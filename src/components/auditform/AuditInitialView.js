@@ -30,14 +30,14 @@ function AuditInitialView(props) {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
   }
-    axios.get(`/getInstitutions`)
+    axios.get(`api/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`/outlets/0`)
+    axios.get(`api/outlets/0`)
     .then(res => {
         const outs = res.data;
         var outletList = getOutlets(outs, "username", "outlet_id")

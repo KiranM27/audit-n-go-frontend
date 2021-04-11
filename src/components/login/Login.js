@@ -37,7 +37,7 @@ function Login(props) {
         } else {
           try {
             const response = await axios.post(
-              '/forgotPassword',
+              'api/forgotPassword',
               {
                 email,
               },
@@ -111,7 +111,7 @@ function Login(props) {
             password: password,
             headers: { 'Content-Type': 'application/json' }
         };
-        axios.post('/login', userObject)
+        axios.post('api/login', userObject)
             .then(
               (res) => {
                 if(res.status!==200){
@@ -170,7 +170,7 @@ function Login(props) {
             headers: { 'Content-Type': 'application/json',
             "Authorization" : `Bearer ${req.accessToken}`
         }}
-        const responsehello = axios.get('/auth', 
+        const responsehello = axios.get('api/auth', 
             head,
           )
           .then(function (response) {
@@ -185,10 +185,10 @@ function Login(props) {
     async function refreshAccess(req){
         const refreshToken = {token:req.refreshToken}
 
-        axios.post('/tokens', refreshToken
+        axios.post('api/tokens', refreshToken
       )
       .then(function (response) {
-        axios.post('/tokens', refreshToken).then(function (responseAgain){
+        axios.post('api/tokens', refreshToken).then(function (responseAgain){
             return responseAgain.data.accessToken;
         })
         

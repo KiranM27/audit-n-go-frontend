@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const localhost = "http://127.0.0.1:3030";
+const localhost = "";
 const apiURL = "";
 const endpoint = `${localhost}${apiURL}`;
 

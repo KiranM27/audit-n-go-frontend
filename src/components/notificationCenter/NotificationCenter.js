@@ -21,7 +21,7 @@ function NotificationCenter(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    axios.get(`/getNotifications/${ props.loggedInUser.userId }`)
+    axios.get(`api/getNotifications/${ props.loggedInUser.userId }`)
       .then(res => {
           console.log("notifications are", res.data, res.data.length);
           props.dispatch({ type: "setNoNotifications", noNotifications: res.data.length })

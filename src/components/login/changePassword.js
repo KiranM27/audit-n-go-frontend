@@ -103,7 +103,7 @@ export default class ChangePassword extends Component {
 
 
 
-        axios.put('/changePassword/', userObject)
+        axios.put('api/changePassword/', userObject)
             .then((res) => {
                 if(res.status==201){
                     this.props.history.push('/dashboard');

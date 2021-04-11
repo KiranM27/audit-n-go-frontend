@@ -39,7 +39,7 @@ const title = {
         } else {
           try {
             const response = await axios.post(
-              '/forgotPassword',
+              'api/forgotPassword',
               {
                 email,
               },
