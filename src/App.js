@@ -68,7 +68,6 @@ function reducer(state = initialState, action) {
         loggedInUser: action.loggedInUser
       }
     case "setNoNotifications":
-      console.log("YAYYY I am being called ")
       return {
         ...state,
         noNotifications: action.noNotifications
