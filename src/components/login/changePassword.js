@@ -103,7 +103,7 @@ export default class ChangePassword extends Component {
 
 
 
-        axios.put('api/changePassword/', userObject)
+        axios.put('https://audit-n-go-backend.herokuapp.com/changePassword/', userObject)
             .then((res) => {
                 if(res.status==201){
                     this.props.history.push('/dashboard');
