@@ -76,7 +76,7 @@ const AuditView = props => {
   const [id, setId] = React.useState(0);
   const [showNC, setShowNC] = React.useState(false);
   const theAuditThing = []
-
+  const csvExport = []
   useEffect( () => {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
@@ -203,6 +203,12 @@ const AuditView = props => {
           theAuditThing.push(checklist[i][j])
       }
     }
+    // for(var len =0;len<theAuditThing.length;len++){
+    //   theAuditThing[len].images = theAuditThing[len].images.toString()
+    // }
+
+    // csvExport = theAuditThing.slice()
+    
 
     for(var i=0;i<theAuditThing.length;i++){
           theAuditThing[i].tenant =  tenantName;
@@ -220,13 +226,15 @@ const AuditView = props => {
     )
   }
   if (showNC){
+    console.log("THE AUDIT THING IS",theAuditThing[0].images)
+    console.log("size is ",theAuditThing.length)
     const isLoggedIn = Cookies.get("isLoggedIn")
 
 if (isLoggedIn == 0) {
   return (
     <Redirect to="/" />        
   )}
-
+  
     return (
       <div>
           <div>
