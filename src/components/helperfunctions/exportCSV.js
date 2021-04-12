@@ -22,7 +22,7 @@ export const ExportCSV = ({csvData}) => {
         config.dirName = new Date().getTime().toString()
         ReactS3.uploadFile(file , config)
         .then( (data) => {
-            axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
+            axios.post("/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
             .then((res) => {
                 })
         })
@@ -32,6 +32,9 @@ export const ExportCSV = ({csvData}) => {
       }
 
     const exportToCSV = (csvData) => {
+        for(var len =0;len<csvData.length;len++){
+            csvData[len].images = csvData[len].images.toString()
+        }
         const fileName = new Date().getTime().toString()
         const ws = XLSX.utils.json_to_sheet(csvData);
         const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
