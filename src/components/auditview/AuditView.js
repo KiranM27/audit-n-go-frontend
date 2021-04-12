@@ -102,10 +102,10 @@ const AuditView = props => {
   const retrieveOutletData = async () => {
     try {
         const data = await axios
-            .get(`/outlets/0`)
-            .then(res => {
-                setOutletDta(res.data);
-            });
+          .get(`/outlets/0`)
+          .then(res => {
+              setOutletDta(res.data);
+          });
     }catch(error){
       setOutletDta([]);
     }
