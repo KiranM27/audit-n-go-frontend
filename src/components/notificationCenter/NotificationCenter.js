@@ -21,7 +21,7 @@ function NotificationCenter(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    axios.get(`https://audit-n-go-backend.herokuapp.com/getNotifications/${ props.loggedInUser.userId }`)
+    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/getNotifications/${ props.loggedInUser.userId }`)
       .then(res => {
           console.log("notifications are", res.data, res.data.length);
           props.dispatch({ type: "setNoNotifications", noNotifications: res.data.length })

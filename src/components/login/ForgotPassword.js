@@ -39,7 +39,7 @@ const title = {
         } else {
           try {
             const response = await axios.post(
-              'https://audit-n-go-backend.herokuapp.com/forgotPassword',
+              'http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/forgotPassword',
               {
                 email,
               },

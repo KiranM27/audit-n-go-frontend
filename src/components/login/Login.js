@@ -37,7 +37,7 @@ function Login(props) {
         } else {
           try {
             const response = await axios.post(
-              'https://audit-n-go-backend.herokuapp.com/forgotPassword',
+              'http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/forgotPassword',
               {
                 email,
               },
@@ -111,7 +111,7 @@ function Login(props) {
             password: password,
             headers: { 'Content-Type': 'application/json' }
         };
-        axios.post('https://audit-n-go-backend.herokuapp.com/login', userObject)
+        axios.post('http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/login', userObject)
             .then(
               (res) => {
                 if(res.status!==200){
@@ -170,7 +170,7 @@ function Login(props) {
             headers: { 'Content-Type': 'application/json',
             "Authorization" : `Bearer ${req.accessToken}`
         }}
-        const responsehello = axios.get('https://audit-n-go-backend.herokuapp.com/auth', 
+        const responsehello = axios.get('http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/auth', 
             head,
           )
           .then(function (response) {
@@ -185,10 +185,10 @@ function Login(props) {
     async function refreshAccess(req){
         const refreshToken = {token:req.refreshToken}
 
-        axios.post('https://audit-n-go-backend.herokuapp.com/tokens', refreshToken
+        axios.post('http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/tokens', refreshToken
       )
       .then(function (response) {
-        axios.post('https://audit-n-go-backend.herokuapp.com/tokens', refreshToken).then(function (responseAgain){
+        axios.post('http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/tokens', refreshToken).then(function (responseAgain){
             return responseAgain.data.accessToken;
         })
         

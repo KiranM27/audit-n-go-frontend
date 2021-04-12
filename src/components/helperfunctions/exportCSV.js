@@ -22,7 +22,7 @@ export const ExportCSV = ({csvData}) => {
         config.dirName = new Date().getTime().toString()
         ReactS3.uploadFile(file , config)
         .then( (data) => {
-            axios.post("https://audit-n-go-backend.herokuapp.com/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
+            axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
             .then((res) => {
                 })
         })

@@ -52,14 +52,14 @@ export default function InstitutionView() {
 
   // useEffect for random is done so that componentDidMount can be simulated
   useEffect(( ) => {
-    axios.get(`https://audit-n-go-backend.herokuapp.com/getInstitutions`)
+    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`https://audit-n-go-backend.herokuapp.com/outlets/0`)
+    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/outlets/0`)
     .then(res => {
         const outs = res.data;
         var outletList = getOutlets(outs, "username", "outlet_id")

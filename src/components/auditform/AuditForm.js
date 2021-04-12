@@ -28,7 +28,7 @@ function AuditForm(props) {
         if(!localStorage.checkbox){
             Cookies.set("isLoggedIn",0)
         }
-        authAxios.get(`https://audit-n-go-backend.herokuapp.com/checklistItems/${params[2]}`)
+        axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/checklistItems/${params[2]}`)
         .then(res => {
             var resData = res.data;
             // Adds in Status, Images, SNo to each of the items
@@ -128,7 +128,7 @@ function RenderButton(props) {
         } else {
             notificationBody = `Please resolve your ${ NCcount } non complaince(s) by ${ props.deadline }`
         }
-        axios.post("https://audit-n-go-backend.herokuapp.com/audit", auditData
+        axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/audit", auditData
         ).then((response) => {
             toast.success(' Audit Created !', {
                 position: "top-center",
@@ -148,7 +148,7 @@ function RenderButton(props) {
                 draggable: true,
                 progress: undefined,
                 });
-            axios.post("https://audit-n-go-backend.herokuapp.com/notification", {
+            axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/notification", {
                 "outlet_id": props.params[1],
                 "title": 'New Audit !',
                 "body": notificationBody,

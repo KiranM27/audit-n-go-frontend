@@ -103,7 +103,7 @@ export default class ChangePassword extends Component {
 
 
 
-        axios.put('https://audit-n-go-backend.herokuapp.com/changePassword/', userObject)
+        axios.put('http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/changePassword/', userObject)
             .then((res) => {
                 if(res.status==201){
                     this.props.history.push('/dashboard');

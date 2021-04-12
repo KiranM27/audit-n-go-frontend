@@ -73,7 +73,7 @@ const Navigator = props => {
     const refreshToken = localStorage.getItem("refreshToken")
     // console.log("INSIDE LOGOUT STUFF", refreshToken)
     Cookies.set('isLoggedIn', 0 , { expires: 2 })
-    axios.post("https://audit-n-go-backend.herokuapp.com/logout",{token:refreshToken}).then(function (response) {
+    axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/logout",{token:refreshToken}).then(function (response) {
         // console.log("logout stuff",response);
         props.history.push('/')
         
