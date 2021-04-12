@@ -116,6 +116,14 @@ export default function Part(props){
 
     const handleSubmitButton = (itemDescription, idx) => {
       var newStatus = statusArr[idx]
+      
+      axios.post('/editstatus',{audit_id:id,newStatus:newStatus,part:part,item:itemDescription})
+      .then(
+        (res) => {
+          if(res.status==200){
+            alert('Status has been updated successfully!')
+          }
+        })
 
       console.log(itemDescription)
       console.log(newStatus)
@@ -252,6 +260,7 @@ const download = (props) => {
 
 function MediaCard(props) {
   console.log(props.imageURL)
+  console.log("props: ",props)
     const classes = useStyles();
     return (
       <Card className={classes.rootCard}>
