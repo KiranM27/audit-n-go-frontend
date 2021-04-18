@@ -53,14 +53,14 @@ export default function DeleteOutlet() {
   // useEffect for random is done so that componentDidMount can be simulated
   
   useEffect(( ) => {
-    axios.get(`/getInstitutions`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`/outlets/0`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
     .then(res => {
         const outs = res.data;
         var outletList = getOutlets(outs, "username", "outlet_id")
@@ -72,7 +72,7 @@ export default function DeleteOutlet() {
   function onSubmit(){
       console.log("outlet_id is", selectedOutlet)
 
-    axios.put('/outlet',{outlet_id:selectedOutlet})
+    axios.put('https://www.audit-n-go-backend.technopanther.com/outlet',{outlet_id:selectedOutlet})
     .then(
       (res) => {
         if(res.status!==201){

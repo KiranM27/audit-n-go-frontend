@@ -103,7 +103,7 @@ export default class ChangePassword extends Component {
 
 
 
-        axios.put('/changePassword/', userObject)
+        axios.put('https://www.audit-n-go-backend.technopanther.com/changePassword/', userObject)
             .then((res) => {
                 if(res.status==201){
                     this.props.history.push('/dashboard');

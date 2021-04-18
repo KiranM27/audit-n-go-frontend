@@ -118,7 +118,7 @@ export default function Part(props){
     const handleSubmitButton = (itemDescription, idx) => {
       var newStatus = statusArr[idx]
       
-      axios.post('/editstatus',{audit_id:id,newStatus:newStatus,part:part,item:itemDescription})
+      axios.post('https://www.audit-n-go-backend.technopanther.com/editstatus',{audit_id:id,newStatus:newStatus,part:part,item:itemDescription})
       .then(
         (res) => {
           if(res.status==200){

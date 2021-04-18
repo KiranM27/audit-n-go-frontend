@@ -26,7 +26,7 @@ function onSubmit(){
     let temp_password = Math.random().toString(36).substring(10);
     console.log("random ", temp_password);
 
-    axios.post('/outlet', {username:username,email:email,password:temp_password,institution_name:institution_name})
+    axios.post('https://www.audit-n-go-backend.technopanther.com/outlet', {username:username,email:email,password:temp_password,institution_name:institution_name})
     .then(
       (res) => {
         if(res.status!==201){

@@ -52,14 +52,14 @@ export default function InstitutionView() {
 
   // useEffect for random is done so that componentDidMount can be simulated
   useEffect(( ) => {
-    axios.get(`/getInstitutions`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`/outlets/0`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
     .then(res => {
 
         const outs = []

@@ -322,7 +322,7 @@ const AuditView = props => {
   }else{
     function deleteAudit(){
       console.log("id is ",id)
-      axios.put('/audit', {audit_id:id})
+      axios.put('https://www.audit-n-go-backend.technopanther.com/audit', {audit_id:id})
     .then(
       (res) => {
         alert('Audit has been deleted!')
