@@ -7,6 +7,9 @@ import Badge from '@material-ui/core/Badge';
 import NotificationCenterBody from './NotificationCenterBody'
 import { connect } from 'react-redux';
 import axios from 'axios';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,12 +19,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}))(Badge);
+
 function NotificationCenter(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles();
 
   useEffect(() => {
-    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/getNotifications/${ props.loggedInUser.userId }`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${ props.loggedInUser.userId }`)
       .then(res => {
           console.log("notifications are", res.data, res.data.length);
           props.dispatch({ type: "setNoNotifications", noNotifications: res.data.length })
@@ -39,34 +51,65 @@ function NotificationCenter(props) {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  return (
-    <div>
-      <div className={classes.root}>
-        <Badge badgeContent={ props.noNotifications } color="secondary">
-          <Button aria-describedby={id} color="inherit" onClick={handleClick}>
-            Notifications
-          </Button>
-        </Badge>
+  if (props.isMobile) {
+    return (
+      <div>
+        <div className={classes.root}>
+          <IconButton color="inherit" onClick={handleClick}>
+            <StyledBadge badgeContent={ props.noNotifications } color="secondary">
+              <NotificationsIcon/>
+            </StyledBadge>
+          </IconButton>
+        </div>
+        <Popover
+          id={id}
+          open={ open }
+          anchorEl={ anchorEl }
+          onClose={ handleClose }
+          anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+        >
+          <NotificationCenterBody 
+          handleClose = { handleClose }/>
+        </Popover>
       </div>
-      <Popover
-        id={id}
-        open={ open }
-        anchorEl={ anchorEl }
-        onClose={ handleClose }
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-      >
-        <NotificationCenterBody 
-        handleClose = { handleClose }/>
-      </Popover>
-    </div>
-  );
+    );
+  }else{
+    return (
+      <div>
+        <div className={classes.root}>
+          <Badge badgeContent={ props.noNotifications } color="secondary">
+            <Button aria-describedby={id} color="inherit" onClick={handleClick}>
+              Notifications
+            </Button>
+          </Badge>
+        </div>
+        <Popover
+          id={id}
+          open={ open }
+          anchorEl={ anchorEl }
+          onClose={ handleClose }
+          anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+        >
+          <NotificationCenterBody 
+          handleClose = { handleClose }/>
+        </Popover>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = function(state) {

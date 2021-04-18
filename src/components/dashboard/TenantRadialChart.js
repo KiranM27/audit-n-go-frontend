@@ -57,18 +57,18 @@ export default function TenantRadialChart(props) {
     const retrieveData = async () => {
         try {
             const data = await axios
-                .get(`/audits/0`)
+                .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
                 .then(res => {
                     console.log(res.data)
                     setAuditData(getAudits(res.data));
                 });
             const outletData = await axios
-                .get(`/outlets/0`)
+                .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
                 .then(res =>{
                     setOutletData(res.data);
                 });
             const instituionData = await axios
-                .get(`/getInstitutions`)
+                .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
                 .then(res =>{
                     setInstData(res.data);
                 });
@@ -95,10 +95,10 @@ export default function TenantRadialChart(props) {
     return (
       <RadarChart
         cx="50%"
-        cy="30%"
-        outerRadius="40%"
+        cy="50%"
+        outerRadius="75%"
         width={400}
-        height={400}
+        height={250}
         data={data_radial}
       >
         <PolarGrid />

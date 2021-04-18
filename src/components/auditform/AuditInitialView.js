@@ -30,16 +30,21 @@ function AuditInitialView(props) {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
   }
-    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/getInstitutions`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/outlets/0`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
     .then(res => {
-        const outs = res.data;
+      const outs = []
+      for(var i=0;i<res.data.length;i++){
+          if(res.data[i].active==true){
+              outs.push(res.data[i])
+          }
+      }
         var outletList = getOutlets(outs, "username", "outlet_id")
         setAlloutlets(outletList);
         

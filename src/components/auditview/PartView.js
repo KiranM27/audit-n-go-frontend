@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -117,7 +118,7 @@ export default function Part(props){
     const handleSubmitButton = (itemDescription, idx) => {
       var newStatus = statusArr[idx]
       
-      axios.post('/editstatus',{audit_id:id,newStatus:newStatus,part:part,item:itemDescription})
+      axios.post('https://www.audit-n-go-backend.technopanther.com/editstatus',{audit_id:id,newStatus:newStatus,part:part,item:itemDescription})
       .then(
         (res) => {
           if(res.status==200){
@@ -125,14 +126,14 @@ export default function Part(props){
           }
         })
 
-      console.log(itemDescription)
-      console.log(newStatus)
-      console.log(part)
-      console.log(id)
+      setOriginalStatusArr(statusArr)
+      setEditStatus(!editStatus);
+      editStatusArr[idx] = !editStatusArr[idx];
       
     }
 
     useEffect(() => {console.log(statusArr)}, [statusArr]);
+    useEffect(() => {console.log(originalStatusArr)}, [originalStatusArr]);
 
     const handleEditButtonClick = (props) =>{
       setStatusArr(originalStatusArr);
@@ -177,7 +178,9 @@ export default function Part(props){
       // console.log(statusArr);
     }else{
       return(
-        <div>Loading</div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <CircularProgress />
+        </div>
       )
     }
 
@@ -195,7 +198,7 @@ export default function Part(props){
                         <Typography className={classes.heading}>{data.id}</Typography>
                     </div>
                     <div className={classes.column}>
-                        <StatusIcon status={data.status}/>
+                        <StatusIcon status={originalStatusArr[data.id-1]}/>
                     </div>
                     <div className={classes.column}>
                         <Typography className={classes.secondaryHeading}>{data.item}</Typography>

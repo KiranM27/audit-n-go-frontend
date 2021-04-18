@@ -39,7 +39,7 @@ function NotificationCenterBody(props) {
   const retrieveNotification = () => {
     try {
         axios
-          .get(`/getNotifications/${ props.loggedInUser.userId }`)
+          .get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${ props.loggedInUser.userId }`)
           .then(res => {
               console.log(res.data);
               setNotifications(res.data);
@@ -82,7 +82,7 @@ function NotificationCenterBody(props) {
           </span>
           <List className={classes.root_list}>
             { notifications.map( notification => <NotificationCard title = { notification.title }
-              body = { notification.body } path = { notification.path } handleClose = { props.handleClose } />) }
+              body = { notification.body } path = { notification.path } id = { notification.notification_id } handleClose = { props.handleClose } />) }
           </List>
         </CardContent>
       </Card>
