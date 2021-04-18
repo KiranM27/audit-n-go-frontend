@@ -16,6 +16,9 @@ import AuditInitialView from './components/auditform/AuditInitialView'
 import AuditForm from './components/auditform/AuditForm'
 import ForgotPassword from './components/login/ForgotPassword';
 import ChangePassword from './components/login/changePassword';
+import AddOutlet from './components/ManageObjects/addOutlet';
+import DeleteOutlet from './components/ManageObjects/deleteOutlet';
+// import AddInstitution from './components/ManageObjects/addInstitution';
 
 // Initialise Global State Here. Add in other gloal states below
 let initialState = {}
@@ -29,7 +32,8 @@ try {
       isAdmin: false,
       username: ''
     },
-    noNotifications: 0
+    noNotifications: 0,
+    noMessages: 0
   }
 } catch (e) {
   initialState = {
@@ -41,7 +45,8 @@ try {
       isAdmin: false,
       username: ''
     },
-    noNotifications: 0
+    noNotifications: 0,
+    noMessages: 0
   }
 }
 
@@ -68,9 +73,15 @@ function reducer(state = initialState, action) {
         loggedInUser: action.loggedInUser
       }
     case "setNoNotifications":
+      console.log("YAYYY I am being called ")
       return {
         ...state,
         noNotifications: action.noNotifications
+      }
+    case "setNoMessages":
+      return {
+        ...state,
+        noMessages: action.noMessages
       }
     default:
       return(state)
@@ -116,6 +127,9 @@ function App(){
             <Route path="/auditInitialise" component={AuditInitialView}/>
             <Route path='/auditForm/:iid/:oid/:at' component={ AuditForm } />
             <Route path='/institutions' component={ InstitutionView } />
+            <Route path='/addOutlet' component={AddOutlet} />
+            <Route path='/deleteOutlet' component={DeleteOutlet} />
+            {/* <Route path='/addInstitution' component={AddInstitution} /> */}
           </div>
         </Switch>
       </Router>

@@ -1,7 +1,5 @@
 import React from 'react';
-
-// import 'antd/dist/antd.css';
-
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,7 +14,8 @@ import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useHistory } from "react-router-dom";
-import NotificationCenter from './notificationCenter/NotificationCenter'
+import NotificationCenter from './notificationCenter/NotificationCenter';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -73,7 +72,7 @@ const Navigator = props => {
     const refreshToken = localStorage.getItem("refreshToken")
     // console.log("INSIDE LOGOUT STUFF", refreshToken)
     Cookies.set('isLoggedIn', 0 , { expires: 2 })
-    axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/logout",{token:refreshToken}).then(function (response) {
+    axios.post("/logout",{token:refreshToken}).then(function (response) {
         // console.log("logout stuff",response);
         props.history.push('/')
         
@@ -97,11 +96,16 @@ const Navigator = props => {
     >
         <MenuItem onClick={() => handleMobileMenuClick('/dashboard')}>Dashboard</MenuItem>
         <MenuItem onClick={() => handleMobileMenuClick('/institutions')}>Institutions</MenuItem>
-        <NotificationCenter />
         <MenuItem onClick={() => handleMobileMenuClick('/about')}>About</MenuItem>
         <MenuItem onClick={logoutFinally}>Logout</MenuItem>
     </Menu>
   );
+
+  const handleMobileBellClick = () => {
+    return (
+      <NotificationCenter/>
+    )
+  }
 
   return (
     <div className={classes.grow}>
@@ -129,11 +133,12 @@ const Navigator = props => {
           <div className={classes.sectionDesktop}>
             <Button color="inherit" onClick={() => handleMobileMenuClick('/dashboard')}>Dashboard</Button>
             <Button color="inherit" onClick={() => handleMobileMenuClick('/institutions')}>Institutions</Button>
-            <NotificationCenter />
+            <NotificationCenter isMobile={false}/>
             <Button color="inherit" onClick={() => handleMobileMenuClick('/about')}>About</Button>
             <Button color="inherit" onClick={logoutFinally}>Logout</Button>
           </div>
           <div className={classes.sectionMobile}>
+            <NotificationCenter isMobile={true}/>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}

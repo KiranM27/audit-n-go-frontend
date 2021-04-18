@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button"
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -19,8 +19,6 @@ import Cookies from 'js-cookie';
 import { useHistory, Redirect } from "react-router-dom";
 import { ExportCSV } from "../helperfunctions/exportCSV";
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-
 import Chat from '../chat/Chat'
 import PartView from './PartView'
 
@@ -81,7 +79,14 @@ const AuditView = props => {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
   }
-    setId(props.location.state.id);
+    if (typeof(props.location.state) !== "undefined"){
+      setId(props.location.state.id);
+    }else{
+      return (
+        <Redirect to="/" />        
+      )
+    }
+    
     retrieveAuditDetail();
     retrieveInstData();
     retrieveOutletData();
@@ -169,6 +174,9 @@ const AuditView = props => {
       }
     }
 
+    console.log(checklist)
+    console.log(NC_list)
+
 
     // get tenant name and institution name
     for (var i = 0; i < outletData.length; i++) {
@@ -196,6 +204,7 @@ const AuditView = props => {
       disablePart45 = true;
     }
 
+    
    
 
     for(var i=0; i<checklist.length;i++){
@@ -225,16 +234,15 @@ const AuditView = props => {
       </div>
     )
   }
-  if (showNC){
-    console.log("THE AUDIT THING IS",theAuditThing[0].images)
-    console.log("size is ",theAuditThing.length)
-    const isLoggedIn = Cookies.get("isLoggedIn")
 
-if (isLoggedIn == 0) {
-  return (
-    <Redirect to="/" />        
+  const isLoggedIn = Cookies.get("isLoggedIn");
+
+  if (isLoggedIn == 0) {
+    return (
+      <Redirect to="/" />        
   )}
-  
+  if (showNC){
+    
     return (
       <div>
           <div>
@@ -308,17 +316,34 @@ if (isLoggedIn == 0) {
             </Container>
           </TabPanel>
         </SwipeableViews>
-        <Chat />
+        <Chat audit_id = { id } />
       </div>
     )
   }else{
+    function deleteAudit(){
+      console.log("id is ",id)
+      axios.put('/audit', {audit_id:id})
+    .then(
+      (res) => {
+        alert('Audit has been deleted!')
+        if(res.status!==201){
+          alert('Audit not deleted! Please try again!')
+        }
+    })
+    }
     return (
       <div>
           <div>
               <Container maxWidth="md" style={{paddingBottom:10}}>
                 <Typography variant = "h6" align="center">{formType}</Typography>  
                 <Grid container direction="row" justify="center" alignItems="center">
-                  <ExportCSV csvData={theAuditThing}/>  
+                  <ExportCSV csvData={theAuditThing}/>
+                  <Link to={"/dashboard"}>
+                    <Button variant="contained" color="secondary" onClick={deleteAudit} style={{textTransform:"none"}}>
+                      Delete Audit
+                    </Button>
+                  </Link>
+
                 </Grid>   
                 <Grid container spacing={2}>
                     <Grid item xs={6} md={6}>
@@ -391,7 +416,7 @@ if (isLoggedIn == 0) {
             </Container>
           </TabPanel>
         </SwipeableViews>
-        <Chat />
+        <Chat audit_id = { id } />
       </div>
     );
   }

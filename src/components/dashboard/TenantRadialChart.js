@@ -95,10 +95,10 @@ export default function TenantRadialChart(props) {
     return (
       <RadarChart
         cx="50%"
-        cy="30%"
-        outerRadius="40%"
+        cy="50%"
+        outerRadius="75%"
         width={400}
-        height={400}
+        height={250}
         data={data_radial}
       >
         <PolarGrid />

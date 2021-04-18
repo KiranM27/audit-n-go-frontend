@@ -26,7 +26,7 @@ const metaData = {
             },
             {
                 'partNo': 3,
-                'partTitle': "Food Hygiene "
+                'partTitle': "Food Hygiene"
             },
             {
                 'partNo': 4,
@@ -52,7 +52,7 @@ const metaData = {
             },
             {
                 'partNo': 3,
-                'partTitle': "Workplace Safety & Health "
+                'partTitle': "Workplace Safety & Health"
             }
         ]
     },

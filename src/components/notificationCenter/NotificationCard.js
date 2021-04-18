@@ -6,12 +6,12 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Divider } from '@material-ui/core';
-
 import purpleDot from '../../assets/images/purpleDot.png'
 import notificationSymbol from '../../assets/images/notificationSymbol.png'
-
 import { useHistory } from "react-router-dom";
-
+import { notification } from 'antd';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   inline: {
@@ -27,22 +27,34 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function NotificationCard( props ) {
+function NotificationCard(props)  {
 
   const classes = useStyles();
   const history = useHistory()  
 
-  function handleBellClick() {  
+  function handleCardClick() {  
     if (props.path !=  null) {
         history.push( props.path )
         props.handleClose() 
+        axios.put(`/changeStatusToSeen/${props.id}`)
+            .then((res) => {
+                if(res.status==201){
+                  console.log("Set notification to seen !")
+                }else if(res.status==401){
+                  console.log("Error")
+                }
+                // console.log(res.data)
+            }).catch((error) => {
+                // console.log(error)
+            });
         }
+        props.dispatch({type: "setNoNotifications", noNotifications: props.noNotifications - 1})
     } 
 
   return (
     <div> 
       <Divider />
-      <ListItem alignItems="flex-start" onClick = { handleBellClick }>
+      <ListItem alignItems="flex-start" onClick = { handleCardClick }>
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src = { notificationSymbol } />
         </ListItemAvatar>
@@ -65,3 +77,11 @@ export default function NotificationCard( props ) {
     </div>
   );
 }
+
+
+const mapStateToProps = function(state) {
+  return {
+      noNotifications: state.noNotifications
+  }
+}
+export default connect(mapStateToProps)(NotificationCard)

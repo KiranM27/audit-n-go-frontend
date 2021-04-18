@@ -94,7 +94,7 @@ const Dashboard = props => {
     const classes = useStyles();
     const themeTab = useTheme();
     const [value, setValue] = React.useState(1);
-    const [pieSelection, setPieSelection] = React.useState("SUTD");
+    const [pieSelection, setPieSelection] = React.useState("KKH");
 
     const { history } = props
 
@@ -139,6 +139,7 @@ if (isLoggedIn == 0) {
                         </Grid>
                         <Grid container spacing={0} justify="flex-end" item xs={6} sm={6}>
                                 <Button 
+                                    style = {{textTransform: "none"}}
                                     variant="contained" 
                                     color="secondary"
                                     onClick={(e) => history.push({
@@ -147,6 +148,7 @@ if (isLoggedIn == 0) {
                                     >
                                     Create new audit
                                 </Button>
+                                
                         </Grid>
                     </Grid>
                 </div>

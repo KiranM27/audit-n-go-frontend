@@ -82,7 +82,7 @@ function NotificationCenterBody(props) {
           </span>
           <List className={classes.root_list}>
             { notifications.map( notification => <NotificationCard title = { notification.title }
-              body = { notification.body } path = { notification.path } handleClose = { props.handleClose } />) }
+              body = { notification.body } path = { notification.path } id = { notification.notification_id } handleClose = { props.handleClose } />) }
           </List>
         </CardContent>
       </Card>

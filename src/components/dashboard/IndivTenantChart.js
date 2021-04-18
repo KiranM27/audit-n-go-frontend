@@ -79,15 +79,15 @@ export default function PieChartDashboard(props) {
     }
     
     return (
-      <PieChart width={400} height={400}>
+      <PieChart width={400} height={250}>
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
           cx="50%"
-          cy="30%"
-          innerRadius="30%"
-          outerRadius="40%"
+          cy="45%"
+          innerRadius="45%"
+          outerRadius="75%"
         //   fill="#8884d8"
           dataKey="value"
           onMouseEnter={onPieEnter}

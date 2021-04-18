@@ -9,10 +9,54 @@ import TableRow from '@material-ui/core/TableRow';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withRouter } from 'react-router-dom'
 import axios from 'axios';
-import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Button from '@material-ui/core/Button';
+import { DataGrid } from '@material-ui/data-grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { CssBaseline, Typography, Paper, Grid, Container } from '@material-ui/core'
 // import { getAudits, makeData, getOutletAndInstitute, sortAudits } from '../helperfunctions/AuditProcessing'
+
+const columns = [
+  {
+    field: 'date',
+    headerName: 'Date',
+    type: 'date',
+    width: 130,
+  },
+  {
+    field: 'tenant',
+    headerName: 'Tenant',
+    type: 'string',
+    width: 150,
+  },
+  {
+    field: 'institution',
+    headerName: 'Institution',
+    type: 'string',
+    width: 130,
+  },
+  {
+    field: 'date',
+    headerName: 'Date',
+    type: 'date',
+    width: 130,
+  },
+  {
+    field: 'NC',
+    headerName: 'NCs',
+    type: 'number',
+    width: 110,
+  },
+  {
+    field: 'score',
+    headerName: 'Score',
+    type: 'number',
+    width: 110,
+  },
+];
+
+const rows = [
+  { id: 1, type: 'No data', numberNC:0, score:0 },
+];
 
 const { getAudits, makeData, getOutletAndInstitute, sortAudits } = require('../helperfunctions/AuditProcessing.js')
 
@@ -89,7 +133,7 @@ const RecentAudits = props => {
       var table_row = makeData(id, date, tenantName, instName, no_NC, score);
       dataForTable.push(table_row);
     }
-
+    
     console.log(dataForTable);
 
   }else{
@@ -99,57 +143,39 @@ const RecentAudits = props => {
       </div>
     )
   }
-  
-  return (
-    <div>
-    <React.Fragment>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Tenant</TableCell>
-            <TableCell>Institution</TableCell>
-            <TableCell align="right">Score</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {dataForTable.map((data) => (
-            <TableRow key={data.id}>
-              <TableCell>{data.date}</TableCell>
-              <TableCell>{data.tenant}</TableCell>
-              <TableCell>{data.institution}</TableCell>
-              <TableCell align="right">{data.score}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Grid container spacing={2}>
-          <Grid container justify="left" item xs={6} sm={6}>
-              <Grid>
-                <div className={classes.seeMore}>
-                  <Link color="primary" href="#" onClick={() => handleMobileMenuClick('/institutions')}>
-                    See more audit results
-                  </Link>
-                </div>
-              </Grid>
-          </Grid>
-          <Grid container spacing={0} justify="flex-end" item xs={6} sm={6} style={{paddingTop:25}}>
-                  <Button 
-                      variant="contained" 
-                      color="primary"
-                      style={{maxHeight:40}}
-                      onClick={(e) => history.push({
-                        pathname: '/auditDetail',
-                        state: {id: dataForTable[0]["id"]}
-                      })}
-                      >
-                      View last audit
-                  </Button>
-          </Grid>
-        </Grid>
-    </React.Fragment>
-    </div>
-  );
+
+  if (true){
+    try {
+      return (
+          <div style={{ width: '100%' }}>
+              <DataGrid 
+                  autoHeight={true} 
+                  rows={dataForTable} 
+                  columns={columns} 
+                  pageSize={10} 
+                  onRowClick={(e) => history.push({
+                      pathname: '/auditDetail',
+                      state: {id: e['id']}
+                  })}
+                  disableSelectionOnClick={true}
+                  disableExtendRowFullWidth={false}/>
+          </div>
+      );
+      }catch(error){
+          return (
+              <div style={{ width: '100%' }}>
+                  <DataGrid 
+                      autoHeight={true} 
+                      rows={rows} 
+                      columns={columns} 
+                      pageSize={10} 
+                      onRowClick={(e) => console.log(e)}
+                      disableSelectionOnClick={true}
+                      disableExtendRowFullWidth={false}/>
+              </div>
+          );
+      }
+  }
 }
 
 export default withRouter(RecentAudits)

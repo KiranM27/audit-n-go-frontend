@@ -23,12 +23,13 @@ function GetParams() {
 function AuditForm(props) {
     const params = GetParams()
     const [items, setItems] = useState([]) // Has the items of the Checklist 
+    const needScore = params[2] == 'cv' ? false : true;
 
     useEffect( () => {
         if(!localStorage.checkbox){
             Cookies.set("isLoggedIn",0)
         }
-        axios.get(`http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/checklistItems/${params[2]}`)
+        axios.get(`/checklistItems/${params[2]}`)
         .then(res => {
             var resData = res.data;
             // Adds in Status, Images, SNo to each of the items
@@ -36,8 +37,10 @@ function AuditForm(props) {
                 item["status"] = 'Status TBD'
                 item["images"] = []
                 item["SNo"] = 0
+                item["score"] = 0
             })
             setItems(resData)
+            props.dispatch({ type: "setAuditFormData", auditFormData: resData })
         })
     }, [])
 
@@ -128,8 +131,11 @@ function RenderButton(props) {
         } else {
             notificationBody = `Please resolve your ${ NCcount } non complaince(s) by ${ props.deadline }`
         }
-        axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/audit", auditData
+        axios.post("/audit", auditData
         ).then((response) => {
+
+            const createdAuditId = response.data.audit_id;
+
             toast.success(' Audit Created !', {
                 position: "top-center",
                 autoClose: 3000,
@@ -148,7 +154,16 @@ function RenderButton(props) {
                 draggable: true,
                 progress: undefined,
                 });
-            axios.post("http://auditngobackend-env-1.eba-c9ump7bh.ap-southeast-1.elasticbeanstalk.com/notification", {
+            
+            axios.post("/chatInit", {
+                "audit_id": createdAuditId
+            }).then((response) => {
+                console.log("Chat doc created")
+            }).catch((error) => {
+                console.log(error);
+            })
+            
+            axios.post("/notification", {
                 "outlet_id": props.params[1],
                 "title": 'New Audit !',
                 "body": notificationBody,

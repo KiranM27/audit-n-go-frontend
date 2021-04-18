@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useHistory } from "react-router-dom";
 import { CssBaseline, Typography, Paper, Grid, Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button'
-import TableAuditView from './TableAuditView'
+import TableAuditView from '../institutionview/TableAuditView'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Cookies from 'js-cookie';
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function InstitutionView() {
+export default function DeleteOutlet() {
   const [status, setStatus] = useState(0);
   const [random, setRandom] = useState(0);
   const [viewAll, setviewAll] = useState(false);
@@ -51,6 +51,7 @@ export default function InstitutionView() {
   const [selectedOutlet, setSelectedOutlet] = useState(0);
 
   // useEffect for random is done so that componentDidMount can be simulated
+  
   useEffect(( ) => {
     axios.get(`/getInstitutions`)
         .then(res => {
@@ -61,19 +62,25 @@ export default function InstitutionView() {
     
     axios.get(`/outlets/0`)
     .then(res => {
-
-        const outs = []
-        for(var i=0;i<res.data.length;i++){
-            if(res.data[i].active==true){
-                outs.push(res.data[i])
-            }
-        }
-        
+        const outs = res.data;
         var outletList = getOutlets(outs, "username", "outlet_id")
         setAlloutlets(outletList);
         
     })
   }, [random])
+
+  function onSubmit(){
+      console.log("outlet_id is", selectedOutlet)
+
+    axios.put('/outlet',{outlet_id:selectedOutlet})
+    .then(
+      (res) => {
+        if(res.status!==201){
+          alert('Outlet not deleted! Please try again!')
+        }
+    })
+
+    }
 
   const onInstitutionSelect = (e, v) => {
       if (v != null){
@@ -104,20 +111,11 @@ export default function InstitutionView() {
           <main>
             <Container maxWidth="sm">
                 <Typography variant="h6" align="center" color="textPrimary" gutterBottom>
-                    Find audit results by institutions and outlets.
+                    Delete outlets
                 </Typography>
                 <Typography variant="body1" align="center" color="textPrimary" gutterBottom>
-                    Or click the button below to view all.
+                    Select institution and outlet
                 </Typography>
-                <div className={classes.heroButtons} style={{paddingBottom:20}} >
-                        <Grid container spacing={2} justify="center">
-                            <Grid item>
-                            <Button variant="contained" color="primary" onClick = { () => setviewAll(true) }>
-                                View all
-                            </Button>
-                            </Grid>
-                        </Grid>
-                </div>
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
                         <Grid style={{paddingBottom:10}}>                        
@@ -140,11 +138,15 @@ export default function InstitutionView() {
                 </div>
             </Container>
             <Container maxWidth="md">
-                <RenderTable
-                    status = { status }
-                    viewAll = { viewAll }
-                    selectedInstitution = { selectedInstitution } 
-                    selectedOutlet = { selectedOutlet } />
+            <Grid container spacing={2} justify="center">
+                            <Grid item>
+                            <Button variant="contained" color="secondary" onClick={onSubmit}>
+                                Delete outlet
+                            </Button>
+                            </Grid>
+                        </Grid>
+            
+
             </Container>
           </main>
       </div>
