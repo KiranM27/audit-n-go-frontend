@@ -154,7 +154,8 @@ const RecentAudits = props => {
                   columns={columns} 
                   pageSize={10} 
                   onRowClick={(e) => history.push({
-                      pathname: '/auditDetail'+e['id'],
+                      pathname: '/auditDetail',
+                      state: {id: e['id']}
                   })}
                   disableSelectionOnClick={true}
                   disableExtendRowFullWidth={false}/>
