@@ -123,7 +123,7 @@ function App(){
             <div style={{paddingBottom:25}}><Navigator/></div>
             <Route path="/dashboard" component={ Dashboard } />
             <Route path="/about" component={ About } />
-            <Route path="/auditDetail" component={ AuditView } />
+            <Route path="/auditDetail/:audit_id" component={ AuditView } />
             <Route path="/auditInitialise" component={AuditInitialView}/>
             <Route path='/auditForm/:iid/:oid/:at' component={ AuditForm } />
             <Route path='/institutions' component={ InstitutionView } />

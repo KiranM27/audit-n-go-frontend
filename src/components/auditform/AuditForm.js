@@ -6,7 +6,6 @@ import { useParams } from "react-router";
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {  Typography  } from '@material-ui/core';
-import { authAxios } from "../helperfunctions/authAxios"
 import Cookies from 'js-cookie';
 import {  Redirect } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';

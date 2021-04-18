@@ -11,6 +11,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button"
 import { Link, withRouter } from 'react-router-dom'
+import { useParams } from "react-router";
 import axios from 'axios'
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -21,6 +22,12 @@ import { ExportCSV } from "../helperfunctions/exportCSV";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Chat from '../chat/Chat'
 import PartView from './PartView'
+
+function GetParams() {
+  let { audit_id } = useParams();
+  return audit_id
+}
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,8 +86,8 @@ const AuditView = props => {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
   }
-    if (typeof(props.location.state) !== "undefined"){
-      setId(props.location.state.id);
+    if (typeof(GetParams) !== "undefined"){
+      setId(GetParams);
     }else{
       return (
         <Redirect to="/" />        

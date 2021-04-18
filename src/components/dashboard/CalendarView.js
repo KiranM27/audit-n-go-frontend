@@ -89,8 +89,7 @@ const CalendarView = props => {
     useEffect(() => {
       if (selectedAudit != null){
         history.push({
-          pathname: '/auditDetail',
-          state: {id: selectedAudit}
+          pathname: '/auditDetail/'+selectedAudit,
         })
       }
     })
