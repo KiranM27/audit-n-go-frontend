@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import { Row, Col } from 'antd';
 
 const { Meta } = Card;
 
@@ -60,34 +61,32 @@ const CenteredGrid = props => {
 
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={5}>
-        <Grid item xs={12} sm={6}>
-            <ControlCard 
-                action="Create new audit" 
-                handleFunc={handleCreateNewAudit} 
-                imageURL="https://images.unsplash.com/photo-1554470938-85886688c6e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2110&q=80"/>
-        </Grid>
-        <Grid item xs={12}  sm={6}>
-            <ControlCard 
-                action="View all audits" 
-                handleFunc={handleViewAllAudit}
-                imageURL="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
-        </Grid>
-        <Grid item xs={12}  sm={6}>
-            <ControlCard 
-                action="Create a new tenant" 
-                handleFunc={handleCreateNewTenant}
-                imageURL="https://images.unsplash.com/photo-1590986201364-ce95ab280ca2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
-        </Grid>
-        <Grid item xs={12}  sm={6}>
-            <ControlCard 
-                action="Delete a tenant" 
-                handleFunc={handleDeleteTenant}
-                imageURL="https://images.unsplash.com/photo-1595418130437-641018a1b248?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
-        </Grid>
-      </Grid>
-    </div>
+    <Row gutter={[10, 10]}>
+    <Col xs={{ span: 12, offset: 0 }} lg={{ span: 6, offset: 0 }}>
+    <ControlCard 
+        action="Create audit" 
+        handleFunc={handleCreateNewAudit} 
+        imageURL="https://images.unsplash.com/photo-1554470938-85886688c6e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2110&q=80"/>
+    </Col>
+    <Col xs={{ span: 12, offset: 0 }} lg={{ span: 6, offset: 0 }}>
+    <ControlCard 
+        action="View audits" 
+        handleFunc={handleViewAllAudit}
+        imageURL="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
+    </Col>
+    <Col xs={{ span: 12, offset: 0 }} lg={{ span: 6, offset: 0 }}>
+    <ControlCard 
+        action="Create tenant" 
+        handleFunc={handleCreateNewTenant}
+        imageURL="https://images.unsplash.com/photo-1590986201364-ce95ab280ca2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
+    </Col>
+    <Col xs={{ span: 12, offset: 0 }} lg={{ span: 6, offset: 0 }}>
+    <ControlCard 
+        action="Delete tenant" 
+        handleFunc={handleDeleteTenant}
+        imageURL="https://images.unsplash.com/photo-1595418130437-641018a1b248?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80"/>
+    </Col>
+  </Row>
   );
 }
 

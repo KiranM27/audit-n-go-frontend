@@ -230,7 +230,7 @@ if (isLoggedIn == 0) {
                             </Container>
                         </TabPanel>
                         <TabPanel value={value} index={3} dir={themeTab.direction}>
-                            <Container maxWidth="sm">
+                            <Container maxWidth="sm" alignItems="center">
                                 <ControlCenter/>
                             </Container>
                         </TabPanel>
