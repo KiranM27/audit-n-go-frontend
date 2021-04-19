@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from "react-router";
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,413 +23,210 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Chat from '../chat/Chat'
 import PartView from './PartView'
 
+function GetParams() {
+    let { audit_id } = useParams();
+    return audit_id;
+}
+
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
-  },
-  formGroup: {
-    alignItems: 'right'
-  }
-}));
-
-const AuditView = props => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-  const [fullAuditData, setFullAuditData] = React.useState([]);
-  const [instData, setInstData] = React.useState([]);
-  const [outletData, setOutletDta] = React.useState([]);
-  const [id, setId] = React.useState(0);
-  const [showNC, setShowNC] = React.useState(false);
-  const theAuditThing = []
-  const csvExport = []
-  useEffect( () => {
-    if(!localStorage.checkbox){
-      Cookies.set("isLoggedIn",0)
-  }
-    if (typeof(props.location.state) !== "undefined"){
-      setId(props.location.state.id);
-    }else{
-      return (
-        <Redirect to="/" />        
-      )
-    }
-    
-    retrieveAuditDetail();
-    retrieveInstData();
-    retrieveOutletData();
-  },[])
-
-  const retrieveInstData = async () => {
-    try {
-        const data = await axios
-            .get(`/getInstitutions`)
-            .then(res => {
-                setInstData(res.data);
-            });
-    }catch(error){
-      setInstData([]);
-    }
-  };
-
-  const retrieveOutletData = async () => {
-    try {
-        const data = await axios
-            .get(`/outlets/0`)
-            .then(res => {
-                setOutletDta(res.data);
-            });
-    }catch(error){
-      setOutletDta([]);
-    }
-  };
-
-  const handleShowNCChange = (event) => {
-    setShowNC(!showNC);
-  }
-
-  const retrieveAuditDetail = async () => {
-    try {
-        const data = await axios
-            .get(`/audits/0`)
-            .then(res => {
-                setFullAuditData(res.data);
-            });
-    }catch(error){
-      setFullAuditData([]);
-    }
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
-
-
-  if (fullAuditData.length != 0 && instData.length != 0 && outletData.length != 0){
-
-    var checklist = [];
-    var NC_list = [];
-    var auditDetailData = [];
-    var tenantName = "";
-    var instName = "";
-    var formType ="";
-    var disablePart3 = false;
-    var disablePart45 = false;
-
-    // create checklist
-    // a list that contains all the audit results
-    for (var i = 0; i < fullAuditData.length; i++) {
-     if (id == fullAuditData[i]["audit_id"]){
-
-       checklist = fullAuditData[i]['checklist_results'];
-       auditDetailData = fullAuditData[i];
-      }
-    }
-
-    // create NC_list
-    // a list that contains all the non-compliance items
-    for (var i = 0; i < checklist.length; i++) {
-      NC_list.push([])
-      for (var j = 0; j < checklist[i].length; j++) {
-        if (checklist[i][j]["status"] == "Not Complied"){
-          NC_list[i].push(checklist[i][j])
-        }
-      }
-    }
-
-    console.log(checklist)
-    console.log(NC_list)
-
-
-    // get tenant name and institution name
-    for (var i = 0; i < outletData.length; i++) {
-      if (auditDetailData["outlet_id"] == outletData[i]["outlet_id"]){
-        tenantName = outletData[i]["username"];
-        for (var j = 0; j < instData.length; j++){
-          if (outletData[i]["institution_id"] == instData[j]["institution_id"]){
-            instName = instData[j]["name"]
-            break;
-          }
-        }
-        break;
-      }
-    }
-
-    // get audit form type
-    if (auditDetailData['audit_type'] == "cv"){
-      formType = "COVID-19 Audit Form";
-      disablePart3 = true;
-      disablePart45 = true;
-    }else if (auditDetailData['audit_type'] == "fb"){
-      formType = "Food & Beverages Audit Form";
-    }else{
-      formType = "Non Food & Beverages Audit Form";
-      disablePart45 = true;
-    }
-
-    
-   
-
-    for(var i=0; i<checklist.length;i++){
-      for(var j=0;j<checklist[i].length;j++){
-          theAuditThing.push(checklist[i][j])
-      }
-    }
-    // for(var len =0;len<theAuditThing.length;len++){
-    //   theAuditThing[len].images = theAuditThing[len].images.toString()
-    // }
-
-    // csvExport = theAuditThing.slice()
-    
-
-    for(var i=0;i<theAuditThing.length;i++){
-          theAuditThing[i].tenant =  tenantName;
-          theAuditThing[i].institution = instName;
-          theAuditThing[i].deadline = auditDetailData['start_date'].slice(0,10);
-
-    }
-
-
-  }else{
+    const { children, value, index, ...other } = props;
+  
     return (
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-          <CircularProgress />
-      </div>
-    )
-  }
-
-  const isLoggedIn = Cookies.get("isLoggedIn");
-
-  if (isLoggedIn == 0) {
-    return (
-      <Redirect to="/" />        
-  )}
-  if (showNC){
-    
-    return (
-      <div>
-          <div>
-              <Container maxWidth="md" style={{paddingBottom:10}}>
-                <Typography variant = "h6" align="center">{formType}</Typography>                
-                <Grid container spacing={2}>
-                    <Grid item xs={6} md={6}>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Switch checked={showNC} onChange={handleShowNCChange} />}
-                          label={`${showNC ? "Showing NCs only." : "Showing all."}`}
-                        />
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={6} md={6}>
-                        <Typography variant = "subtitle1" align="right">{tenantName}, {instName}</Typography>
-                        <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography>
-                        
-                    </Grid>
-                </Grid>
-              </Container>
-          </div>
-          <Container maxWidth="md">
-          <Grid container spacing={2} justify="center">
-              <AppBar position="static" color="default">
-                  <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  variant="fullWidth"
-                  aria-label="full width tabs example"
-                  >
-                  <Tab label="Part I" {...a11yProps(0)} />
-                  <Tab label="Part II" {...a11yProps(1)} />
-                  <Tab label="Part III" {...a11yProps(2)} disabled={disablePart3}/>
-                  <Tab label="Part IV" {...a11yProps(3)} disabled={disablePart45}/>
-                  <Tab label="Part V" {...a11yProps(4)} disabled={disablePart45}/>
-                  </Tabs>
-              </AppBar>
-          </Grid>
-          </Container>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Container maxWidth="md">
-              <PartView id={id} part={0} checklist={NC_list[0]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={1} checklist={NC_list[1]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={2} checklist={NC_list[2]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={3} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={3} checklist={NC_list[3]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={4} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={4} checklist={NC_list[4]}/>
-            </Container>
-          </TabPanel>
-        </SwipeableViews>
-        <Chat audit_id = { id } />
-      </div>
-    )
-  }else{
-    function deleteAudit(){
-      console.log("id is ",id)
-      axios.put('https://www.audit-n-go-backend.technopanther.com/audit', {audit_id:id})
-    .then(
-      (res) => {
-        alert('Audit has been deleted!')
-        if(res.status!==201){
-          alert('Audit not deleted! Please try again!')
-        }
-    })
-    }
-    return (
-      <div>
-          <div>
-              <Container maxWidth="md" style={{paddingBottom:10}}>
-                <Typography variant = "h6" align="center">{formType}</Typography>  
-                <Grid container direction="row" justify="center" alignItems="center">
-                  <ExportCSV csvData={theAuditThing}/>
-                  <Link to={"/dashboard"}>
-                    <Button variant="contained" color="secondary" onClick={deleteAudit} style={{textTransform:"none"}}>
-                      Delete Audit
-                    </Button>
-                  </Link>
-
-                </Grid>   
-                <Grid container spacing={2}>
-                    <Grid item xs={6} md={6}>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Switch checked={showNC} onChange={handleShowNCChange} />}
-                          label={`${showNC ? "Showing NCs only." : "Showing all."}`}
-                        />
-                        
-                      </FormGroup>
-                      
-                    </Grid>
-                    <Grid item xs={6} md={6}>
-                        <Typography variant = "subtitle1" align="right">{tenantName}, {instName}</Typography>
-                        <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography>
-                        
-                    </Grid>
-                    
-                </Grid>
-              </Container>
-          </div>
-          <Container maxWidth="md">
-          <Grid container spacing={2} justify="center">
-              <AppBar position="static" color="default">
-                  <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  variant="fullWidth"
-                  aria-label="full width tabs example"
-                  >
-                  <Tab label="Part I" {...a11yProps(0)} />
-                  <Tab label="Part II" {...a11yProps(1)} />
-                  <Tab label="Part III" {...a11yProps(2)} disabled={disablePart3}/>
-                  <Tab label="Part IV" {...a11yProps(3)} disabled={disablePart45}/>
-                  <Tab label="Part V" {...a11yProps(4)} disabled={disablePart45}/>
-                  </Tabs>
-              </AppBar>
-          </Grid>
-          </Container>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Container maxWidth="md">
-              <PartView id={id} part={0} checklist={checklist[0]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={1} checklist={checklist[1]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={2} checklist={checklist[2]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={3} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={3} checklist={checklist[3]}/>
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={4} dir={theme.direction}>
-          <Container maxWidth="md">
-            <PartView id={id} part={4} checklist={checklist[4]}/>
-            </Container>
-          </TabPanel>
-        </SwipeableViews>
-        <Chat audit_id = { id } />
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        aria-labelledby={`full-width-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
       </div>
     );
-  }
 }
+  
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+  
+function a11yProps(index) {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`,
+    };
+}
+  
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: theme.palette.background.paper,
+        width: 500,
+    },
+}));
 
-function getAuditbyID(id, allAuditData){
-  for (var i = 0; i < allAuditData.length; i++) {
-    if (id == allAuditData[i]['audit_id']){
-      return allAuditData[i];
+export default function AuditView() {
+
+    const audit_id = GetParams();
+    const [auditType, setAuditType] = useState('')
+    const [checklistResults, setChecklistResults] = useState([]);
+    const [NCs, setNCs] = useState([]);
+    const [institutionName, setInstitutionName] = useState('');
+    const [outletName, setOutletName] = useState('');
+    const [auditInfo, setAuditInfo] = useState('');
+    const [disableParts, setDisableParts] = useState([]);
+    const [checklistRenderData, setChecklistrenderData] = useState([]);
+
+    // NC Toggle
+    const [showNC, setShowNC] = useState(false);
+
+    // Tab stuff
+    const classes = useStyles();
+    const theme = useTheme();
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    
+    const handleChangeIndex = (index) => {
+        setValue(index);
+    };
+
+    // Toggle showNC function
+    const handleShowNCChange = (event) => {
+        if (!showNC === false) {
+            setChecklistrenderData(checklistResults);
+        } else {
+            setChecklistrenderData(NCs);
+        }
+        setShowNC(!showNC);
     }
-  }
-  return null;
-}
 
-export default withRouter(AuditView);
+    useEffect(() => {
+        axios.get("/getAuditViewDetails/" + audit_id)
+        .then((response) => {
+            setChecklistResults(response.data.auditInfo.checklist_results);
+            setChecklistrenderData(response.data.auditInfo.checklist_results);
+            setAuditType(response.data.auditInfo.audit_type === 'cv' ? "Covid Compliance" : 
+                response.data.auditInfo.audit_type === 'fb' ? "Retail F&B" : "Non F&B" )
+            setDisableParts(response.data.auditInfo.audit_type === 'cv' ? [ true, true, true ] : 
+                response.data.auditInfo.audit_type === 'fb' ? [ false, false, false ]: [ false, true, true ])
+            setInstitutionName(response.data.institutionName);
+            setOutletName(response.data.outletName);
+            setNCs(computeNCList(response.data.auditInfo.checklist_results));
+            setAuditInfo(response.data.auditInfo);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }, []) 
+
+    function computeNCList( checklistResults ) {
+        let localNCList = [];
+        for (let i = 0; i < checklistResults.length; i ++) {
+            localNCList.push([])
+            for (let j = 0; j < checklistResults[i].length; j ++) {
+                if (checklistResults[i][j].status === "Not Complied") {
+                    localNCList[i].push(checklistResults[i][j]);
+                }
+            }
+        }
+        console.log("The list of NCs are ", localNCList)
+        return localNCList;
+    } 
+
+    try {
+        return (
+            <div>
+                <div>
+                    <Container maxWidth="md" style={{paddingBottom:10}}>
+                      <Typography variant = "h6" align="center">{ auditType }</Typography>  
+                      <Grid container spacing={2}>
+                          <Grid item xs={6} md={6}>
+                            <FormGroup>
+                              <FormControlLabel
+                                control={<Switch checked={ showNC } onChange={ handleShowNCChange } />}
+                                label={`${showNC ? "Showing NCs only" : "Showing all"}`}
+                              />
+                            </FormGroup>
+                            
+                          </Grid>
+                          <Grid item xs={6} md={6}>
+                              <Typography variant = "subtitle1" align="right">{ outletName }, { institutionName }</Typography>
+                              <Typography variant = "subtitle1" align="right">Created on: { auditInfo['start_date'].slice(0,10) }</Typography>
+                          </Grid>
+                      </Grid>
+                    </Container>
+                </div>
+                <Container maxWidth="md">
+                <Grid container spacing={2} justify="center">
+                    <AppBar position="static" color="default">
+                        <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
+                        >
+                        <Tab label="Part I" {...a11yProps(0)} />
+                        <Tab label="Part II" {...a11yProps(1)} />
+                        <Tab label="Part III" {...a11yProps(2)} disabled={ disableParts[0] }/>
+                        <Tab label="Part IV" {...a11yProps(3)} disabled={ disableParts[1] }/>
+                        <Tab label="Part V" {...a11yProps(4)} disabled={ disableParts[2] }/>
+                        </Tabs>
+                    </AppBar>
+                </Grid>
+                </Container>
+              <SwipeableViews
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                index={value}
+                onChangeIndex={handleChangeIndex}
+              >
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                  <Container maxWidth="md">
+                    <PartView id={0} part={0} checklist={ checklistRenderData[0] }/>
+                  </Container>
+                </TabPanel>
+
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                <Container maxWidth="md">
+                  <PartView id={0} part={1} checklist={ checklistRenderData[1] }/>
+                  </Container>
+                </TabPanel>
+
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                <Container maxWidth="md">
+                  <PartView id={0} part={2} checklist={ checklistRenderData[2] }/>
+                  </Container>
+                </TabPanel>
+
+                <TabPanel value={value} index={3} dir={theme.direction}>
+                <Container maxWidth="md">
+                  <PartView id={0} part={3} checklist={ checklistRenderData[3] }/>
+                  </Container>
+                </TabPanel>
+
+                <TabPanel value={value} index={4} dir={theme.direction}>
+                <Container maxWidth="md">
+                  <PartView id={0} part={4} checklist={ checklistRenderData[4] }/>
+                  </Container>
+                </TabPanel>
+
+              </SwipeableViews>
+              <Chat audit_id = { audit_id } />
+            </div>
+          );
+    } catch (e) {
+        return (
+            <div>
+                <CircularProgress/>
+            </div>
+        )
+    }
+    
+}

@@ -178,9 +178,9 @@ if (isLoggedIn == 0) {
                     >
                         <TabPanel value={value} index={0} dir={themeTab.direction}>
                             <Container maxWidth="md">
-                                <Paper className="classes.paper" style={{padding:10}}>
+                                {/* <Paper className="classes.paper" style={{padding:10}}> */}
                                     <RecentAudits/>
-                                </Paper>
+                                {/* </Paper> */}
                             </Container>
                         </TabPanel>
                         
