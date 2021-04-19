@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        height: '100vh',
+        height: 'auto',
         overflow: 'auto',
     },
     rootTab: {
@@ -138,7 +138,6 @@ if (isLoggedIn == 0) {
 
     return (
         <div className={classes.root}>
-            <CssBaseline/>
             <main className={classes.content}>
                 <Container maxWidth="md">
                 <div style={{paddingTop:0, paddingBottom:20}}>
