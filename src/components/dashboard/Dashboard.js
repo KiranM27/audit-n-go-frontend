@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IndivTenantChart from './IndivTenantChart';
 import TenantRadialChart from './TenantRadialChart';
+import InstitutionBarChart from './InstitutionBarChart';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -19,6 +20,7 @@ import Cookies from 'js-cookie';
 import { useHistory, Redirect } from "react-router-dom";
 import { ResponsiveContainer } from 'recharts';
 import CalendarView from './CalendarView';
+import ControlCenter from './ControlCenter'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -167,6 +169,7 @@ if (isLoggedIn == 0) {
                                 <Tab label="Recent" {...a11yProps(0)} />
                                 <Tab label="Charts" {...a11yProps(1)} />
                                 <Tab label="Calendar" {...a11yProps(2)} />
+                                <Tab label="Controls" {...a11yProps(3)} />
                             </Tabs>
                         </AppBar>
                     </Grid>
@@ -199,16 +202,25 @@ if (isLoggedIn == 0) {
                                     </Grid>
                                     <Grid>
                                         <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>{pieSelection}</Typography>
-                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Detailed breakdown by all tenants in {pieSelection}</Typography>
+                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>NCs breakdown by all tenants in {pieSelection}</Typography>
                                         <TenantRadialChart pieSelection = { pieSelection }/>
                                     </Grid>
-                                    
+                                    <Grid>
+                                        <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>{pieSelection}</Typography>
+                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Score of latest F&B and Non F&B audits by all tenants in {pieSelection}</Typography>
+                                        <InstitutionBarChart  pieSelection = { pieSelection }/>
+                                    </Grid>
                                 </Grid>
                             </Container>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={themeTab.direction}>
                             <Container maxWidth="md" height="100%">
                                 <CalendarView/>
+                            </Container>
+                        </TabPanel>
+                        <TabPanel value={value} index={3} dir={themeTab.direction}>
+                            <Container maxWidth="sm">
+                                <ControlCenter/>
                             </Container>
                         </TabPanel>
                     </SwipeableViews>
@@ -223,4 +235,5 @@ const mapStateToProps = function(state) {
         loggedInUser: state.loggedInUser
     }
 }
+
 export default withRouter(connect(mapStateToProps)(Dashboard));
