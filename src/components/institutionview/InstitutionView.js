@@ -112,7 +112,8 @@ export default function InstitutionView() {
                 <div className={classes.heroButtons} style={{paddingBottom:20}} >
                         <Grid container spacing={2} justify="center">
                             <Grid item>
-                            <Button variant="contained" color="primary" onClick = { () => setviewAll(true) }>
+                            <Button variant="contained" color="primary" style = {{ textTransform: "None"}}
+                            onClick = { () => setviewAll(true) }>
                                 View all
                             </Button>
                             </Grid>

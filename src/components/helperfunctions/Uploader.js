@@ -63,6 +63,7 @@ export default class Uploader extends Component {
         
         <div style={{ paddingTop: "5px"}} >
           <Button type="primary" disabled={ !this.state.uploaded }
+          style = {{ textTransform: "None"}}
           onChange={ this.setFile } 
           onClick= { this.upload }> <CloudUploadOutlined/> Upload</Button>
         </div>
