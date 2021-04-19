@@ -154,7 +154,7 @@ export default function Part(props){
       setPart(props.part)
     }, [])
 
-    
+    console.log("props is ", props)
     for (var i = 0; i < props.checklist.length; i++) {
       var entry = makeData(
         i+1, 
