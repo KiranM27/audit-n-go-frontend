@@ -123,9 +123,11 @@ export default function AddOutlet() {
           <CssBaseline/>
           <main>
             <Container maxWidth="sm">
-                <Typography variant="h6" align="center" color="textPrimary" gutterBottom>
+                <div styles={{align:"left"}}>
+                <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
                     Add outlets by institutions
                 </Typography>
+                <p></p>
                 
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
@@ -138,14 +140,17 @@ export default function AddOutlet() {
                                 onChange={ onInstitutionSelect }
                                 renderInput={(params) => <TextField {...params} label="Institution" variant="outlined" />}
                             />  
+                            
                       
                             <div style={{paddingBottom:20}}>
                             <RenderOutletSelect status={status} setUsername={setUsername} onSubmit={onSubmit} setEmail={setEmail} username={username} email={email}>
 
                             </RenderOutletSelect>
                             </div>
+                            
                         </Grid>
                     </Grid>
+                 </div>
                 </div>
             </Container>
             <Container maxWidth="md">
@@ -163,19 +168,27 @@ export default function AddOutlet() {
 function RenderOutletSelect(props) {
   if (props.status === 1 || props.status === 2) {
       return(
-        <div>
-          <h2 class="form-title">Create new outlet</h2>
+        
+        <div styles={{align:'center'}}>
+        <Grid container spacing={2} justify="center">
+        <Grid style={{paddingBottom:10}}>
+            <p></p>
+            <p></p>
+          <h3 class="form-title">Create new outlet</h3>
           <form>
-          <TextField required id="standard-required" label="Name" placeholder="Name" value={props.username} onChange={(e) => props.setUsername(e.target.value)} />
+          <TextField style={{ width: 300 }} required id="outlined-basic" label="Name" variant="outlined" placeholder="Name" value={props.username} onChange={(e) => props.setUsername(e.target.value)} />
           <p></p>
-          <TextField required id="standard-required" label="Email" placeholder="Email" value={props.email} onChange={(e) => props.setEmail(e.target.value)}/>
+          <TextField style={{ width: 300 }} required id="outlined-basic" variant="outlined" label="Email" placeholder="Email" value={props.email} onChange={(e) => props.setEmail(e.target.value)}/>
           </form>
+          <p></p>
 
           <Link to={"https://www.audit-n-go-backend.technopanther.com/dashboard"}>
           <Button variant="contained" color="primary" onClick={props.onSubmit} style={{textTransform:"none"}}>
               Create outlet
           </Button>
           </Link>
+          </Grid>
+          </Grid>
         </div>
       )
   }
