@@ -10,6 +10,7 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import { useMediaQuery } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 function RenderCard(props){
     const classes = useStyles();
-    const theme = useTheme();
+    const themeAbout = useTheme();
+    const isSmallScreen = useMediaQuery(theme => themeAbout.breakpoints.down("sm"));
+
     return (
         <Card className={classes.root}>
           <div className={classes.details}>
@@ -77,7 +80,7 @@ function RenderCard(props){
 export default function MediaControlCard() {
   return (
       <div>
-          <Container maxWidth="lg">
+          <Container maxWidth="lg" align="center">
               <Typography variant="h6" align="center">
                   SUTD 50.003 ESC Singhealth Project
               </Typography>
@@ -85,7 +88,7 @@ export default function MediaControlCard() {
                   Done by
               </Typography>
             <Grid container spacing={2} justify="center" style={{paddingBottom:15}}>
-                <Grid item xs={7} lg={3}>
+                <Grid item xs={12} lg={3}>
                     <RenderCard 
                         name="Kiran" 
                         imageURL="https://audit-n-go-bucket.s3-ap-southeast-1.amazonaws.com/Kiran+DJ.JPG" 
@@ -94,7 +97,7 @@ export default function MediaControlCard() {
                         githubURL="https://github.com/KiranM27"
                         linkedinURL="https://www.linkedin.com/in/kiranm27/"/>
                 </Grid>
-                <Grid item xs={7} lg={3}>
+                <Grid item xs={12} lg={3}>
                     <RenderCard
                         name="Shuyi" 
                         imageURL="https://audit-n-go-bucket.s3-ap-southeast-1.amazonaws.com/IMG_9583.JPG" 
@@ -104,7 +107,7 @@ export default function MediaControlCard() {
                         linkedinURL="https://www.linkedin.com/"
                         />
                 </Grid>
-                <Grid item xs={7} lg={3}>
+                <Grid item xs={12} lg={3}>
                     <RenderCard 
                         name="Anirudh" 
                         imageURL="https://audit-n-go-bucket.s3-ap-southeast-1.amazonaws.com/Anirudh_pic+(2).jpg" 
