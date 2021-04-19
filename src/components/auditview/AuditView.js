@@ -207,11 +207,12 @@ const AuditView = props => {
     
    
 
-    for(var i=0; i<checklist.length;i++){
-      for(var j=0;j<checklist[i].length;j++){
-          theAuditThing.push(checklist[i][j])
-      }
-    }
+    // for(var i=0; i<checklist.length;i++){
+    //   for(var j=0;j<checklist[i].length;j++){
+    //       theAuditThing.push(checklist[i][j])
+    //   }
+    // }
+
     // for(var len =0;len<theAuditThing.length;len++){
     //   theAuditThing[len].images = theAuditThing[len].images.toString()
     // }
@@ -219,12 +220,12 @@ const AuditView = props => {
     // csvExport = theAuditThing.slice()
     
 
-    for(var i=0;i<theAuditThing.length;i++){
-          theAuditThing[i].tenant =  tenantName;
-          theAuditThing[i].institution = instName;
-          theAuditThing[i].deadline = auditDetailData['start_date'].slice(0,10);
+    // for(var i=0;i<theAuditThing.length;i++){
+    //       theAuditThing[i].tenant =  tenantName;
+    //       theAuditThing[i].institution = instName;
+    //       theAuditThing[i].deadline = auditDetailData['start_date'].slice(0,10);
 
-    }
+    // }
 
 
   }else{
@@ -259,7 +260,7 @@ const AuditView = props => {
                     </Grid>
                     <Grid item xs={6} md={6}>
                         <Typography variant = "subtitle1" align="right">{tenantName}, {instName}</Typography>
-                        <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography>
+                        {/* <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography> */}
                         
                     </Grid>
                 </Grid>
@@ -337,7 +338,7 @@ const AuditView = props => {
               <Container maxWidth="md" style={{paddingBottom:10}}>
                 <Typography variant = "h6" align="center">{formType}</Typography>  
                 <Grid container direction="row" justify="center" alignItems="center">
-                  <ExportCSV csvData={theAuditThing}/>
+                  {/* <ExportCSV csvData={theAuditThing}/> */}
                   <Link to={"/dashboard"}>
                     <Button variant="contained" color="secondary" onClick={deleteAudit} style={{textTransform:"none"}}>
                       Delete Audit
@@ -358,7 +359,7 @@ const AuditView = props => {
                     </Grid>
                     <Grid item xs={6} md={6}>
                         <Typography variant = "subtitle1" align="right">{tenantName}, {instName}</Typography>
-                        <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography>
+                        {/* <Typography variant = "subtitle1" align="right">Created on: {auditDetailData['start_date'].slice(0,10)}</Typography> */}
                         
                     </Grid>
                     
