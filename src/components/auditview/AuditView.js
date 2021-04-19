@@ -107,7 +107,7 @@ export default function AuditView() {
     }
 
     useEffect(() => {
-        axios.get("/getAuditViewDetails/" + audit_id)
+        axios.get("https://www.audit-n-go-backend.technopanther.com/getAuditViewDetails/" + audit_id)
         .then((response) => {
             setChecklistResults(response.data.auditInfo.checklist_results);
             setChecklistrenderData(response.data.auditInfo.checklist_results);
