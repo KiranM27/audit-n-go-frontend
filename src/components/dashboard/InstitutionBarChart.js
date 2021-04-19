@@ -10,13 +10,17 @@ import {
 } from "recharts";
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
+
 const { getAudits } = require('../helperfunctions/AuditProcessing.js');
-const { genDataforRadialChart } = require('../helperfunctions/DashboardChartFuncs.js');
 
 export default function InstitutionBarChart(props) {
   const [auditData, setAuditData] = useState([]);
   const [outletData, setOutletData] = useState([]);
   const [instData, setInstData] = useState([]);
+  const themeTab = useTheme();
+  const isSmallScreen = useMediaQuery(theme => themeTab.breakpoints.down("sm"));
 
   useEffect(() => {
     retrieveData();
@@ -53,6 +57,10 @@ export default function InstitutionBarChart(props) {
         setInstData([]);
     }
   };
+  const chartProps = {
+    width: isSmallScreen ? 400 : 800,
+    height: isSmallScreen ? 200 : 300,
+  };
 
   if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
     var data_barchart = genDataforBarChart(auditData, instData, outletData, props.pieSelection);
@@ -66,8 +74,7 @@ export default function InstitutionBarChart(props) {
 
   return (
     <BarChart
-      width={500}
-      height={300}
+      {...chartProps}
       data={data_barchart}
       margin={{
         top: 5,

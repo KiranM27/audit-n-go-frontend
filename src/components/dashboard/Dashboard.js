@@ -102,7 +102,6 @@ const Dashboard = props => {
     const buttonProps = {
         variant: isSmallScreen ? "contained" : "contained",
         size: isSmallScreen ? "small" : "large",
-
     };
 
     const welcomeProps = {

@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 const { getAudits } = require('../helperfunctions/AuditProcessing.js');
 const { genDataforPieChart } = require('../helperfunctions/DashboardChartFuncs.js')
 
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PieChartDashboard(props) {
     const classes = useStyles();
+    const themeTab = useTheme();
+    const isSmallScreen = useMediaQuery(theme => themeTab.breakpoints.down("sm"));
     const [activeIndex, setActiveIndex] = useState(0);
     const onPieEnter = useCallback(
       (_, index) => {
@@ -24,6 +27,17 @@ export default function PieChartDashboard(props) {
       },
       [setActiveIndex]
     );
+    const chartProps = {
+      width: isSmallScreen ? 400 : 400,
+      height: isSmallScreen ? 185 : 250,
+    };
+
+    const pieProps = {
+      cx: isSmallScreen ? "50%" : "50%",
+      cy: isSmallScreen ? "50%" : "50%",
+      outerRadius: isSmallScreen ? "80%" : "75%",
+      innerRadius: isSmallScreen ? "55%" : "50%",
+    }
     const onPieClick = useCallback(
         (_, index) => {
           props.setPieSelection(data[index].name);
@@ -86,15 +100,12 @@ export default function PieChartDashboard(props) {
     }
     
     return (
-      <PieChart width={400} height={250}>
+      <PieChart {...chartProps}>
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
-          cx="50%"
-          cy="45%"
-          innerRadius="45%"
-          outerRadius="75%"
+          {...pieProps}
         //   fill="#8884d8"
           dataKey="value"
           onMouseEnter={onPieEnter}

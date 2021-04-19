@@ -1,58 +1,30 @@
 import React, { PureComponent, useEffect, useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { CssBaseline, Typography, Paper, Grid, Container } from '@material-ui/core';
 const { getAudits } = require('../helperfunctions/AuditProcessing.js');
 const { genDataforRadialChart } = require('../helperfunctions/DashboardChartFuncs.js');
-
-const data = [
-  {
-    subject: 'Math',
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: 'Chinese',
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'English',
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'Geography',
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: 'Physics',
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: 'History',
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
 
 export default function TenantRadialChart(props) {
     const [auditData, setAuditData] = useState([]);
     const [outletData, setOutletData] = useState([]);
     const [instData, setInstData] = useState([]);
+    const themeTab = useTheme();
+    const isSmallScreen = useMediaQuery(theme => themeTab.breakpoints.down("sm"));
 
     useEffect(() => {
         retrieveData();
     }, []); 
+
+    const chartProps = {
+      width: isSmallScreen ? 400 : 400,
+      height: isSmallScreen ? 185 : 250,
+      cx: isSmallScreen ? "50%" : "50%",
+      cy: isSmallScreen ? "50%" : "50%",
+      outerRadius: isSmallScreen ? "80%" : "75%",
+    };
 
     const retrieveData = async () => {
         try {
@@ -101,11 +73,7 @@ export default function TenantRadialChart(props) {
 
     return (
       <RadarChart
-        cx="50%"
-        cy="50%"
-        outerRadius="75%"
-        width={400}
-        height={250}
+        {...chartProps}
         data={data_radial}
       >
         <PolarGrid />
