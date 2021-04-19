@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { CssBaseline, Typography, Paper, Grid, Container } from '@material-ui/core'
+import { CssBaseline, Typography, Paper, Grid, Container, useMediaQuery } from '@material-ui/core'
 import RecentAudits from './RecentAudits'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -97,6 +97,17 @@ const Dashboard = props => {
     const themeTab = useTheme();
     const [value, setValue] = React.useState(1);
     const [pieSelection, setPieSelection] = React.useState("KKH");
+    const isSmallScreen = useMediaQuery(theme => themeTab.breakpoints.down("xs"));
+
+    const buttonProps = {
+        variant: isSmallScreen ? "contained" : "contained",
+        size: isSmallScreen ? "small" : "large",
+
+    };
+
+    const welcomeProps = {
+        variant: isSmallScreen ? "body2" : "h5",
+    };
 
     const { history } = props
 
@@ -130,25 +141,25 @@ if (isLoggedIn == 0) {
             <CssBaseline/>
             <main className={classes.content}>
                 <Container maxWidth="md">
-                <div style={{paddingTop:10, paddingBottom:30}}>
+                <div style={{paddingTop:0, paddingBottom:20}}>
                     <Grid container spacing={2}>
                         <Grid container justify="left" item xs={6} sm={6}>
                             <Grid>
-                                <Typography variant="h5" align="left" color="textPrimary" gutterBottom>
+                                <Typography {...welcomeProps} align="left" color="textPrimary">
                                     Welcome, { props.loggedInUser.username }
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Grid container spacing={0} justify="flex-end" item xs={6} sm={6}>
+                        <Grid container justify="flex-end" item xs={6} sm={6}>
                                 <Button 
                                     style = {{textTransform: "none"}}
-                                    variant="contained" 
+                                    {...buttonProps}
                                     color="secondary"
                                     onClick={(e) => history.push({
                                         pathname: '/auditInitialise'
                                     })}
                                     >
-                                    Create new audit
+                                    Go Audit
                                 </Button>
                                 
                         </Grid>
@@ -181,9 +192,9 @@ if (isLoggedIn == 0) {
                     >
                         <TabPanel value={value} index={0} dir={themeTab.direction}>
                             <Container maxWidth="md">
-                                {/* <Paper className="classes.paper" style={{padding:10}}> */}
+                                <Paper className="classes.paper" style={{padding:10}}>
                                     <RecentAudits/>
-                                {/* </Paper> */}
+                                </Paper>
                             </Container>
                         </TabPanel>
                         
