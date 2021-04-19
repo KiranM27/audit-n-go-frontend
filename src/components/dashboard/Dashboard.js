@@ -216,7 +216,7 @@ if (isLoggedIn == 0) {
                                     </Grid>
                                     <Grid>
                                         <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>{pieSelection}</Typography>
-                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Score of latest F&B and Non F&B audits by all tenants in {pieSelection}</Typography>
+                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Score of latest F&B and Non F&B audits in {pieSelection}</Typography>
                                         <InstitutionBarChart  pieSelection = { pieSelection }/>
                                     </Grid>
                                 </Grid>

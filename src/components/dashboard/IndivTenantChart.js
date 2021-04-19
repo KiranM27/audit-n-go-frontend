@@ -35,7 +35,7 @@ export default function PieChartDashboard(props) {
     const pieProps = {
       cx: isSmallScreen ? "50%" : "50%",
       cy: isSmallScreen ? "50%" : "50%",
-      outerRadius: isSmallScreen ? "80%" : "75%",
+      outerRadius: isSmallScreen ? "80%" : "70%",
       innerRadius: isSmallScreen ? "55%" : "50%",
     }
     const onPieClick = useCallback(
