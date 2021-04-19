@@ -177,7 +177,7 @@ function RenderButton(props) {
     if (props.deadline == null || props.deadline == '') {
         return(
         <div style = {{ paddingTop : 15, paddingBottom: 20}}>
-            <Button variant="contained" color="secondary" style = {{ textTransform: "None"}}
+            <Button variant="contained" color="secondary"
             // onClick = { auditSubmitOnClick }
             >
                 Please select the deadline 

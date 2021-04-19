@@ -13,6 +13,9 @@ function Chat() {
 	const [messages, setMessages] = useState([])
 	// const [messages, setMessages] = useState(["Fucked up beyond all repair", "Situation Normal, All Fucked up", "An Imperial Fuck up"])
 
+	const getCustomLauncher = (handleToggle) =>
+    <button onClick={handleToggle}>This is my launcher component!</button>
+
   useEffect(() => {
 		deleteMessages(noMessages)
 		markAllAsRead()

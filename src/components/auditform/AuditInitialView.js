@@ -215,8 +215,7 @@ function RenderButton(props) {
     return(
       <div>
           <ButtonGroup>
-                <Button variant="contained" color="primary" onClick = { onClick }
-                style = {{ textTransform: "None"}} >
+                <Button variant="contained" color="primary" onClick = { onClick }>
                     Begin Audit
                 </Button>
           </ButtonGroup>
@@ -227,7 +226,7 @@ function RenderButton(props) {
     return(
       <div>
           <ButtonGroup>
-         <Button variant="contained" color="secondary" style = {{ textTransform: "None"}} >
+         <Button variant="contained" color="secondary">
             Please fill up all fields
           </Button>
           </ButtonGroup>

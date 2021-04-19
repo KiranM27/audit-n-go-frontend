@@ -346,10 +346,8 @@ function RenderNormalStatusBar(props){
       </Grid>
       
       <Grid item xs={6} md={6} align="right">
-        <Button disabled={!editStatusArr[data.id-1]} onClick={() => handleSubmitButton(data.item, data.id-1)}
-        style = {{ textTransform: "None"}}>Submit</Button>
-        <Button size="small" color="primary" onClick={() => handleEditButtonClick(data.id-1)}
-        style = {{ textTransform: "None"}} >
+        <Button disabled={!editStatusArr[data.id-1]} onClick={() => handleSubmitButton(data.item, data.id-1)}>Submit</Button>
+        <Button size="small" color="primary" onClick={() => handleEditButtonClick(data.id-1)}>
           {`${editStatusArr[data.id-1] ? "CANCEL" : "EDIT"}`}
         </Button>
       </Grid>
