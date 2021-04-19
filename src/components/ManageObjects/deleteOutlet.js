@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Cookies from 'js-cookie';
 import {  Redirect } from "react-router-dom";
+import { Link, withRouter } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -137,18 +138,6 @@ export default function DeleteOutlet() {
                     </Grid>
                 </div>
             </Container>
-            <Container maxWidth="md">
-            <Grid container spacing={2} justify="center">
-                            <Grid item>
-                            <Button variant="contained" color="secondary" onClick={onSubmit}
-                            style = {{ textTransform: "None"}}>
-                                Delete outlet
-                            </Button>
-                            </Grid>
-                        </Grid>
-            
-
-            </Container>
           </main>
       </div>
   )
@@ -157,6 +146,7 @@ export default function DeleteOutlet() {
 function RenderOutletSelect(props) {
   if (props.status === 1 || props.status === 2) {
       return(
+          <div>
         <Autocomplete
             id="combo-box-outlet"
             options={props.outletOptions}
@@ -173,13 +163,24 @@ function RenderOutletSelect(props) {
                 }
             }}
             renderInput={(params) => <TextField {...params} label="Tenant" variant="outlined" />}
-        />    
+        /> 
+        <p></p>
+        <Grid item>
+        <Link to= {"https://www.audit-n-go-backend.technopanther.com/dashboard"}>
+        <Button variant="contained" color="secondary" onClick={props.onSubmit}>
+            Delete outlet
+        </Button>
+        </Link>
+        </Grid>  
+        </div>
+        
       )
   }
   else {
     return(null)
   }
 }
+
 
 function RenderTable(props){
     if (props.viewAll === true){

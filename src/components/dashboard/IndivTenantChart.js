@@ -72,7 +72,7 @@ export default function PieChartDashboard(props) {
     if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
         console.log(auditData)
         console.log(instData)
-        console.log(outletData)
+        console.log("outletData is ",outletData)
 
         var data = genDataforPieChart(auditData, instData, outletData);
 
