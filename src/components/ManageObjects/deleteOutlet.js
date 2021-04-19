@@ -140,7 +140,8 @@ export default function DeleteOutlet() {
             <Container maxWidth="md">
             <Grid container spacing={2} justify="center">
                             <Grid item>
-                            <Button variant="contained" color="secondary" onClick={onSubmit}>
+                            <Button variant="contained" color="secondary" onClick={onSubmit}
+                            style = {{ textTransform: "None"}}>
                                 Delete outlet
                             </Button>
                             </Grid>
