@@ -43,7 +43,7 @@ function NotificationCenter(props) {
     <div>
       <div className={classes.root}>
         <Badge badgeContent={ props.noNotifications } color="secondary">
-          <Button aria-describedby={id} color="inherit" onClick={handleClick}>
+          <Button aria-describedby={id} color="inherit" onClick={handleClick} style = {{ textTransform: "None"}}>
             Notifications
           </Button>
         </Badge>
