@@ -87,35 +87,27 @@ function Login(props) {
   };
 
   useEffect(() => {
-    console.log("email is",email)
-    console.log("passsword is",password)
-    localStorage.username = CryptoJS.AES.encrypt(email,'ElementsOfSoftwareConstruction')
-    localStorage.password = CryptoJS.AES.encrypt(password,'ElementsOfSoftwareConstruction')
     localStorage.checkbox = isChecked
-  }, [email,password,isChecked])
+  }, [isChecked])
 
   useEffect(() => {
     setIsChecked(true)
     localStorage.checkbox = true
-
-    console.log("use effect is being called")
-    console.log("email is",email)
-    console.log("password is",password)
+    localStorage.username = CryptoJS.AES.encrypt("","ElementsOfSoftwareConstruction")
+    localStorage.password = CryptoJS.AES.encrypt("",'ElementsOfSoftwareConstruction')
 
     if (localStorage.username !== '' && localStorage.checkbox) {
       setEmail(CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8))
       setPassword(CryptoJS.AES.decrypt(localStorage.password, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8))
       setIsChecked(localStorage.checkbox)
     }
-
-
-
     setError(false)
     setisVerified(true)
     console.log("setError is: ", error)
     Cookies.get("isLoggedIn") == 1 ? console.log("Hello") : loadCaptchaEnginge(6);
 
   }, []);
+
 
   const onChangeCheckbox = event => {
     setIsChecked(
@@ -128,7 +120,8 @@ function Login(props) {
 
     e.preventDefault()
 
-    if (isChecked && email !== "") {
+    if (email !== "") {
+      console.log("email submitted is ",email)
       localStorage.username = CryptoJS.AES.encrypt(email, 'ElementsOfSoftwareConstruction').toString()
       localStorage.password = CryptoJS.AES.encrypt(password, 'ElementsOfSoftwareConstruction').toString()
       localStorage.checkbox = isChecked

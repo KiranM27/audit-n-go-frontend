@@ -65,7 +65,13 @@ export default function TenantRadialChart(props) {
             const outletData = await axios
                 .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
                 .then(res =>{
-                    setOutletData(res.data);
+                  const activeOutlets=[]
+                  for(var i=0;i<res.data.length;i++){
+                    if(res.data[i].active==true){
+                      activeOutlets.push(res.data[i])
+                    }
+                  }
+                  setOutletData(activeOutlets);
                 });
             const instituionData = await axios
                 .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
