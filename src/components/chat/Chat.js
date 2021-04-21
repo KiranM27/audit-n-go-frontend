@@ -23,7 +23,7 @@ function Chat(props) {
     props.dispatch({ type: 'setNoMessages', noMessages: 0})
 
     // Setting up socket.io client
-    socketRef.current = io.connect("http://localhost:5000")
+    socketRef.current = io.connect("https://www.audit-n-go-backend.technopanther.com")
     socketRef.current.on("socketId", yourSocketId => {
       setYourSocketId(yourSocketId)
       let localSokcetId = yourSocketId;
