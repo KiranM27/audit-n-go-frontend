@@ -30,6 +30,7 @@ import CalendarView from "./dashboardTenants/CalendarByTenant";
 import ControlCenter from "./ControlCenter";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 import AIChatbot from "../chatbot/AIChatbot";
+import ChartsForTenant from "./dashboardTenants/ChartsByTenant"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -197,64 +198,7 @@ const Dashboard = (props) => {
 
           <TabPanel value={value} index={1} dir={themeTab.direction}>
             <Container maxWidth="md">
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-              >
-                <Grid>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    NCs by Institutions
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    align="center"
-                    style={{ fontStyle: "italic" }}
-                  >
-                    Click on the pie to see the detailed breakdown.
-                  </Typography>
-                  <IndivTenantChart setPieSelection={setPieSelection} />
-                </Grid>
-                <Grid>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    {pieSelection}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    align="center"
-                    style={{ fontStyle: "italic" }}
-                  >
-                    NCs breakdown by all tenants in {pieSelection}
-                  </Typography>
-                  <TenantRadialChart pieSelection={pieSelection} />
-                </Grid>
-                <Grid>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    {pieSelection}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    align="center"
-                    style={{ fontStyle: "italic" }}
-                  >
-                    Score of latest F&B and Non F&B audits in {pieSelection}
-                  </Typography>
-                  <InstitutionBarChart pieSelection={pieSelection} />
-                </Grid>
-              </Grid>
+              <ChartsForTenant />
             </Container>
           </TabPanel>
           <TabPanel value={value} index={2} dir={themeTab.direction}>
