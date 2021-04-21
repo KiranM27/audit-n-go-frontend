@@ -26,7 +26,7 @@ import { connect } from "react-redux";
 import Cookies from "js-cookie";
 import { useHistory, Redirect } from "react-router-dom";
 import { ResponsiveContainer } from "recharts";
-import CalendarView from "./CalendarView";
+import CalendarView from "./dashboardTenants/CalendarByTenant";
 import ControlCenter from "./ControlCenter";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 

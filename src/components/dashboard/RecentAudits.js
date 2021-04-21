@@ -23,6 +23,12 @@ const columns = [
     width: 130,
   },
   {
+    field: 'type',
+    headerName: 'Type',
+    type: 'string',
+    width: 130,
+  },
+  {
     field: 'tenant',
     headerName: 'Tenant',
     type: 'string',
@@ -127,10 +133,17 @@ const RecentAudits = props => {
       // id, date, tenant, institution, NC, score
       var id = latestAudits[i]["id"];
       var date = latestAudits[i]["date"];
+      var type = latestAudits[i]["type"];
       var no_NC = latestAudits[i]["NC"];
-      var score = latestAudits[i]["score"]
+      var score = latestAudits[i]["score"];
+      if (type == "COVID-19"){
+        score = "N/A";
+      }
+      if (type != "COVID-19"){
+        no_NC = "N/A";
+      }
       
-      var table_row = makeData(id, date, tenantName, instName, no_NC, score);
+      var table_row = makeData(id, date, type, tenantName, instName, no_NC, score);
       dataForTable.push(table_row);
     }
     

@@ -118,7 +118,6 @@ const RecentAudits = props => {
   if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
     var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
 
-    var latestAudits = sortAudits(auditData).slice(0,5);
     var all_audits_by_tenant = sortAudits(auditData).filter(audit => (audit.outlet_id == current_user_id));
     var dataForTable = [];
 
