@@ -21,6 +21,7 @@ import {
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
+import AIChatbot from "../chatbot/AIChatbot";
 
 function AuditInitialView(props) {
   RestrictAccess("/dashboardTenant");
@@ -87,6 +88,7 @@ function AuditInitialView(props) {
 
   return (
     <div>
+      <AIChatbot />
       <CssBaseline />
       <main>
         <Container maxWidth="sm">

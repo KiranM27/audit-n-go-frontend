@@ -23,6 +23,7 @@ import { ResponsiveContainer } from 'recharts';
 import CalendarView from './CalendarView';
 import ControlCenter from './ControlCenter'
 import RestrictAccess from "../helperfunctions/RestrictAccess";
+import AIChatbot from "../chatbot/AIChatbot";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -140,6 +141,7 @@ if (isLoggedIn == 0) {
 
     return (
         <div className={classes.root}>
+            <AIChatbot/>
             <main className={classes.content}>
                 <Container maxWidth="md">
                 <div style={{paddingTop:0, paddingBottom:20}}>

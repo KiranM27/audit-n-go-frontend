@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+import './AIChatbot.css'
 
 const theme = {
   background: "#f5f8fb",
