@@ -23,7 +23,7 @@ export default function TenantRadialChart(props) {
       height: isSmallScreen ? 185 : 250,
       cx: isSmallScreen ? "50%" : "50%",
       cy: isSmallScreen ? "50%" : "50%",
-      outerRadius: isSmallScreen ? "80%" : "75%",
+      outerRadius: isSmallScreen ? "65%" : "65%",
     };
 
     const retrieveData = async () => {
@@ -77,7 +77,7 @@ export default function TenantRadialChart(props) {
         data={data_radial}
       >
         <PolarGrid />
-        <PolarAngleAxis dataKey="tenant" />
+        <PolarAngleAxis dataKey="tenant" tick={{fontSize: 13}} />
         <PolarRadiusAxis />
         <Radar
           name="Mike"

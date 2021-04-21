@@ -29,14 +29,14 @@ export default function PieChartDashboard(props) {
     );
     const chartProps = {
       width: isSmallScreen ? 400 : 400,
-      height: isSmallScreen ? 185 : 250,
+      height: isSmallScreen ? 200 : 250,
     };
 
     const pieProps = {
       cx: isSmallScreen ? "50%" : "50%",
       cy: isSmallScreen ? "50%" : "50%",
-      outerRadius: isSmallScreen ? "80%" : "70%",
-      innerRadius: isSmallScreen ? "55%" : "50%",
+      outerRadius: isSmallScreen ? "55%" : "65%",
+      innerRadius: isSmallScreen ? "35%" : "45%",
     }
     const onPieClick = useCallback(
         (_, index) => {
