@@ -108,7 +108,7 @@ export default function AuditView() {
 
   useEffect(() => {
     axios
-      .get("https://www.audit-n-go-backend.technopanther.com/getAuditViewDetails/" + audit_id)
+      .get("/getAuditViewDetails/" + audit_id)
       .then((response) => {
         setChecklistResults(response.data.auditInfo.checklist_results);
         setChecklistrenderData(response.data.auditInfo.checklist_results);
@@ -224,35 +224,40 @@ export default function AuditView() {
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView id={0} part={0} checklist={checklistRenderData[0]} 
-              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }/>
+              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }
+              auditType = { auditType } />
             </Container>
           </TabPanel>
 
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView id={0} part={1} checklist={checklistRenderData[1]} 
-              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }/>
+              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }
+              auditType = { auditType } />
             </Container>
           </TabPanel>
 
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView id={0} part={2} checklist={checklistRenderData[2]} 
-              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }/>
+              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }
+              auditType = { auditType } />
             </Container>
           </TabPanel>
 
           <TabPanel value={value} index={3} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView id={0} part={3} checklist={checklistRenderData[3]} 
-              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }/>
+              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }
+              auditType = { auditType } />
             </Container>
           </TabPanel>
 
           <TabPanel value={value} index={4} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView id={0} part={4} checklist={checklistRenderData[4]} 
-              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }/>
+              checklistResults = { checklistResults } setChecklistResults = { setChecklistResults }
+              auditType = { auditType } />
             </Container>
           </TabPanel>
         </SwipeableViews>

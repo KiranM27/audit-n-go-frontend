@@ -12,6 +12,8 @@ import Divider from "@material-ui/core/Divider";
 import CheckCircleTwoToneIcon from "@material-ui/icons/CheckCircleTwoTone";
 import HelpTwoToneIcon from "@material-ui/icons/HelpTwoTone";
 import CancelTwoToneIcon from "@material-ui/icons/CancelTwoTone";
+import TrendingUpTwoToneIcon from '@material-ui/icons/TrendingUpTwoTone';
+import TrendingDownTwoToneIcon from '@material-ui/icons/TrendingDownTwoTone';
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -19,7 +21,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MediaCard from "./MediaCard";
 import { useParams } from "react-router";
-import axios from "axios";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,17 +103,15 @@ export default function SubPartView(props) {
   // This is to ensure that the API for updating the status in the databse is called only when the
   // user chnages the state and not when all of the components are loaded
   const [count, setCount] = useState(0);
-  console.log(props.item)
 
   useEffect(() => {
+    console.log("actualStatus has changed ", actualStatus);
     let localChecklistResults = [...props.checklistResults];
-    localChecklistResults[props.item.part - 1][
-      props.item.SNo - 1
-    ].status = actualStatus;
+    localChecklistResults[props.item.part - 1][props.item.SNo - 1].status = actualStatus;
     props.setChecklistResults(localChecklistResults);
     if (count != 0) {
       axios
-        .post("https://www.audit-n-go-backend.technopanther.com/editstatus", {
+        .post("/editstatus", {
           audit_id: audit_id,
           newStatus: actualStatus,
           part: props.item.part,
@@ -140,7 +140,7 @@ export default function SubPartView(props) {
             </Typography>
           </div>
           <div className={classes.column}>
-            <StatusIconRenderer status={props.item.status} />
+            <StatusIconRenderer status={props.item.status} auditType = { props.auditType } item = {props.item}/>
           </div>
           <div className={classes.column}>
             <Typography className={classes.secondaryHeading}>
@@ -159,6 +159,8 @@ export default function SubPartView(props) {
             actualStatus={actualStatus}
             localStatus={localStatus}
             setLocalStatus={setLocalStatus}
+            audit_type={props.auditType}
+            item={props.item}
           />
           <ActionsButtonsRenderer
             editable={editable}
@@ -167,6 +169,7 @@ export default function SubPartView(props) {
             setActualStatus={setActualStatus}
             localStatus={localStatus}
             setLocalStatus={setLocalStatus}
+            audit_type={props.auditType}
           />
         </AccordionActions>
       </Accordion>
@@ -196,12 +199,21 @@ function ImageRenderer(props) {
 }
 
 function StatusIconRenderer(props) {
-  if (props.status === "Complied") {
-    return <CheckCircleTwoToneIcon style={{ color: "#32a852" }} />;
-  } else if (props.status === "Not Complied") {
-    return <CancelTwoToneIcon style={{ color: "#d11d23" }} />;
+  if (props.auditType === "Covid Compliance") {
+    if (props.status === "Complied") {
+      return <CheckCircleTwoToneIcon style={{ color: "#32a852" }} />;
+    } else if (props.status === "Not Complied") {
+      return <CancelTwoToneIcon style={{ color: "#d11d23" }} />;
+    } else {
+      return <HelpTwoToneIcon style={{ color: "#93acad" }} />;
+    }
   } else {
-    return <HelpTwoToneIcon style={{ color: "#93acad" }} />;
+    if (props.item.score > 0.5) {
+      return <TrendingUpTwoToneIcon style={{ color: "#32a852" }} />;
+    }
+    else {
+      return <TrendingDownTwoToneIcon style={{ color: "#d11d23" }} />;
+    }
   }
 }
 
