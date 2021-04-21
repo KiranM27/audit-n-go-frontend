@@ -79,9 +79,11 @@ export default function AuditView() {
   const [auditInfo, setAuditInfo] = useState("");
   const [disableParts, setDisableParts] = useState([]);
   const [checklistRenderData, setChecklistrenderData] = useState([]);
-
+  const csvExport = []
   // NC Toggle
   const [showNC, setShowNC] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const history = useHistory()
 
   // Tab stuff
   const classes = useStyles();
@@ -96,6 +98,19 @@ export default function AuditView() {
     setValue(index);
   };
 
+  const showModal = () => {
+    setIsModalVisible(true);
+    console.log("modal visibile", isModalVisible)
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   // Toggle showNC function
   const handleShowNCChange = (event) => {
     if (!showNC === false) {
@@ -107,6 +122,9 @@ export default function AuditView() {
   };
 
   useEffect(() => {
+    if(!localStorage.checkbox){
+      Cookies.set("isLoggedIn",0)
+  }
     axios
       .get("/getAuditViewDetails/" + audit_id)
       .then((response) => {
@@ -154,7 +172,37 @@ export default function AuditView() {
     return localNCList;
   }
 
+  for(var i=0; i<checklistResults.length;i++){
+    for(var j=0;j<checklistResults[i].length;j++){
+      csvExport.push(checklistResults[i][j])
+    }
+  }
+  for(var i=0;i<csvExport.length;i++){
+    csvExport[i].tenant =  outletName;
+    csvExport[i].institution = institutionName;
+}
+
+function deleteAudit(){
+  axios.put('/audit', {audit_id:audit_id})
+.then(
+  (res) => {
+    setIsModalVisible(false)
+    alert('Audit has been deleted!')
+    history.push("/dashboard")
+    if(res.status!==201){
+      alert('Audit not deleted! Please try again!')
+    }
+})
+
+}
+
   try {
+    const isLoggedIn = Cookies.get("isLoggedIn")
+
+if (isLoggedIn == 0) {
+  return (
+    <Redirect to="/" />        
+  )}
     return (
       <div>
         <div>
@@ -162,6 +210,12 @@ export default function AuditView() {
             <Typography variant="h6" align="center">
               {auditType}
             </Typography>
+            <Grid container direction="row" justify="center" alignItems="center">
+                  <ExportCSV csvData={csvExport}/>  
+                  <Button variant="contained" color="secondary" onClick={showModal} style={{textTransform:"none"}}>
+                      Delete Audit
+                    </Button>
+                </Grid>   
             <Grid container spacing={2}>
               <Grid item xs={6} md={6}>
                 <FormGroup>
@@ -262,6 +316,13 @@ export default function AuditView() {
           </TabPanel>
         </SwipeableViews>
         <Chat audit_id={audit_id} />
+        <Modal title="Upload Non compliance Image" visible={isModalVisible} onOk={deleteAudit} onCancel={handleCancel}>
+            <div 
+            class = "center-noflex" 
+              >
+                Are you sure that you wish to delete this audit?
+            </div>
+        </Modal>
       </div>
     );
   } catch (e) {
