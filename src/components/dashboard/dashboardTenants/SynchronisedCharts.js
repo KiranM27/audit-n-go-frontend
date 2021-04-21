@@ -1,5 +1,4 @@
 import React, { PureComponent, useEffect, useState } from "react";
-import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
