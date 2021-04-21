@@ -39,7 +39,7 @@ function NotificationCenterBody(props) {
   const retrieveNotification = () => {
     try {
         axios
-          .get(`/getNotifications/${ props.loggedInUser.userId }`)
+          .get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${ props.loggedInUser.userId }`)
           .then(res => {
               console.log(res.data);
               setNotifications(res.data);
