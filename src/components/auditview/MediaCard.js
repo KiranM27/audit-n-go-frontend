@@ -19,15 +19,15 @@ export default function MediaCard(props) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style = {{ padding: 5 }}>
         <Card className={classes.root}>
         <CardActionArea>
             <CardMedia
             component="img"
-            alt="Contemplative Reptile"
+            alt="The uploaded image can't be displayed"
             height="140"
             image={ props.imageUrl }
-            title="Contemplative Reptile"
+            title="Uploaded Image"
             />
         </CardActionArea>
         </Card>
