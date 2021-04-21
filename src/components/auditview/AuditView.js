@@ -81,6 +81,7 @@ export default function AuditView() {
   const [disableParts, setDisableParts] = useState([]);
   const [checklistRenderData, setChecklistrenderData] = useState([]);
   const csvExport = [];
+  
   // NC Toggle
   const [showNC, setShowNC] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -160,7 +161,6 @@ export default function AuditView() {
   }, [checklistResults]);
 
   RestrictAccess("/auditDetailTenant/" + audit_id);
-
   function computeNCList(checklistResults) {
     let localNCList = [];
     for (let i = 0; i < checklistResults.length; i++) {
@@ -170,8 +170,7 @@ export default function AuditView() {
           if (checklistResults[i][j].status === "Not Complied") {
             localNCList[i].push(checklistResults[i][j]);
           }
-        }
-        else {
+        } else {
           if (checklistResults[i][j].score < 0.5) {
             localNCList[i].push(checklistResults[i][j]);
           }

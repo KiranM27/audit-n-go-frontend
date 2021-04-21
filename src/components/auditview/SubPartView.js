@@ -253,7 +253,7 @@ function StatusIconRenderer(props) {
 }
 
 function EditValueRenderer(props) {
-  console.log(props.auditType)
+  console.log(props.auditType);
   if (props.auditType === "Covid Compliance") {
     return (
       <StatusDropdown
@@ -340,7 +340,6 @@ function EditScoreField(props) {
 }
 
 function ActionsButtonsRenderer(props) {
-
   function handleEditButtonClick() {
     props.setEditable(!props.editable);
   }
@@ -381,7 +380,10 @@ function ActionsButtonsRenderer(props) {
       </div>
     );
   } else {
-    if (props.localStatus === props.actualStatus && props.localScore === props.actualScore) {
+    if (
+      props.localStatus === props.actualStatus &&
+      props.localScore === props.actualScore
+    ) {
       return (
         <div>
           <Button disabled color="secondary" style={{ textTransform: "None" }}>
