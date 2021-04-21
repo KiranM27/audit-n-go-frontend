@@ -18,7 +18,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MediaCard from "./MediaCard";
-import axios from 'axios';
+import { useParams } from "react-router";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,17 +86,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function GetParams() {
+  let { audit_id } = useParams();
+  return audit_id;
+}
+
 export default function SubPartView(props) {
   const classes = useStyles();
   const [editable, setEditable] = useState(false);
   const [actualStatus, setActualStatus] = useState(props.item.status);
   const [localStatus, setLocalStatus] = useState(props.item.status);
+  const audit_id = GetParams();
+
+  // This is to ensure that the API for updating the status in the databse is called only when the
+  // user chnages the state and not when all of the components are loaded
+  const [count, setCount] = useState(0);
+  console.log(props.item)
 
   useEffect(() => {
-    console.log("actualStatus has changed ", actualStatus);
     let localChecklistResults = [...props.checklistResults];
-    localChecklistResults[props.item.part - 1][props.item.SNo - 1].status = actualStatus;
+    localChecklistResults[props.item.part - 1][
+      props.item.SNo - 1
+    ].status = actualStatus;
     props.setChecklistResults(localChecklistResults);
+    if (count != 0) {
+      axios
+        .post("https://www.audit-n-go-backend.technopanther.com/editstatus", {
+          audit_id: audit_id,
+          newStatus: actualStatus,
+          part: props.item.part,
+          item: props.item.checklist_item
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            console.log("status updated")
+          }
+        });
+    }
+    setCount(count + 1);
   }, [actualStatus]);
 
   return (
