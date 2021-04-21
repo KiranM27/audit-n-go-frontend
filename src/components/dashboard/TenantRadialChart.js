@@ -29,13 +29,13 @@ export default function TenantRadialChart(props) {
     const retrieveData = async () => {
         try {
             const data = await axios
-                .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
+                .get(`/audits/0`)
                 .then(res => {
                     console.log(res.data)
                     setAuditData(getAudits(res.data));
                 });
             const outletData = await axios
-                .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
+                .get(`/outlets/0`)
                 .then(res =>{
                   const activeOutlets=[]
                   for(var i=0;i<res.data.length;i++){
@@ -47,7 +47,7 @@ export default function TenantRadialChart(props) {
                 });
                 
             const instituionData = await axios
-                .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
+                .get(`/getInstitutions`)
                 .then(res =>{
                     setInstData(res.data);
                 });

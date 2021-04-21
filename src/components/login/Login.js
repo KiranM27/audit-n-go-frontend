@@ -43,7 +43,7 @@ function Login(props) {
     } else {
       try {
         const response = await axios.post(
-          'https://www.audit-n-go-backend.technopanther.com/forgotPassword',
+          '/forgotPassword',
           {
             email,
           },
@@ -139,7 +139,7 @@ function Login(props) {
       setisVerified(true)
       setCaptcha("")
 
-      axios.post('https://www.audit-n-go-backend.technopanther.com/login', userObject)
+      axios.post('/login', userObject)
         .then(
           (res) => {
             if (res.status !== 200) {
@@ -205,7 +205,7 @@ function Login(props) {
         "Authorization": `Bearer ${req.accessToken}`
       }
     }
-    const responsehello = axios.get('https://www.audit-n-go-backend.technopanther.com/auth',
+    const responsehello = axios.get('/auth',
       head,
     )
       .then(function (response) {
@@ -220,10 +220,10 @@ function Login(props) {
   async function refreshAccess(req) {
     const refreshToken = { token: req.refreshToken }
 
-    axios.post('https://www.audit-n-go-backend.technopanther.com/tokens', refreshToken
+    axios.post('/tokens', refreshToken
     )
       .then(function (response) {
-        axios.post('https://www.audit-n-go-backend.technopanther.com/tokens', refreshToken).then(function (responseAgain) {
+        axios.post('/tokens', refreshToken).then(function (responseAgain) {
           return responseAgain.data.accessToken;
         })
 

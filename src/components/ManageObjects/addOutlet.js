@@ -57,14 +57,14 @@ export default function AddOutlet() {
 
   // useEffect for random is done so that componentDidMount can be simulated
   useEffect(( ) => {
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
+    axios.get(`/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
+    axios.get(`/outlets/0`)
     .then(res => {
 
         const outs = []
@@ -95,7 +95,7 @@ export default function AddOutlet() {
     let temp_password = Math.random().toString(36).substring(10);
     console.log("random ", temp_password);
 
-    axios.post('https://www.audit-n-go-backend.technopanther.com/outlet', {username:username,email:email,password:temp_password,institution_id:selectedInstitution})
+    axios.post('/outlet', {username:username,email:email,password:temp_password,institution_id:selectedInstitution})
     .then(
       (res) => {
         if(res.status!==201){
@@ -115,7 +115,7 @@ export default function AddOutlet() {
    
    if (isLoggedIn == 0) {
      return (
-       <Redirect to="https://www.audit-n-go-backend.technopanther.com/" />        
+       <Redirect to="/" />        
      )}
   
   return (
@@ -182,7 +182,7 @@ function RenderOutletSelect(props) {
           </form>
           <p></p>
 
-          <Link to={"https://www.audit-n-go-backend.technopanther.com/dashboard"}>
+          <Link to={"/dashboard"}>
           <Button variant="contained" color="primary" onClick={props.onSubmit} style={{textTransform:"none"}}>
               Create outlet
           </Button>

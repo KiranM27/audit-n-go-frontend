@@ -30,14 +30,14 @@ function AuditInitialView(props) {
     if(!localStorage.checkbox){
       Cookies.set("isLoggedIn",0)
   }
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
+    axios.get(`/getInstitutions`)
         .then(res => {
             var insts = res.data;
             insts = getInstitutions(insts, "name", "institution_id")
             setInstitutionOptions(insts);
         })
     
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
+    axios.get(`/outlets/0`)
     .then(res => {
       const outs = []
       for(var i=0;i<res.data.length;i++){
