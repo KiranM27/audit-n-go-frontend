@@ -77,7 +77,7 @@ const Navigator = props => {
       isAdmin: false,
       username: ''
     }, { expires: 2 })
-    axios.post("logout",{token:refreshToken}).then(function (response) {
+    axios.post("https://www.audit-n-go-backend.technopanther.com/logout",{token:refreshToken}).then(function (response) {
         // console.log("logout stuff",response);
         props.history.push('/')
         
