@@ -6,11 +6,12 @@ import { useParams } from "react-router";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputNumber } from 'antd';
+import Button from '@material-ui/core/Button';
 import './formstyle.css'
 
 import { ExpandOutlined, CheckCircleTwoTone, CloseCircleTwoTone, LoginOutlined } from '@ant-design/icons'
 import { Card, Avatar } from 'antd';
-import { Modal, Button } from 'antd';
+import { Modal} from 'antd';
 
 const { Meta } = Card;
 const size = "large"
@@ -32,7 +33,7 @@ function GetParams() {
 function ChecklistItemCard(props) {
 
     const [status, setStatus] = useState("Status TBD")
-    const [score, setScore] = useState(50)
+    const [score, setScore] = useState(1)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [fileLocation, setFileLocation] = useState('')
     const params = GetParams()
@@ -119,10 +120,9 @@ function ChecklistItemCard(props) {
                         style={{ width: '100%' }}
         
                         actions={[
-                            <ExpandOutlined onClick={showModal}/>,
-                            // <CheckCircleTwoTone twoToneColor="#52c41a" onClick = {() => { setStatus("Complied")}} />,
-                            // <CloseCircleTwoTone twoToneColor="#e42f3b" onClick = {() => { setStatus("Not Complied")}}/>,
-                            <InputNumber min={1} max={100} defaultValue={50}
+                            <Button color="primary" onClick = {showModal} variant="contained"
+                            style = {{ textTransform: "None" }}>Upload</Button>,
+                            <InputNumber min={0} max={1} defaultValue={1}
                              onChange={(e) => setScore(e)} 
                              />
                         ]}
