@@ -12,6 +12,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { useMediaQuery } from "@material-ui/core";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
+import { Redirect } from "react-router";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RenderCard(props) {
-  RestrictAccess("/aboutTenant");
   const classes = useStyles();
   const themeAbout = useTheme();
   const isSmallScreen = useMediaQuery((theme) =>
@@ -90,11 +92,14 @@ function RenderCard(props) {
 }
 
 export default function MediaControlCard() {
+  if (Cookies.get("isLoggedIn") != 1) {
+    return <Redirect to={"/"} />;
+  }
   return (
     <div>
       <Container maxWidth="lg" align="center">
         <Typography variant="h6" align="center">
-          SUTD 50.003 ESC Singhealth Project
+          SUTD 50.003 ESC Singhealth Project TENANT
         </Typography>
         <Typography
           variant="subtitle1"

@@ -12,16 +12,16 @@ import Divider from "@material-ui/core/Divider";
 import CheckCircleTwoToneIcon from "@material-ui/icons/CheckCircleTwoTone";
 import HelpTwoToneIcon from "@material-ui/icons/HelpTwoTone";
 import CancelTwoToneIcon from "@material-ui/icons/CancelTwoTone";
-import TrendingUpTwoToneIcon from '@material-ui/icons/TrendingUpTwoTone';
-import TrendingDownTwoToneIcon from '@material-ui/icons/TrendingDownTwoTone';
+import TrendingUpTwoToneIcon from "@material-ui/icons/TrendingUpTwoTone";
+import TrendingDownTwoToneIcon from "@material-ui/icons/TrendingDownTwoTone";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import { InputNumber } from "antd";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MediaCard from "./MediaCard";
 import { useParams } from "react-router";
-import axios from 'axios';
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,33 +98,60 @@ export default function SubPartView(props) {
   const [editable, setEditable] = useState(false);
   const [actualStatus, setActualStatus] = useState(props.item.status);
   const [localStatus, setLocalStatus] = useState(props.item.status);
+  const [actualScore, setActualScore] = useState(props.item.score);
+  const [localScore, setLocalScore] = useState(props.item.score);
   const audit_id = GetParams();
 
   // This is to ensure that the API for updating the status in the databse is called only when the
   // user chnages the state and not when all of the components are loaded
   const [count, setCount] = useState(0);
+  const [sCount, setSCount] = useState(0);
 
   useEffect(() => {
-    console.log("actualStatus has changed ", actualStatus);
     let localChecklistResults = [...props.checklistResults];
-    localChecklistResults[props.item.part - 1][props.item.SNo - 1].status = actualStatus;
+    localChecklistResults[props.item.part - 1][
+      props.item.SNo - 1
+    ].status = actualStatus;
     props.setChecklistResults(localChecklistResults);
     if (count != 0) {
       axios
-        .post("https://www.audit-n-go-backend.technopanther.com/editstatus", {
+        .post("/editstatus", {
           audit_id: audit_id,
           newStatus: actualStatus,
           part: props.item.part,
-          item: props.item.checklist_item
+          item: props.item.checklist_item,
         })
         .then((res) => {
           if (res.status == 200) {
-            console.log("status updated")
+            console.log("status updated");
           }
         });
     }
     setCount(count + 1);
   }, [actualStatus]);
+
+  useEffect(() => {
+    let localChecklistResults = [...props.checklistResults];
+    localChecklistResults[props.item.part - 1][
+      props.item.SNo - 1
+    ].score = actualScore;
+    props.setChecklistResults(localChecklistResults);
+    if (sCount != 0) {
+      axios
+        .post("/editscore", {
+          audit_id: audit_id,
+          newScore: actualScore,
+          part: props.item.part,
+          item: props.item.checklist_item,
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            console.log("score updated");
+          }
+        });
+    }
+    setSCount(sCount + 1);
+  }, [actualScore]);
 
   return (
     <div className={classes.root} style={{ paddingBottom: 5 }}>
@@ -140,7 +167,11 @@ export default function SubPartView(props) {
             </Typography>
           </div>
           <div className={classes.column}>
-            <StatusIconRenderer status={props.item.status} auditType = { props.auditType } item = {props.item}/>
+            <StatusIconRenderer
+              status={props.item.status}
+              auditType={props.auditType}
+              item={props.item}
+            />
           </div>
           <div className={classes.column}>
             <Typography className={classes.secondaryHeading}>
@@ -154,13 +185,14 @@ export default function SubPartView(props) {
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <StatusDropdown
+          <EditValueRenderer
             editable={editable}
             actualStatus={actualStatus}
             localStatus={localStatus}
             setLocalStatus={setLocalStatus}
-            audit_type={props.auditType}
-            item={props.item}
+            auditType={props.auditType}
+            localScore={localScore}
+            setLocalScore={setLocalScore}
           />
           <ActionsButtonsRenderer
             editable={editable}
@@ -169,7 +201,11 @@ export default function SubPartView(props) {
             setActualStatus={setActualStatus}
             localStatus={localStatus}
             setLocalStatus={setLocalStatus}
-            audit_type={props.auditType}
+            actualScore={actualScore}
+            setActualScore={setActualScore}
+            localScore={localScore}
+            setLocalScore={setLocalScore}
+            auditType={props.auditType}
           />
         </AccordionActions>
       </Accordion>
@@ -210,10 +246,31 @@ function StatusIconRenderer(props) {
   } else {
     if (props.item.score > 0.5) {
       return <TrendingUpTwoToneIcon style={{ color: "#32a852" }} />;
-    }
-    else {
+    } else {
       return <TrendingDownTwoToneIcon style={{ color: "#d11d23" }} />;
     }
+  }
+}
+
+function EditValueRenderer(props) {
+  console.log(props.auditType);
+  if (props.auditType === "Covid Compliance") {
+    return (
+      <StatusDropdown
+        editable={props.editable}
+        actualStatus={props.actualStatus}
+        localStatus={props.localStatus}
+        setLocalStatus={props.setLocalStatus}
+      />
+    );
+  } else {
+    return (
+      <EditScoreField
+        localScore={props.localScore}
+        setLocalScore={props.setLocalScore}
+        editable={props.editable}
+      />
+    );
   }
 }
 
@@ -266,6 +323,22 @@ function StatusDropdown(props) {
   );
 }
 
+function EditScoreField(props) {
+  function onScoreChange(value) {
+    props.setLocalScore(value);
+  }
+
+  return (
+    <InputNumber
+      min={0}
+      max={1}
+      value={props.localScore}
+      onChange={onScoreChange}
+      disabled={!props.editable}
+    />
+  );
+}
+
 function ActionsButtonsRenderer(props) {
   function handleEditButtonClick() {
     props.setEditable(!props.editable);
@@ -273,11 +346,19 @@ function ActionsButtonsRenderer(props) {
 
   function handleCancelClick() {
     props.setEditable(false);
-    props.setLocalStatus(props.actualStatus);
+    if (props.auditType === "Covid Compliance") {
+      props.setLocalStatus(props.actualStatus);
+    } else {
+      props.setLocalScore(props.actualScore);
+    }
   }
 
   function handleSubmitClick() {
-    props.setActualStatus(props.localStatus);
+    if (props.auditType === "Covid Compliance") {
+      props.setActualStatus(props.localStatus);
+    } else {
+      props.setActualScore(props.localScore);
+    }
     props.setEditable(false);
   }
 
@@ -299,7 +380,10 @@ function ActionsButtonsRenderer(props) {
       </div>
     );
   } else {
-    if (props.localStatus === props.actualStatus) {
+    if (
+      props.localStatus === props.actualStatus &&
+      props.localScore === props.actualScore
+    ) {
       return (
         <div>
           <Button disabled color="secondary" style={{ textTransform: "None" }}>

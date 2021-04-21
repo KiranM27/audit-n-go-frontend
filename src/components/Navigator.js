@@ -72,7 +72,12 @@ const Navigator = props => {
     const refreshToken = localStorage.getItem("refreshToken")
     // console.log("INSIDE LOGOUT STUFF", refreshToken)
     Cookies.set('isLoggedIn', 0 , { expires: 2 })
-    axios.post("https://www.audit-n-go-backend.technopanther.com/logout",{token:refreshToken}).then(function (response) {
+    Cookies.set('loggedInUser',  {
+      userId: 0,
+      isAdmin: false,
+      username: ''
+    }, { expires: 2 })
+    axios.post("logout",{token:refreshToken}).then(function (response) {
         // console.log("logout stuff",response);
         props.history.push('/')
         
@@ -84,7 +89,10 @@ const Navigator = props => {
   }
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
+
+  if(JSON.parse(Cookies.get("loggedInUser")).isAdmin==true){
+
+  var renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -99,14 +107,31 @@ const Navigator = props => {
         <MenuItem onClick={() => handleMobileMenuClick('/about')}>About</MenuItem>
         <MenuItem onClick={logoutFinally}>Logout</MenuItem>
     </Menu>
-  );
+  )}else{
+    var renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        id={mobileMenuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={() => setMobileMoreAnchorEl(null)}
+      >
+          <MenuItem onClick={() => handleMobileMenuClick('/dashboard')}>Dashboard</MenuItem>
+          <MenuItem onClick={() => handleMobileMenuClick('/about')}>About</MenuItem>
+          <MenuItem onClick={logoutFinally}>Logout</MenuItem>
+      </Menu>)
+
+  }
 
   const handleMobileBellClick = () => {
     return (
       <NotificationCenter/>
     )
   }
-
+  
+  if(JSON.parse(Cookies.get("loggedInUser")).isAdmin==true){
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -154,6 +179,55 @@ const Navigator = props => {
       {renderMobileMenu}
     </div>
   );
+}else{
+  return (
+    <div className={classes.grow}>
+      <AppBar position="static">
+        <Toolbar>
+          <div className={classes.sectionDesktop}>
+          <Button color="inherit" onClick={() => handleMobileMenuClick('/dashboard')}>
+            <Typography className={classes.title} variant="h6" noWrap style = {{ color: "white"}}>
+              Audit-n-Go
+            </Typography>
+          </Button>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={() => handleMobileMenuClick('/dashboard')}
+                color="inherit"
+              >
+                <ChromeReaderModeIcon />
+              </IconButton>
+          </div>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <Button color="inherit" onClick={() => handleMobileMenuClick('/dashboard')}>Dashboard</Button>
+            <NotificationCenter isMobile={false}/>
+            <Button color="inherit" onClick={() => handleMobileMenuClick('/about')}>About</Button>
+            <Button color="inherit" onClick={logoutFinally}>Logout</Button>
+          </div>
+          <div className={classes.sectionMobile}>
+            <NotificationCenter isMobile={true}/>
+            <IconButton
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+    </div>
+  );
+
+}
 }
 
 export default withRouter(Navigator);

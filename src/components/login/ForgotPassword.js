@@ -39,7 +39,7 @@ const title = {
         } else {
           try {
             const response = await axios.post(
-              'https://www.audit-n-go-backend.technopanther.com/forgotPassword',
+              '/forgotPassword',
               {
                 email,
               },

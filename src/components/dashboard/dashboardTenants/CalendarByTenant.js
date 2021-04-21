@@ -17,9 +17,9 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Box from '@material-ui/core/Box';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { withRouter } from 'react-router-dom';
+import Cookies from "js-cookie";
 
-
-const { getAudits, makeData, getOutletAndInstitute, sortAudits } = require('../helperfunctions/AuditProcessing.js');
+const { getAudits, makeData, getOutletAndInstitute, sortAudits } = require('../../helperfunctions/AuditProcessing.js');
 
 const useStyles = makeStyles((theme) => ({
     calendarCard: {
@@ -127,9 +127,7 @@ const CalendarView = props => {
     }
 
     if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
-      console.log(auditData);
-      console.log(instData);
-      console.log(outletData);
+      var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
 
       var deadlineDataforCal = [];
       for (var i = 0; i < 12; i++){
@@ -139,15 +137,17 @@ const CalendarView = props => {
         }
       }
 
-      for (var i = 0; i < auditData.length; i++){
-        var deadline = auditData[i].deadline.split(" ");
+      var auditDataByTenant = auditData.filter(child => (child.outlet_id == current_user_id));
+      console.log(auditDataByTenant);
+
+      for (var i = 0; i < auditDataByTenant.length; i++){
+        var deadline = auditDataByTenant[i].deadline.split(" ");
         let month_digit = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(deadline[0])/3
         var month = month_digit;
         var day = parseInt(deadline[1]) - 1;
         deadlineDataforCal[month][day] = 'success';
       }
 
-      console.log(deadlineDataforCal);
     }else{
       return(
         <div style={{display: 'flex', justifyContent: 'center'}}>
