@@ -91,16 +91,13 @@ function Login(props) {
   useEffect(() => {
     setIsChecked(true);
     localStorage.checkbox = true;
-    localStorage.username = CryptoJS.AES.encrypt(
-      "",
-      "ElementsOfSoftwareConstruction"
-    );
-    localStorage.password = CryptoJS.AES.encrypt(
-      "",
-      "ElementsOfSoftwareConstruction"
-    );
-
-    if (localStorage.username !== "" && localStorage.checkbox) {
+    
+    try{
+    if (
+      localStorage.username !==
+        CryptoJS.AES.encrypt("", "ElementsOfSoftwareConstruction") &&
+      localStorage.checkbox
+    ) {
       setEmail(
         CryptoJS.AES.decrypt(
           localStorage.username,
@@ -114,6 +111,26 @@ function Login(props) {
         ).toString(CryptoJS.enc.Utf8)
       );
       setIsChecked(localStorage.checkbox);
+    }else{
+      localStorage.username = CryptoJS.AES.encrypt(
+        "",
+        "ElementsOfSoftwareConstruction"
+      );
+      localStorage.password = CryptoJS.AES.encrypt(
+        "",
+        "ElementsOfSoftwareConstruction"
+      );
+    }
+  }catch{
+      localStorage.username = CryptoJS.AES.encrypt(
+        "",
+        "ElementsOfSoftwareConstruction"
+      );
+      localStorage.password = CryptoJS.AES.encrypt(
+        "",
+        "ElementsOfSoftwareConstruction"
+      );
+
     }
     setError(false);
     setisVerified(true);
