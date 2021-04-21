@@ -19,7 +19,7 @@ const theme = {
 };
 
 const config = {
-  width: "350px",
+  width: "400px",
   height: "500px",
   floating: true,
   headerTitle: "Chat with Panther, the Chatbot"
@@ -62,20 +62,55 @@ function AIChatbot(props) {
           },
           {
             id: "view-audits",
-            message: "You can view the audits by clicking on the All Audits tab of the dashboard",
+            message:
+              "You can view the audits by clicking on the All Audits tab of the dashboard",
             trigger: "view-audits-link",
             end: false
           },
           {
             id: "create-audit-link",
-            component: <RedirectButton url = "/auditInitialise" text = "New Audit !"/>,
+            component: (
+              <RedirectButton url="/auditInitialise" text="New Audit !" />
+            ),
             asMessage: true,
-            end: true
+            trigger: "next-steps",
+            end: false
           },
           {
             id: "view-audits-link",
-            component: <RedirectButton url = "/dashboard" text = "Go to Dashboard !"/>,
+            component: (
+              <RedirectButton url="/dashboard" text="Go to Dashboard !" />
+            ),
             asMessage: true,
+            trigger: "next-steps",
+            end: false
+          },
+          {
+            id: "next-steps",
+            message: "Is there any thing I can help you with ?",
+            trigger: "next-steps-options",
+            end: false
+          },
+          {
+            id: "next-steps-options",
+            options: [
+              {
+                value: "y",
+                label: "Yes",
+                trigger: "reask-q"
+              },
+              { value: "n", label: "No", trigger: "end-convo" }
+            ]
+          },
+          {
+            id: "reask-q",
+            message: "What can I help you with ?",
+            trigger: "intro-user",
+            end: false
+          },
+          {
+            id: "end-convo",
+            message: "Gald to be of help. Have a great day !",
             end: true
           },
         ]}
@@ -94,11 +129,10 @@ function RedirectButton(props) {
   }
   return (
     <Button
-      color="primary"
       onClick={buttonOnClick}
       style={{ textTransform: "None", color: "#fff" }}
     >
-      { props.text }
+      {props.text}
     </Button>
   );
 }
