@@ -43,7 +43,7 @@ function Login(props) {
       });
     } else {
       try {
-        const response = await axios.post("/forgotPassword", {
+        const response = await axios.post("https://www.audit-n-go-backend.technopanther.com/forgotPassword", {
           email,
         });
         if (response.status == 200) {
@@ -172,7 +172,7 @@ function Login(props) {
       setCaptcha("");
 
       axios
-        .post("/login", userObject)
+        .post("https://www.audit-n-go-backend.technopanther.com/login", userObject)
         .then((res) => {
           if (res.status !== 200) {
             alert("HELLO");
@@ -238,7 +238,7 @@ function Login(props) {
       },
     };
     const responsehello = axios
-      .get("/auth", head)
+      .get("https://www.audit-n-go-backend.technopanther.com/auth", head)
       .then(function (response) {
         return response.data;
       })
@@ -251,8 +251,8 @@ function Login(props) {
   async function refreshAccess(req) {
     const refreshToken = { token: req.refreshToken };
 
-    axios.post("/tokens", refreshToken).then(function (response) {
-      axios.post("/tokens", refreshToken).then(function (responseAgain) {
+    axios.post("https://www.audit-n-go-backend.technopanther.com/tokens", refreshToken).then(function (response) {
+      axios.post("https://www.audit-n-go-backend.technopanther.com/tokens", refreshToken).then(function (responseAgain) {
         return responseAgain.data.accessToken;
       });
     });

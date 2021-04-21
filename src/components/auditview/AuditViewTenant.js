@@ -127,7 +127,7 @@ export default function AuditViewTenant() {
       Cookies.set("isLoggedIn", 0);
     }
     axios
-      .get("/getAuditViewDetails/" + audit_id)
+      .get("https://www.audit-n-go-backend.technopanther.com/getAuditViewDetails/" + audit_id)
       .then((response) => {
         setChecklistResults(response.data.auditInfo.checklist_results);
         setChecklistrenderData(response.data.auditInfo.checklist_results);
@@ -187,24 +187,12 @@ export default function AuditViewTenant() {
     csvExport[i].institution = institutionName;
   }
 
-  function deleteAudit() {
-    axios.put("/audit", { audit_id: audit_id }).then((res) => {
-      setIsModalVisible(false);
-      alert("Audit has been deleted!");
-      history.push("/dashboard");
-      if (res.status !== 201) {
-        alert("Audit not deleted! Please try again!");
-      }
-    });
-  }
-
   try {
     return (
       <div>
         <div>
           <Container maxWidth="md" style={{ paddingBottom: 10 }}>
             <Typography variant="h6" align="center">
-              THIS IS FOR TENANTS LOL
               {auditType}
             </Typography>
             <Grid
@@ -214,14 +202,6 @@ export default function AuditViewTenant() {
               alignItems="center"
             >
               <ExportCSV csvData={csvExport} />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={showModal}
-                style={{ textTransform: "none" }}
-              >
-                Delete Audit
-              </Button>
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6} md={6}>
@@ -348,16 +328,6 @@ export default function AuditViewTenant() {
           </TabPanel>
         </SwipeableViews>
         <Chat audit_id={audit_id} />
-        <Modal
-          title="Upload Non compliance Image"
-          visible={isModalVisible}
-          onOk={deleteAudit}
-          onCancel={handleCancel}
-        >
-          <div class="center-noflex">
-            Are you sure that you wish to delete this audit?
-          </div>
-        </Modal>
       </div>
     );
   } catch (e) {

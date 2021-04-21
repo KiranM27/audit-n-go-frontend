@@ -33,7 +33,7 @@ function NotificationCenter(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    axios.get(`/getNotifications/${ props.loggedInUser.userId }`)
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${ props.loggedInUser.userId }`)
       .then(res => {
           console.log("notifications are", res.data, res.data.length);
           props.dispatch({ type: "setNoNotifications", noNotifications: res.data.length })

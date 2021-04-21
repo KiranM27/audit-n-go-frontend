@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import IndivTenantChart from './IndivTenantChart';
 import TenantRadialChart from './TenantRadialChart';
 import InstitutionBarChart from './InstitutionBarChart';
-import { CssBaseline, Typography, Paper, Grid, Container, useMediaQuery } from '@material-ui/core'
+import { CssBaseline, Typography, Paper, Grid, Container, useMediaQuery } from '@material-ui/core';
 
 export default function AllCharts(props) {
     const {pieSelection, setPieSelection} = props;
