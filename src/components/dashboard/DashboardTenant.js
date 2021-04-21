@@ -175,7 +175,7 @@ const Dashboard = (props) => {
                 aria-label="full width tabs example"
                 centered
               >
-                <Tab label="All Audits" {...a11yProps(0)} />
+                <Tab label="All Your Audits" {...a11yProps(0)} />
                 <Tab label="Charts" {...a11yProps(1)} />
                 <Tab label="Calendar" {...a11yProps(2)} />
               </Tabs>
