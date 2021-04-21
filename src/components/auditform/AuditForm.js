@@ -167,7 +167,7 @@ function RenderButton(props) {
                 "outlet_id": props.params[1],
                 "title": 'New Audit !',
                 "body": notificationBody,
-                "path": '/dashboard'
+                "path": '/auditDetail/' + createdAuditId,
             }).then((response) => {
                 console.log("Notification sent !")
             }).catch((error) => {

@@ -253,6 +253,7 @@ function StatusIconRenderer(props) {
 }
 
 function EditValueRenderer(props) {
+  console.log(props.auditType)
   if (props.auditType === "Covid Compliance") {
     return (
       <StatusDropdown
