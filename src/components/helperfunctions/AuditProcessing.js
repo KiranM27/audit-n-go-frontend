@@ -68,8 +68,8 @@ function tallyScores(checklist){
   return totalScore
 }
 
-function makeData(id, date, tenant, institution, NC, score){
-  return {id, date, tenant, institution, NC, score};
+function makeData(id, date, type, tenant, institution, NC, score){
+  return {id, date, type, tenant, institution, NC, score};
 }
 
 function getOutletAndInstitute(id, instData, outletData){
