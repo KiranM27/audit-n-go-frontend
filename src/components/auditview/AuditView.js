@@ -163,8 +163,15 @@ export default function AuditView() {
     for (let i = 0; i < checklistResults.length; i++) {
       localNCList.push([]);
       for (let j = 0; j < checklistResults[i].length; j++) {
-        if (checklistResults[i][j].status === "Not Complied") {
-          localNCList[i].push(checklistResults[i][j]);
+        if (auditType === "Covid Compliance") {
+          if (checklistResults[i][j].status === "Not Complied") {
+            localNCList[i].push(checklistResults[i][j]);
+          }
+        }
+        else {
+          if (checklistResults[i][j].score < 0.5) {
+            localNCList[i].push(checklistResults[i][j]);
+          }
         }
       }
     }
