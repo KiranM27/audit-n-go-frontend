@@ -14,13 +14,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import AccordionsRenderer from './AccordionsRenderer'
 import metaData from "./AuditFormMetaData"
 import './formstyle.css'
-
+import RestrictAccess from "../helperfunctions/RestrictAccess";
 function GetParams() {
     let { iid, oid, at } = useParams();
     return [iid, oid, at]
   }
 
 function AuditForm(props) {
+    RestrictAccess('/dashboardTenant')
     const params = GetParams()
     const [items, setItems] = useState([]) // Has the items of the Checklist 
     const needScore = params[2] == 'cv' ? false : true;

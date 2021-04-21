@@ -16,6 +16,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import { Link, withRouter } from "react-router-dom";
+import RestrictAccess from "../helperfunctions/RestrictAccess";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DeleteOutlet() {
+  RestrictAccess("/dashboard");
   const [status, setStatus] = useState(0);
   const [random, setRandom] = useState(0);
   const [viewAll, setviewAll] = useState(false);

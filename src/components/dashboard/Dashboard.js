@@ -21,6 +21,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { ResponsiveContainer } from 'recharts';
 import CalendarView from './CalendarView';
 import ControlCenter from './ControlCenter'
+import RestrictAccess from "../helperfunctions/RestrictAccess"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +94,7 @@ function a11yProps(index) {
 }
 
 const Dashboard = props => {
+    RestrictAccess("/dashboardTenant")
     const classes = useStyles();
     const themeTab = useTheme();
     const [value, setValue] = React.useState(1);

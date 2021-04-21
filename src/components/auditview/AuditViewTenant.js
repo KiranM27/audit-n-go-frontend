@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AuditView() {
+export default function AuditViewTenant() {
   const audit_id = GetParams();
   const [auditType, setAuditType] = useState("");
   const [checklistResults, setChecklistResults] = useState([]);
@@ -159,22 +159,17 @@ export default function AuditView() {
     setNCs(computeNCList(checklistResults));
   }, [checklistResults]);
 
-  RestrictAccess("/auditDetailTenant/" + audit_id);
+  if (Cookies.get("isLoggedIn") != 1) {
+    return <Redirect to={"/"} />;
+  }
 
   function computeNCList(checklistResults) {
     let localNCList = [];
     for (let i = 0; i < checklistResults.length; i++) {
       localNCList.push([]);
       for (let j = 0; j < checklistResults[i].length; j++) {
-        if (auditType === "Covid Compliance") {
-          if (checklistResults[i][j].status === "Not Complied") {
-            localNCList[i].push(checklistResults[i][j]);
-          }
-        }
-        else {
-          if (checklistResults[i][j].score < 0.5) {
-            localNCList[i].push(checklistResults[i][j]);
-          }
+        if (checklistResults[i][j].status === "Not Complied") {
+          localNCList[i].push(checklistResults[i][j]);
         }
       }
     }
@@ -209,6 +204,7 @@ export default function AuditView() {
         <div>
           <Container maxWidth="md" style={{ paddingBottom: 10 }}>
             <Typography variant="h6" align="center">
+              THIS IS FOR TENANTS LOL
               {auditType}
             </Typography>
             <Grid
