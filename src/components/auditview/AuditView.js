@@ -24,7 +24,6 @@ import Chat from "../chat/Chat";
 import PartView from "./PartView";
 import { Modal } from "antd";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
-import '../chatbot/AIChatbot.css'
 
 function GetParams() {
   let { audit_id } = useParams();

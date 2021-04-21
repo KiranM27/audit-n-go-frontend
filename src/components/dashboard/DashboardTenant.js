@@ -147,7 +147,6 @@ const Dashboard = (props) => {
   return (
     <div className={classes.root}>
       <main className={classes.content}>
-        <AIChatbot />
         <Container maxWidth="md">
           <div style={{ paddingTop: 0, paddingBottom: 20 }}>
             <Grid container spacing={2}>
