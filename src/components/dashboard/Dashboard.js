@@ -8,6 +8,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IndivTenantChart from './IndivTenantChart';
 import TenantRadialChart from './TenantRadialChart';
 import InstitutionBarChart from './InstitutionBarChart';
+import AllCharts from './ChartsView';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -21,7 +22,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { ResponsiveContainer } from 'recharts';
 import CalendarView from './CalendarView';
 import ControlCenter from './ControlCenter'
-import RestrictAccess from "../helperfunctions/RestrictAccess"
+import RestrictAccess from "../helperfunctions/RestrictAccess";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -200,28 +201,7 @@ if (isLoggedIn == 0) {
                         
                         <TabPanel value={value} index={1} dir={themeTab.direction} >
                             <Container maxWidth="md">
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                >
-                                    <Grid>
-                                        <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>NCs by Institutions</Typography>
-                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Click on the pie to see the detailed breakdown.</Typography>
-                                        <IndivTenantChart setPieSelection = { setPieSelection }/>
-                                    </Grid>
-                                    <Grid>
-                                        <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>{pieSelection}</Typography>
-                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>NCs breakdown by all tenants in {pieSelection}</Typography>
-                                        <TenantRadialChart pieSelection = { pieSelection }/>
-                                    </Grid>
-                                    <Grid>
-                                        <Typography variant="h6" align="center" style={{textDecoration: "underline"}}>{pieSelection}</Typography>
-                                        <Typography variant="body2" align="center" style={{fontStyle: "italic"}}>Score of latest F&B and Non F&B audits in {pieSelection}</Typography>
-                                        <InstitutionBarChart  pieSelection = { pieSelection }/>
-                                    </Grid>
-                                </Grid>
+                                <AllCharts pieSelection={pieSelection} setPieSelection={setPieSelection}/>
                             </Container>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={themeTab.direction}>
