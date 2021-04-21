@@ -9,7 +9,7 @@ import {
   Container,
   useMediaQuery,
 } from "@material-ui/core";
-import RecentAudits from "./RecentAudits";
+import AllAuditsByTenant from "./dashboardTenants/AllAuditsByTenant";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import IndivTenantChart from "./IndivTenantChart";
@@ -155,7 +155,7 @@ const Dashboard = (props) => {
                     align="left"
                     color="textPrimary"
                   >
-                    Welcome, {props.loggedInUser.username}, YOU POWERLESS TENANT
+                    Welcome, {props.loggedInUser.username}
                   </Typography>
                 </Grid>
               </Grid>
@@ -186,7 +186,7 @@ const Dashboard = (props) => {
                 aria-label="full width tabs example"
                 centered
               >
-                <Tab label="Recent" {...a11yProps(0)} />
+                <Tab label="All Audits" {...a11yProps(0)} />
                 <Tab label="Charts" {...a11yProps(1)} />
                 <Tab label="Calendar" {...a11yProps(2)} />
               </Tabs>
@@ -201,7 +201,7 @@ const Dashboard = (props) => {
           <TabPanel value={value} index={0} dir={themeTab.direction}>
             <Container maxWidth="md">
               {/* <Paper className="classes.paper" style={{padding:10}}> */}
-              <RecentAudits />
+              <AllAuditsByTenant />
               {/* </Paper> */}
             </Container>
           </TabPanel>
