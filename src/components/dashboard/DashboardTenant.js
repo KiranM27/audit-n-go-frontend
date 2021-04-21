@@ -29,6 +29,7 @@ import { ResponsiveContainer } from "recharts";
 import CalendarView from "./CalendarView";
 import ControlCenter from "./ControlCenter";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
+import AIChatbot from "../chatbot/AIChatbot";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -145,6 +146,7 @@ const Dashboard = (props) => {
   return (
     <div className={classes.root}>
       <main className={classes.content}>
+        <AIChatbot />
         <Container maxWidth="md">
           <div style={{ paddingTop: 0, paddingBottom: 20 }}>
             <Grid container spacing={2}>
@@ -159,19 +161,6 @@ const Dashboard = (props) => {
                   </Typography>
                 </Grid>
               </Grid>
-              {/* <Grid container justify="flex-end" item xs={6} sm={6}>
-                                <Button 
-                                    style = {{textTransform: "none"}}
-                                    {...buttonProps}
-                                    color="secondary"
-                                    onClick={(e) => history.push({
-                                        pathname: '/auditInitialise'
-                                    })}
-                                    >
-                                    Go Audit
-                                </Button>
-                                
-                        </Grid> */}
             </Grid>
           </div>
         </Container>
