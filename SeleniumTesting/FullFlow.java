@@ -4,14 +4,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.Keys;
-public class AuditDetailTest {
+
+public class FullFlow {
     public static void main(String[] args) throws InterruptedException {
 
         String EmailId = "shrivijiani@gmail.com";
         String Password = "123456";
 
         // Change the link to the driver based on your local location
-        System.setProperty("webdriver.chrome.driver","C:/Users/shriv/Documents/ChromeDriver/chromedriver.exe");
+        // Anirudh
+        // System.setProperty("webdriver.chrome.driver","C:/Users/shriv/Documents/ChromeDriver/chromedriver.exe");
+        // Kiran
+        System.setProperty("webdriver.chrome.driver","/Users/kiran/Desktop/SUTD/Misc/chromedriver");
 		WebDriver driver = new ChromeDriver();
 
         // Ensure that the frontend and the backend of the app are running 
