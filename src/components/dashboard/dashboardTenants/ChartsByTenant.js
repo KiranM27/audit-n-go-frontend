@@ -88,10 +88,8 @@ export default function ChartsForTenant(props) {
           variant="body2"
           align="center"
           style={{ fontStyle: "italic" }}
-        >
-          
-        </Typography>
-        <SynchronisedChart data={ncData} color="#DB324D"/>
+        ></Typography>
+        <SynchronisedChart data={ncData} color="#DB324D" />
       </Grid>
       <Grid>
         <Typography
@@ -105,10 +103,8 @@ export default function ChartsForTenant(props) {
           variant="body2"
           align="center"
           style={{ fontStyle: "italic" }}
-        >
-          
-        </Typography>
-        <SynchronisedChart data={fbData} color="#36558F"/>
+        ></Typography>
+        <SynchronisedChart data={fbData} color="#36558F" />
       </Grid>
       <Grid>
         <Typography
@@ -122,10 +118,8 @@ export default function ChartsForTenant(props) {
           variant="body2"
           align="center"
           style={{ fontStyle: "italic" }}
-        >
-          
-        </Typography>
-        <SynchronisedChart data={nfbData} color="#F4B860"/>
+        ></Typography>
+        <SynchronisedChart data={nfbData} color="#F4B860" />
       </Grid>
     </Grid>
   );
@@ -138,13 +132,25 @@ function genDataforCharts(auditData, instData, outletData) {
 
   var ncData = filteredAuditData
     .filter((child) => child.type == "COVID-19")
-    .map((audit) => ({ name: audit.date, qty: audit.NC }));
+    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.NC }));
   var fbData = filteredAuditData
     .filter((child) => child.type == "F&B")
-    .map((audit) => ({ name: audit.date, qty: audit.score }));
+    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.score }));
   var nfbData = filteredAuditData
     .filter((child) => child.type == "Non F&B")
-    .map((audit) => ({ name: audit.date, qty: audit.score }));
+    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.score }));
 
-  return [ncData.reverse(), fbData.reverse(), nfbData.reverse()];
+  return [
+    ncData.slice(0, getEndLength(ncData)).reverse(),
+    fbData.slice(0, getEndLength(fbData)).reverse(),
+    nfbData.slice(0, getEndLength(nfbData)).reverse(),
+  ];
+}
+
+function getEndLength(arr) {
+  return Math.min(arr.length, 5);
+}
+
+function swapDayMonth(str){
+    return str.split(" ").reverse().join(" ");
 }

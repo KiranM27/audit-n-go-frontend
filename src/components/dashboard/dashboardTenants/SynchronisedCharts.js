@@ -37,7 +37,7 @@ export default function SynchronisedCharts(props) {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" tick={{fontSize: 13}} />
+      <XAxis dataKey="name" tick={{fontSize: 12}} interval={0}/>
       <YAxis />
       <Tooltip />
       <Line
