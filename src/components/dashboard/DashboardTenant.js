@@ -35,6 +35,8 @@ const {
   sortAudits,
 } = require("../helperfunctions/AuditProcessing.js");
 
+const { sortFullAuditData } = require("../helperfunctions/AuditDataClean.js");
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -115,12 +117,19 @@ const Dashboard = (props) => {
 
   const retrieveData = async () => {
     try {
+<<<<<<< Updated upstream
       const data = await axios
         .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
         .then((res) => {
           console.log(res.data);
           setAuditData(getAudits(res.data));
         });
+=======
+      const data = await axios.get(`/audits/0`).then((res) => {
+        console.log(res.data);
+        setAuditData(sortAudits(res.data));
+      });
+>>>>>>> Stashed changes
     } catch (error) {
       setAuditData([]);
     }
@@ -171,7 +180,8 @@ const Dashboard = (props) => {
     var filteredAuditData = sortAudits(auditData).filter(
       (child) => child.outlet_id == current_user_id
     );
-    var lastAuditId = filteredAuditData[0].id;
+    var lastAuditId = filteredAuditData[0].audit_id;
+    console.log(auditData);
   } else {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -225,37 +235,31 @@ const Dashboard = (props) => {
                 aria-label="full width tabs example"
                 centered
               >
-                <Tab label="Calendar" {...a11yProps(0)} />
+                <Tab label="All Your Audits" {...a11yProps(0)} />
                 <Tab label="Charts" {...a11yProps(1)} />
-                <Tab label="All Your Audits" {...a11yProps(2)} />
+                <Tab label="Calendar" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
           </Grid>
         </Container>
-        <SwipeableViews
-          axis={themeTab.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={themeTab.direction}>
-            <Container maxWidth="md">
-              {/* <Paper className="classes.paper" style={{padding:10}}> */}
-              <CalendarView />
-              {/* </Paper> */}
-            </Container>
-          </TabPanel>
+        <TabPanel value={value} index={0} dir={themeTab.direction}>
+          <Container maxWidth="md">
+            {/* <Paper className="classes.paper" style={{padding:10}}> */}
+            <AllAuditsByTenant />
+            {/* </Paper> */}
+          </Container>
+        </TabPanel>
 
-          <TabPanel value={value} index={1} dir={themeTab.direction}>
-            <Container maxWidth="md">
-              <ChartsForTenant />
-            </Container>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={themeTab.direction}>
-            <Container maxWidth="md" height="100%">
-              <AllAuditsByTenant />
-            </Container>
-          </TabPanel>
-        </SwipeableViews>
+        <TabPanel value={value} index={1} dir={themeTab.direction}>
+          <Container maxWidth="md">
+            <ChartsForTenant />
+          </Container>
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={themeTab.direction}>
+          <Container maxWidth="md" height="100%">
+            <CalendarView />
+          </Container>
+        </TabPanel>
       </main>
     </div>
   );

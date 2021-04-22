@@ -2,8 +2,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Keys;
 
-public class AboutTest {
+public class DeleteOutletTest {
 	public static void main(String[] args) throws InterruptedException {
 
 		String EmailId = "shrivijiani@gmail.com";
@@ -29,27 +30,31 @@ public class AboutTest {
 
 		Thread.sleep(4000);
 
-		driver.get("https://audit-n-go.technopanther.com/about");
+		driver.get("https://audit-n-go.technopanther.com/deleteOutlet");
 
-		java.util.List<WebElement> aboutPageLinks = driver.findElements(By.tagName("button"));
+		WebElement instSelect = driver
+				.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div/div/div/div[1]/div/div/div/input"));
+		instSelect.sendKeys("SKH");
+		Thread.sleep(1000);
+		instSelect.sendKeys(Keys.DOWN);
+		instSelect.sendKeys(Keys.ENTER);
 
-		for (int i = 0; i < aboutPageLinks.size(); i++) {
-			try {
-				if (i > aboutPageLinks.size() - 11) {
-					java.util.List<WebElement> aboutPageLinksRe = driver.findElements(By.tagName("button"));
-					aboutPageLinksRe.get(i).click();
-					Thread.sleep(3000);
-					if (driver.getCurrentUrl() != "https://audit-n-go.technopanther.com/about") {
-						System.out.println(driver.getCurrentUrl());
-						driver.navigate().back();
-						Thread.sleep(2000);
-					}
-				}
-			} catch (Exception e) {
-				continue;
-			}
-		}
-		Thread.sleep(3000);
+		Thread.sleep(1000);
+
+		WebElement outletName = driver
+				.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div/div/div/div[2]/div/div/div[1]/div/div/input"));
+		outletName.sendKeys("Test Outlet");
+		Thread.sleep(2000);
+		outletName.sendKeys(Keys.DOWN);
+		outletName.sendKeys(Keys.ENTER);
+		Thread.sleep(4000);
+
+		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div/div/div/div[2]/div/div/div[2]/a/button"))
+				.click();
+		Thread.sleep(2000);
+		driver.switchTo().alert().accept();
+		Thread.sleep(2000);
+
 		driver.close();
 	}
 }
