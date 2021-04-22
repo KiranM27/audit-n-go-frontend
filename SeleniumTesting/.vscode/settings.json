@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\byte-buddy-1.8.15.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\client-combined-3.141.59.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\client-combined-3.141.59-sources.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\commons-exec-1.3.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\guava-25.0-jre.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\okhttp-3.11.0.jar",
+        "c:\\Users\\shriv\\Documents\\Selenium_Stuff\\libs\\okio-1.14.0.jar"
+    ]
+}
