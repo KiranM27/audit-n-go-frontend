@@ -13,8 +13,9 @@ import 'react-toastify/dist/ReactToastify.css';
 var CryptoJS = require("crypto-js");
 const config = Credentials
 
-export const ExportCSV = ({csvData, sendReport}) => {
+export const ExportCSV = ({csvData,sendReport}) => {
 
+    console.log("EXPORTCSV is called")
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
 
@@ -32,6 +33,7 @@ export const ExportCSV = ({csvData, sendReport}) => {
       }
 
     const exportToCSV = (csvData) => {
+        console.log("exportToCSV is called")
         for(var len =0;len<csvData.length;len++){
             csvData[len].images = csvData[len].images.toString()
         }
@@ -46,12 +48,9 @@ export const ExportCSV = ({csvData, sendReport}) => {
     }
 
     if (sendReport){
+        console.log("sendReport is true")
         exportToCSV(csvData);
+        sendReport=false
     }
 
-    return (
-        // <Button variant="contained" color="primary" size="medium" style = {{ textTransform: "none"}} 
-        // onClick={(e) => exportToCSV(csvData)}>Export as CSV</Button>
-        <text>ok</text>
-    )
 }

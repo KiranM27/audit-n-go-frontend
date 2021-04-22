@@ -204,9 +204,8 @@ export default function AuditView() {
   }
 
   function handleSendCSV(){
-    return (
-      <ExportCSV csvData={csvExport} sendReport={true} />
-    )
+    console.log("this is where it happens")
+      ExportCSV({csvData:csvExport,sendReport:true})
   }
 
   try {
@@ -230,7 +229,7 @@ export default function AuditView() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => handleSendCSV}
+                  onClick={ handleSendCSV}
                   style={{ textTransform: "none" }}
                 >
                   Export As CSV
