@@ -114,8 +114,8 @@ function genDataforBarChart(auditData, instData, outletData, pieSelection){
     var latest_fb = getLatestFBAudit(auditData, outlets_radial[j].outlet_id)
     var latest_NonFB = getLatestNonFBAudit(auditData, outlets_radial[j].outlet_id)
     console.log(latest_fb)
-    var score_fb = getScore(auditData, latest_fb)/96
-    var score_nfb = getScore(auditData, latest_NonFB)/37
+    var score_fb = getScore(auditData, latest_fb)
+    var score_nfb = getScore(auditData, latest_NonFB)
     data_barchart.push({"name":outlets_radial[j].outlet_name, "F&B":score_fb, "Non F&B":score_nfb})
   }
   console.log(data_barchart)

@@ -22,6 +22,7 @@ import { ExportCSV } from "../helperfunctions/exportCSV";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../chat/Chat";
 import PartView from "./PartView";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { Modal } from "antd";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 
@@ -81,7 +82,7 @@ export default function AuditView() {
   const [disableParts, setDisableParts] = useState([]);
   const [checklistRenderData, setChecklistrenderData] = useState([]);
   const csvExport = [];
-  
+
   // NC Toggle
   const [showNC, setShowNC] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -202,6 +203,11 @@ export default function AuditView() {
     });
   }
 
+  function handleSendCSV(){
+    console.log("this is where it happens")
+      ExportCSV({csvData:csvExport,sendReport:true})
+  }
+
   try {
     return (
       <div>
@@ -216,15 +222,27 @@ export default function AuditView() {
               justify="center"
               alignItems="center"
             >
-              <ExportCSV csvData={csvExport} />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={showModal}
-                style={{ textTransform: "none" }}
+              <ButtonGroup
+                color="primary"
+                aria-label="outlined primary button group"
               >
-                Delete Audit
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={ handleSendCSV}
+                  style={{ textTransform: "none" }}
+                >
+                  Export As CSV
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={showModal}
+                  style={{ textTransform: "none" }}
+                >
+                  Delete Audit
+                </Button>
+              </ButtonGroup>
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6} md={6}>

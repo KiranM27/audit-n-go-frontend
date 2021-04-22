@@ -187,6 +187,10 @@ export default function AuditViewTenant() {
     csvExport[i].institution = institutionName;
   }
 
+  function handleSendCSV() {
+    ExportCSV({csvData:csvExport, sendReport:true});
+  }
+
   try {
     return (
       <div>
@@ -201,7 +205,14 @@ export default function AuditViewTenant() {
               justify="center"
               alignItems="center"
             >
-              <ExportCSV csvData={csvExport} />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleSendCSV}
+                style={{ textTransform: "none" }}
+              >
+                Export As CSV
+              </Button>
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6} md={6}>
