@@ -13,9 +13,10 @@ import {
 import SynchronisedChart from "./SynchronisedCharts";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 const {
-  getAudits,
-  sortAudits,
-} = require("../../helperfunctions/AuditProcessing.js");
+  sortFullAuditData,
+  getOutletAndInstitute,
+  processAuditData,
+} = require("../../helperfunctions/AuditDataClean.js");
 
 export default function ChartsForTenant(props) {
   const [auditData, setAuditData] = useState([]);
@@ -34,7 +35,7 @@ export default function ChartsForTenant(props) {
     try {
       const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
         console.log(res.data);
-        setAuditData(getAudits(res.data));
+        setAuditData(processAuditData(sortFullAuditData(res.data)));
       });
       const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
         const activeOutlets = [];
@@ -89,7 +90,7 @@ export default function ChartsForTenant(props) {
           align="center"
           style={{ fontStyle: "italic" }}
         ></Typography>
-        <SynchronisedChart data={ncData} color="#DB324D" />
+        <SynchronisedChart data={ncData} color="#DB324D" dataKey="NCs"/>
       </Grid>
       <Grid>
         <Typography
@@ -104,7 +105,7 @@ export default function ChartsForTenant(props) {
           align="center"
           style={{ fontStyle: "italic" }}
         ></Typography>
-        <SynchronisedChart data={fbData} color="#36558F" />
+        <SynchronisedChart data={fbData} color="#36558F" dataKey="Score"/>
       </Grid>
       <Grid>
         <Typography
@@ -119,26 +120,35 @@ export default function ChartsForTenant(props) {
           align="center"
           style={{ fontStyle: "italic" }}
         ></Typography>
-        <SynchronisedChart data={nfbData} color="#F4B860" />
+        <SynchronisedChart data={nfbData} color="#F4B860" dataKey="Score"/>
       </Grid>
     </Grid>
   );
 }
 function genDataforCharts(auditData, instData, outletData) {
   var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
-  var filteredAuditData = sortAudits(auditData).filter(
+  var filteredAuditData = auditData.filter(
     (child) => child.outlet_id == current_user_id
   );
 
   var ncData = filteredAuditData
     .filter((child) => child.type == "COVID-19")
-    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.NC }));
+    .map((audit) => ({
+      name: swapDayMonth(audit.date.slice(0, 6)),
+      NCs: audit.score,
+    }));
   var fbData = filteredAuditData
     .filter((child) => child.type == "F&B")
-    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.score }));
+    .map((audit) => ({
+      name: swapDayMonth(audit.date.slice(0, 6)),
+      Score: audit.score,
+    }));
   var nfbData = filteredAuditData
     .filter((child) => child.type == "Non F&B")
-    .map((audit) => ({ name: swapDayMonth(audit.date.slice(0, 6)), qty: audit.score }));
+    .map((audit) => ({
+      name: swapDayMonth(audit.date.slice(0, 6)),
+      Score: audit.score,
+    }));
 
   return [
     ncData.slice(0, getEndLength(ncData)).reverse(),
@@ -151,6 +161,9 @@ function getEndLength(arr) {
   return Math.min(arr.length, 5);
 }
 
-function swapDayMonth(str){
-    return str.split(" ").reverse().join(" ");
+function swapDayMonth(str) {
+  return str
+    .split(" ")
+    .reverse()
+    .join(" ");
 }

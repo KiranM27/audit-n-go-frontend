@@ -42,7 +42,7 @@ export default function SynchronisedCharts(props) {
       <Tooltip />
       <Line
         type="monotone"
-        dataKey="qty"
+        dataKey={props.dataKey}
         stroke={props.color}
         strokeWidth={2.3}
         activeDot={{ r: 8 }}

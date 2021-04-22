@@ -199,11 +199,6 @@ const Dashboard = (props) => {
             </AppBar>
           </Grid>
         </Container>
-        <SwipeableViews
-          axis={themeTab.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
           <TabPanel value={value} index={0} dir={themeTab.direction}>
             <Container maxWidth="md">
               {/* <Paper className="classes.paper" style={{padding:10}}> */}
@@ -230,7 +225,6 @@ const Dashboard = (props) => {
               <ControlCenter />
             </Container>
           </TabPanel>
-        </SwipeableViews>
       </main>
     </div>
   );

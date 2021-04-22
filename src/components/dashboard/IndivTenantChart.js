@@ -57,7 +57,7 @@ export default function PieChartDashboard(props) {
     try {
       const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
         // console.log(res.data)
-        setAuditData(getAudits(res.data));
+        setAuditData(res.data);
       });
       const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
         const activeOutlets = [];
@@ -69,7 +69,11 @@ export default function PieChartDashboard(props) {
         }
         setOutletData(activeOutlets);
       });
+<<<<<<< Updated upstream
       const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
+=======
+      const institutionData = await axios.get(`/getInstitutions`).then((res) => {
+>>>>>>> Stashed changes
         setInstData(res.data);
       });
     } catch (error) {
@@ -80,13 +84,7 @@ export default function PieChartDashboard(props) {
   };
 
   if (auditData.length != 0 && instData.length != 0 && outletData.length != 0) {
-    console.log(auditData);
-    console.log(instData);
-    console.log("outletData is ", outletData);
-
-    var data = genDataforPieChart(auditData, instData, outletData);
-
-    console.log(data);
+    var data = genDataforPieChart(getAudits(auditData), instData, outletData);
   } else {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
