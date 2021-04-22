@@ -52,10 +52,11 @@ public class AddOutletTest {
 
         Thread.sleep(2000);
 
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div[1]/div/div/div/div/div[2]/div/div/div/a/button")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div[1]/div/div/div/div/div[2]/div/div/div/button")).click();
+        Thread.sleep(2000);
         driver.switchTo().alert().accept();
 
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         driver.get("https://audit-n-go.technopanther.com/dashboard");
         Thread.sleep(4000);
