@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RenderCard(props) {
-  RestrictAccess("/aboutTenant");
   const classes = useStyles();
   const themeAbout = useTheme();
   const isSmallScreen = useMediaQuery((theme) =>

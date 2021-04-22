@@ -161,6 +161,10 @@ export default function AuditView() {
     setNCs(computeNCList(checklistResults));
   }, [checklistResults]);
 
+  useEffect(() => {
+    console.log("checklistRenderData is ", checklistRenderData);
+  }, [checklistRenderData]);
+
   RestrictAccess("/auditDetailTenant/" + audit_id);
   function computeNCList(checklistResults) {
     let localNCList = [];
@@ -203,9 +207,9 @@ export default function AuditView() {
     });
   }
 
-  function handleSendCSV(){
-    console.log("this is where it happens")
-      ExportCSV({csvData:csvExport,sendReport:true})
+  function handleSendCSV() {
+    console.log("this is where it happens");
+    ExportCSV({ csvData: csvExport, sendReport: true });
   }
 
   try {
@@ -229,7 +233,7 @@ export default function AuditView() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={ handleSendCSV}
+                  onClick={handleSendCSV}
                   style={{ textTransform: "none" }}
                 >
                   Export As CSV

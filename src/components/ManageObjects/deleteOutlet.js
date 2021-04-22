@@ -71,7 +71,14 @@ export default function DeleteOutlet() {
     });
 
     axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
-      const outs = res.data;
+      const outs = []
+      for(var i=0;i<res.data.length;i++){
+          if(res.data[i].active==true){
+            
+              outs.push(res.data[i])
+          }
+      }
+      console.log("outs is ",outs)
       var outletList = getOutlets(outs, "username", "outlet_id");
       setAlloutlets(outletList);
     });
@@ -83,6 +90,8 @@ export default function DeleteOutlet() {
     axios.put("https://www.audit-n-go-backend.technopanther.com/outlet", { outlet_id: selectedOutlet }).then((res) => {
       if (res.status !== 201) {
         alert("Outlet not deleted! Please try again!");
+      }else{
+        alert("Outlet Deleted Successfully!")
       }
     });
   }
@@ -155,6 +164,7 @@ export default function DeleteOutlet() {
                     setSelectedOutlet={setSelectedOutlet}
                     setStatus={setStatus}
                     setviewAll={setviewAll}
+                    onSubmit={onSubmit}
                   />
                 </div>
               </Grid>

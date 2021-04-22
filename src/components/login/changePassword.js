@@ -72,7 +72,7 @@ export default class ChangePassword extends Component {
     }
 
     componentDidMount() {
-        if (localStorage.token !== "" && localStorage.email !== "" ) {
+        if (localStorage.token !== "" && CryptoJS.AES.decrypt(localStorage.email, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8) !== "" ) {
             this.setState({
                 token: localStorage.token,
                 email: CryptoJS.AES.decrypt(localStorage.email, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8),

@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
-import './AIChatbot.css'
+import "./AIChatbot.css";
 
 const theme = {
   background: "#f5f8fb",
@@ -13,10 +13,10 @@ const theme = {
   headerBgColor: "#34cce6",
   headerFontColor: "#fff",
   headerFontSize: "15px",
-  botBubbleColor: "#34cce6",
-  botFontColor: "#fff",
-  userBubbleColor: "#fff",
-  userFontColor: "#4a4a4a"
+  botBubbleColor: "#fff",
+  botFontColor: "#000",
+  userBubbleColor: "#34cce6",
+  userFontColor: "#fff"
 };
 
 const config = {
@@ -207,8 +207,9 @@ function RedirectButton(props) {
   }
   return (
     <Button
+      color="secondary"
       onClick={buttonOnClick}
-      style={{ textTransform: "None", color: "#fff" }}
+      style={{ textTransform: "None" }}
     >
       {props.text}
     </Button>
