@@ -173,7 +173,7 @@ const Dashboard = (props) => {
     var filteredAuditData = sortAudits(auditData).filter(
       (child) => child.outlet_id == current_user_id
     );
-    var lastAuditId = filteredAuditData[0].audit_id;
+    var lastAuditId = filteredAuditData[0].id;
     console.log(auditData);
   } else {
     return (
