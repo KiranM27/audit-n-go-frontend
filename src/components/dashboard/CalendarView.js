@@ -52,50 +52,6 @@ function onPanelChange(value, mode) {
   console.log(value, mode);
 }
 
-<<<<<<< Updated upstream
-const monthStr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
-
-const CalendarView = props => {
-    const { history } = props;
-    const classes = useStyles();
-    const [auditData, setAuditData] = useState([]);
-    const [outletData, setOutletData] = useState([]);
-    const [instData, setInstData] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [selectedMonth, setSelectedMonth] = useState(null);
-    const [selectedDay, setSelectedDay] = useState(null);
-    const [selectedAudit, setSelectedAudit] = useState(null);
-
-    useEffect(() => {
-      retrieveData();
-    }, []); 
-
-    const retrieveData = async () => {
-      try {
-          const data = await axios
-            .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
-            .then(res => {
-                console.log(res.data)
-                setAuditData(getAudits(res.data));
-            });
-          const outletData = await axios
-            .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
-            .then(res =>{
-                setOutletData(res.data);
-            });
-          const instituionData = await axios
-          .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
-          .then(res =>{
-            setInstData(res.data);
-          });
-      }catch(error){
-        setAuditData([]);
-        setOutletData([]);
-        setInstData([]);
-      }
-    };
-=======
 const monthStr = [
   "Jan",
   "Feb",
@@ -109,7 +65,6 @@ const monthStr = [
   "Nov",
   "Dec",
 ];
->>>>>>> Stashed changes
 
 const CalendarView = (props) => {
   const { history } = props;
