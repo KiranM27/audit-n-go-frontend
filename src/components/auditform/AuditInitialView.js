@@ -54,10 +54,11 @@ function AuditInitialView(props) {
     axios.get(`/outlets/0`).then((res) => {
       const outs = [];
       for (var i = 0; i < res.data.length; i++) {
-        if (res.data[i].active == true) {
+        if (res.data[i].active == true && res.data[i].admin==false) {
           outs.push(res.data[i]);
         }
       }
+      console.log("outs is ", outs)
       var outletList = getOutlets(outs, "username", "outlet_id");
       setAlloutlets(outletList);
     });

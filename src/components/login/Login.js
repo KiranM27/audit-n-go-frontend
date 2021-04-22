@@ -228,6 +228,7 @@ function Login(props) {
 
     setEmail("");
     setPassword("");
+    setCaptcha("");
   }
 
   function getAuthHeader(req) {
