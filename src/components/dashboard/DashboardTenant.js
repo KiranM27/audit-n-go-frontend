@@ -223,9 +223,9 @@ const Dashboard = (props) => {
                 aria-label="full width tabs example"
                 centered
               >
-                <Tab label="All Your Audits" {...a11yProps(0)} />
+                <Tab label="Calendar" {...a11yProps(0)} />
                 <Tab label="Charts" {...a11yProps(1)} />
-                <Tab label="Calendar" {...a11yProps(2)} />
+                <Tab label="All Your Audits" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
           </Grid>
@@ -238,7 +238,7 @@ const Dashboard = (props) => {
           <TabPanel value={value} index={0} dir={themeTab.direction}>
             <Container maxWidth="md">
               {/* <Paper className="classes.paper" style={{padding:10}}> */}
-              <AllAuditsByTenant />
+              <CalendarView />
               {/* </Paper> */}
             </Container>
           </TabPanel>
@@ -250,7 +250,7 @@ const Dashboard = (props) => {
           </TabPanel>
           <TabPanel value={value} index={2} dir={themeTab.direction}>
             <Container maxWidth="md" height="100%">
-              <CalendarView />
+              <AllAuditsByTenant />
             </Container>
           </TabPanel>
         </SwipeableViews>
