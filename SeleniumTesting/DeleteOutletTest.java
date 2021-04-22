@@ -41,8 +41,8 @@ public class DeleteOutletTest {
 
 		Thread.sleep(1000);
 
-		WebElement outletName = driver.findElement(
-				By.xpath("/html/body/div[1]/div/div[2]/main/div/div/div/div[2]/div/div/div[1]/div/div/input"));
+		WebElement outletName = driver
+				.findElement(By.xpath("/html/body/div[1]/div/div[2]/main/div/div/div/div[2]/div/div/div[1]/div/div/input"));
 		outletName.sendKeys("Test Outlet");
 		Thread.sleep(2000);
 		outletName.sendKeys(Keys.DOWN);
