@@ -38,7 +38,7 @@ function AuditForm(props) {
         item["images"] = [];
         item["SNo"] = 0;
         item["score"] = 0;
-				item["actualScore"] = 0;
+        item["actualScore"] = 0;
       });
       setItems(resData);
       props.dispatch({ type: "setAuditFormData", auditFormData: resData });
@@ -119,116 +119,118 @@ function RenderButton(props) {
 
   function computeNCsOrScore() {
     let NCcount = 0;
-		let score = [];
+    let score = [];
     for (let i = 0; i < props.auditFormData.length; i++) {
-			let partScore = 0;
+      let partScore = 0;
       for (let j = 0; j < props.auditFormData[i].length; j++) {
-				if (props.params[2] === 'cv') {
-					if (props.auditFormData[i][j].status == "Not Complied") {
-						NCcount += 1;
-					}
-				} else {
-					partScore += props.auditFormData[i][j].score
-				}
+        if (props.params[2] === "cv") {
+          if (props.auditFormData[i][j].status == "Not Complied") {
+            NCcount += 1;
+          }
+        } else {
+          partScore += props.auditFormData[i][j].score;
+        }
       }
-			score.push(partScore)
+      score.push(partScore);
     }
-		if (props.params[2] === 'cv') {
-			return NCcount;
-		} else {
-			console.log("added up score is ", score)
-			for (let i = 0; i < score.length; i++) {
-				score[i] = (score[i] / (metaData[props.params[2]].partDetails[i].noItems)) * (metaData[props.params[2]].partDetails[i].maxScore)
-			}
-			let actualScore = score.reduce((a, b) => a + b, 0)
-			return actualScore
-		}
+    if (props.params[2] === "cv") {
+      return NCcount;
+    } else {
+      console.log("added up score is ", score);
+      for (let i = 0; i < score.length; i++) {
+        score[i] =
+          (score[i] / metaData[props.params[2]].partDetails[i].noItems) *
+          metaData[props.params[2]].partDetails[i].maxScore;
+      }
+      let actualScore = score.reduce((a, b) => a + b, 0);
+      return actualScore;
+    }
   }
 
   function auditSubmitOnClick() {
     computedAuditData();
     let actualScore = computeNCsOrScore();
-		auditData['score'] = actualScore;
-		console.log("auditData is ", auditData)
+    auditData["score"] = actualScore;
+    console.log("auditData is ", auditData);
     let notificationBody = "";
-		if (props.params[2] === 'cv') {
-			if (actualScore === 0) {
-				notificationBody = `You have 0 non compliances. Great Job !`;
-			} else {
-				notificationBody = `Please resolve your ${actualScore} non complaince(s) by ${props.deadline}`;
-			}
-		} else {
-			if (actualScore >= 95) {
-				notificationBody = `You audit score is above 95. Great Job !`;
-			} else {
-				notificationBody = `As the score of your new audit is below 95, you will shortly receive a warning letter`;
-			}
-		}
-    
-    // axios
-    //   .post("/audit", auditData)
-    //   .then((response) => {
-    //     const createdAuditId = response.data.audit_id;
+    if (props.params[2] === "cv") {
+      if (actualScore === 0) {
+        notificationBody = `You have 0 non compliances. Great Job !`;
+      } else {
+        notificationBody = `Please resolve your ${actualScore} non complaince(s) by ${props.deadline}`;
+      }
+    } else {
+      if (actualScore >= 95) {
+        notificationBody = `You audit score is above 95. Great Job !`;
+      } else {
+        notificationBody = `As the score of your new audit is below 95, you will shortly receive a warning letter`;
+      }
+    }
 
-    //     toast.success(" Audit Created !", {
-    //       position: "top-center",
-    //       autoClose: 3000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     });
-    //     toast.info("Redirecting to Dashboard", {
-    //       position: "top-center",
-    //       autoClose: 3000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     });
+    axios
+      .post("/audit", auditData)
+      .then((response) => {
+        const createdAuditId = response.data.audit_id;
 
-    //     axios
-    //       .post("/chatInit", {
-    //         audit_id: createdAuditId,
-    //       })
-    //       .then((response) => {
-    //         console.log("Chat doc created");
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
+        toast.success(" Audit Created !", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        toast.info("Redirecting to Dashboard", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
 
-    //     axios
-    //       .post("/notification", {
-    //         outlet_id: props.params[1],
-    //         title: "New Audit !",
-    //         body: notificationBody,
-    //         path: "/auditDetail/" + createdAuditId,
-    //       })
-    //       .then((response) => {
-    //         console.log("Notification sent !");
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-    //     const noNotifications = props.props.noNotifications + 1;
-    //     if (
-    //       parseInt(props.props.loggedInUser.userId) == parseInt(props.params[1])
-    //     ) {
-    //       props.props.dispatch({
-    //         type: "setNoNotifications",
-    //         noNotifications: noNotifications,
-    //       });
-    //     }
-    //     setTimeout(function() {
-    //       history.push("/dashboard");
-    //     }, 3000);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+        axios
+          .post("/chatInit", {
+            audit_id: createdAuditId,
+          })
+          .then((response) => {
+            console.log("Chat doc created");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        axios
+          .post("/notification", {
+            outlet_id: props.params[1],
+            title: "New Audit !",
+            body: notificationBody,
+            path: "/auditDetail/" + createdAuditId,
+          })
+          .then((response) => {
+            console.log("Notification sent !");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        const noNotifications = props.props.noNotifications + 1;
+        if (
+          parseInt(props.props.loggedInUser.userId) == parseInt(props.params[1])
+        ) {
+          props.props.dispatch({
+            type: "setNoNotifications",
+            noNotifications: noNotifications,
+          });
+        }
+        setTimeout(function() {
+          history.push("/dashboard");
+        }, 3000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   const isLoggedIn = Cookies.get("isLoggedIn");
 
