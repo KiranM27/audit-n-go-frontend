@@ -188,7 +188,7 @@ export default function AuditViewTenant() {
   }
 
   function handleSendCSV() {
-    return <ExportCSV csvData={csvExport} sendReport={true} />;
+    ExportCSV({csvData:csvExport, sendReport:true});
   }
 
   try {
