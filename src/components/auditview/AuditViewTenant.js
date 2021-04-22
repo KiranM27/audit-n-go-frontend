@@ -21,7 +21,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { ExportCSV } from "../helperfunctions/exportCSV";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../chat/Chat";
-import PartView from "./PartView";
+import PartView from "./PartViewTenant";
 import { Modal } from "antd";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 
