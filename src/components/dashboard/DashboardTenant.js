@@ -115,10 +115,12 @@ const Dashboard = (props) => {
 
   const retrieveData = async () => {
     try {
-      const data = await axios.get(`/audits/0`).then((res) => {
-        console.log(res.data);
-        setAuditData(getAudits(res.data));
-      });
+      const data = await axios
+        .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
+        .then((res) => {
+          console.log(res.data);
+          setAuditData(getAudits(res.data));
+        });
     } catch (error) {
       setAuditData([]);
     }

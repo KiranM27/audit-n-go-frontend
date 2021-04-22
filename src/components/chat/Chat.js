@@ -23,7 +23,7 @@ function Chat(props) {
     props.dispatch({ type: 'setNoMessages', noMessages: 0})
 
     // Setting up socket.io client
-    socketRef.current = io.connect("http://localhost:5000")
+    socketRef.current = io.connect("https://www.audit-n-go-backend.technopanther.com")
     socketRef.current.on("socketId", yourSocketId => {
       setYourSocketId(yourSocketId)
       let localSokcetId = yourSocketId;
@@ -50,7 +50,7 @@ function Chat(props) {
       });
     })
 
-    axios.get("/getMessages/" + props.audit_id)
+    axios.get("https://www.audit-n-go-backend.technopanther.com/getMessages/" + props.audit_id)
     .then(res => {
       localMessages = res.data
       console.log("messages retreived from db are ", localMessages)
@@ -96,7 +96,7 @@ function Chat(props) {
     socketRef.current.emit("message", { isAdmin: props.loggedInUser.isAdmin, socketId: yourSocketId, 
       audit_id: props.audit_id, message: newMessage})
     props.dispatch({ type: "setNoMessages", noMessages: props.noMessages + 1 })
-    axios.post("/newMessage", {
+    axios.post("https://www.audit-n-go-backend.technopanther.com/newMessage", {
       "audit_id": props.audit_id,
       "chat_details": {
         "fromAdmin": props.loggedInUser.isAdmin,

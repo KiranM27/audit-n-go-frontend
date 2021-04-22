@@ -23,7 +23,7 @@ export const ExportCSV = ({csvData,sendReport}) => {
         config.dirName = new Date().getTime().toString()
         ReactS3.uploadFile(file , config)
         .then( (data) => {
-            axios.post("/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
+            axios.post("https://www.audit-n-go-backend.technopanther.com/sendAuditMail/",{csvLink:data.location,email:CryptoJS.AES.decrypt(localStorage.username, 'ElementsOfSoftwareConstruction').toString(CryptoJS.enc.Utf8)})
             .then((res) => {
                 })
         })

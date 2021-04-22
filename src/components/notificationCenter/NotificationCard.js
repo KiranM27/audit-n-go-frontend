@@ -36,7 +36,7 @@ function NotificationCard(props)  {
     if (props.path !=  null) {
         history.push( props.path )
         props.handleClose() 
-        axios.put(`/changeStatusToSeen/${props.id}`)
+        axios.put(`https://www.audit-n-go-backend.technopanther.com/changeStatusToSeen/${props.id}`)
             .then((res) => {
                 if(res.status==201){
                   console.log("Set notification to seen !")
