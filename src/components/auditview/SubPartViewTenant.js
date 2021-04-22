@@ -184,7 +184,7 @@ export default function SubPartView(props) {
           <ImageRenderer images={props.item.images} />
         </AccordionDetails>
         <Divider />
-        <AccordionActions>
+        {/* <AccordionActions>
           <EditValueRenderer
             editable={editable}
             actualStatus={actualStatus}
@@ -207,7 +207,7 @@ export default function SubPartView(props) {
             setLocalScore={setLocalScore}
             auditType={props.auditType}
           />
-        </AccordionActions>
+        </AccordionActions> */}
       </Accordion>
     </div>
   );

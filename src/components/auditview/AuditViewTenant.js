@@ -21,7 +21,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { ExportCSV } from "../helperfunctions/exportCSV";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../chat/Chat";
-import PartView from "./PartView";
+import PartView from "./PartViewTenant";
 import { Modal } from "antd";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 
@@ -127,7 +127,7 @@ export default function AuditViewTenant() {
       Cookies.set("isLoggedIn", 0);
     }
     axios
-      .get("https://www.audit-n-go-backend.technopanther.com/getAuditViewDetails/" + audit_id)
+      .get("/getAuditViewDetails/" + audit_id)
       .then((response) => {
         setChecklistResults(response.data.auditInfo.checklist_results);
         setChecklistrenderData(response.data.auditInfo.checklist_results);

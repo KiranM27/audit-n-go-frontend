@@ -128,7 +128,7 @@ export default function AuditView() {
       Cookies.set("isLoggedIn", 0);
     }
     axios
-      .get("https://www.audit-n-go-backend.technopanther.com/getAuditViewDetails/" + audit_id)
+      .get("/getAuditViewDetails/" + audit_id)
       .then((response) => {
         setChecklistResults(response.data.auditInfo.checklist_results);
         setChecklistrenderData(response.data.auditInfo.checklist_results);
@@ -192,7 +192,7 @@ export default function AuditView() {
   }
 
   function deleteAudit() {
-    axios.put("https://www.audit-n-go-backend.technopanther.com/audit", { audit_id: audit_id }).then((res) => {
+    axios.put("/audit", { audit_id: audit_id }).then((res) => {
       setIsModalVisible(false);
       alert("Audit has been deleted!");
       history.push("/dashboard");
