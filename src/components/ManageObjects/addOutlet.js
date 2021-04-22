@@ -73,13 +73,13 @@ export default function AddOutlet() {
 
   // useEffect for random is done so that componentDidMount can be simulated
   useEffect(() => {
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
+    axios.get(`/getInstitutions`).then((res) => {
       var insts = res.data;
       insts = getInstitutions(insts, "name", "institution_id");
       setInstitutionOptions(insts);
     });
 
-    axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
+    axios.get(`/outlets/0`).then((res) => {
       const outs = [];
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].active == true) {
@@ -107,7 +107,7 @@ export default function AddOutlet() {
     console.log("random ", temp_password);
 
     axios
-      .post("https://www.audit-n-go-backend.technopanther.com/outlet", {
+      .post("/outlet", {
         username: username,
         email: email,
         password: temp_password,
@@ -121,7 +121,7 @@ export default function AddOutlet() {
       });
 
       await axios
-      .post("https://www.audit-n-go-backend.technopanther.com/sendOutletMail", {
+      .post("/sendOutletMail", {
         email: email
       })
       .then((res) => {

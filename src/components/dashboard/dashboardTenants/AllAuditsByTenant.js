@@ -100,13 +100,13 @@ const RecentAudits = (props) => {
 
   const retrieveData = async () => {
     try {
-      const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
+      const data = await axios.get(`/audits/0`).then((res) => {
         setAuditData(res.data);
       });
-      const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
+      const outletData = await axios.get(`/outlets/0`).then((res) => {
         setOutletData(res.data);
       });
-      const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
+      const instituionData = await axios.get(`/getInstitutions`).then((res) => {
         setInstData(res.data);
       });
     } catch (error) {

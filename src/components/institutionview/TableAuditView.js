@@ -50,7 +50,7 @@ function DataTable(props) {
     const retrieveOutlets = async () => {
         try {
             const data = await axios
-                .get(`https://www.audit-n-go-backend.technopanther.com/audits/${props.selectedOutlet}`)
+                .get(`/audits/${props.selectedOutlet}`)
                 .then(res => {
                     console.log(res.data);
                     setOutletAudits(getAudits(res.data));

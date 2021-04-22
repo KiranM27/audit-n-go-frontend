@@ -118,7 +118,7 @@ const Dashboard = (props) => {
   const retrieveData = async () => {
     try {
       const data = await axios
-        .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
+        .get(`/audits/0`)
         .then((res) => {
           console.log(res.data);
           setAuditData(getAudits(res.data));
@@ -170,11 +170,13 @@ const Dashboard = (props) => {
 
   if (auditData.length != 0) {
     var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
+    console.log(current_user_id);
     var filteredAuditData = sortAudits(auditData).filter(
       (child) => child.outlet_id == current_user_id
     );
-    var lastAuditId = filteredAuditData[0].audit_id;
-    console.log(auditData);
+    console.log(filteredAuditData);
+    var lastAuditId = filteredAuditData[0].id;
+    console.log(lastAuditId);
   } else {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -205,11 +207,12 @@ const Dashboard = (props) => {
                   style={{ textTransform: "none" }}
                   {...buttonProps}
                   color="secondary"
-                  onClick={(e) =>
-                    history.push({
-                      pathname: "/auditDetail/" + lastAuditId,
-                    })
-                  }
+                  // onClick={(e) =>
+                  //   history.push({
+                  //     pathname: "/auditDetail/" + lastAuditId,
+                  //   })
+                  // }
+                  onClick={() => console.log(lastAuditId)}
                 >
                   See Last Audit
                 </Button>
