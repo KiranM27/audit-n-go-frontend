@@ -207,12 +207,11 @@ const Dashboard = (props) => {
                   style={{ textTransform: "none" }}
                   {...buttonProps}
                   color="secondary"
-                  // onClick={(e) =>
-                  //   history.push({
-                  //     pathname: "/auditDetail/" + lastAuditId,
-                  //   })
-                  // }
-                  onClick={() => console.log(lastAuditId)}
+                  onClick={(e) =>
+                    history.push({
+                      pathname: "/auditDetail/" + lastAuditId,
+                    })
+                  }
                 >
                   See Last Audit
                 </Button>
