@@ -121,7 +121,7 @@ export default function AddOutlet() {
       });
 
       await axios
-      .post("/sendOutletMail", {
+      .post("https://www.audit-n-go-backend.technopanther.com/sendOutletMail", {
         email: email
       })
       .then((res) => {

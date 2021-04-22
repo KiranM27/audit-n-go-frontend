@@ -115,7 +115,7 @@ export default function SubPartView(props) {
     props.setChecklistResults(localChecklistResults);
     if (count != 0) {
       axios
-        .post("/editstatus", {
+        .post("https://www.audit-n-go-backend.technopanther.com/editstatus", {
           audit_id: audit_id,
           newStatus: actualStatus,
           part: props.item.part,
@@ -138,7 +138,7 @@ export default function SubPartView(props) {
     props.setChecklistResults(localChecklistResults);
     if (sCount != 0) {
       axios
-        .post("/editscore", {
+        .post("https://www.audit-n-go-backend.technopanther.com/editscore", {
           audit_id: audit_id,
           newScore: actualScore,
           part: props.item.part,

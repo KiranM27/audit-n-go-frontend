@@ -30,7 +30,7 @@ function AuditForm(props) {
     if (!localStorage.checkbox) {
       Cookies.set("isLoggedIn", 0);
     }
-    axios.get(`/checklistItems/${params[2]}`).then((res) => {
+    axios.get(`https://www.audit-n-go-backend.technopanther.com/checklistItems/${params[2]}`).then((res) => {
       var resData = res.data;
       // Adds in Status, Images, SNo to each of the items
       resData.map((item) => {
@@ -168,7 +168,7 @@ function RenderButton(props) {
     }
 
     axios
-      .post("/audit", auditData)
+      .post("https://www.audit-n-go-backend.technopanther.com/audit", auditData)
       .then((response) => {
         const createdAuditId = response.data.audit_id;
 
@@ -192,7 +192,7 @@ function RenderButton(props) {
         });
 
         axios
-          .post("/chatInit", {
+          .post("https://www.audit-n-go-backend.technopanther.com/chatInit", {
             audit_id: createdAuditId,
           })
           .then((response) => {
@@ -203,7 +203,7 @@ function RenderButton(props) {
           });
 
         axios
-          .post("/notification", {
+          .post("https://www.audit-n-go-backend.technopanther.com/notification", {
             outlet_id: props.params[1],
             title: "New Audit !",
             body: notificationBody,
