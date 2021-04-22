@@ -92,9 +92,6 @@ function RenderCard(props) {
 }
 
 export default function MediaControlCard() {
-  if (Cookies.get("isLoggedIn") != 1) {
-    return <Redirect to={"/"} />;
-  }
   return (
     <div>
       <Container maxWidth="lg" align="center">
