@@ -69,11 +69,7 @@ export default function PieChartDashboard(props) {
         }
         setOutletData(activeOutlets);
       });
-<<<<<<< Updated upstream
       const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
-=======
-      const institutionData = await axios.get(`/getInstitutions`).then((res) => {
->>>>>>> Stashed changes
         setInstData(res.data);
       });
     } catch (error) {

@@ -82,42 +82,16 @@ const CalendarView = (props) => {
     retrieveData();
   }, []);
 
-<<<<<<< Updated upstream
-    const retrieveData = async () => {
-      try {
-          const data = await axios
-            .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
-            .then(res => {
-                console.log(res.data)
-                setAuditData(getAudits(res.data));
-            });
-          const outletData = await axios
-            .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
-            .then(res =>{
-                setOutletData(res.data);
-            });
-          const instituionData = await axios
-          .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
-          .then(res =>{
-            setInstData(res.data);
-          });
-      }catch(error){
-        setAuditData([]);
-        setOutletData([]);
-        setInstData([]);
-      }
-    };
-=======
   const retrieveData = async () => {
     try {
-      const data = await axios.get(`/audits/0`).then((res) => {
+      const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
         console.log(res.data);
         setAuditData(processAuditData(res.data));
       });
-      const outletData = await axios.get(`/outlets/0`).then((res) => {
+      const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
         setOutletData(res.data);
       });
-      const instituionData = await axios.get(`/getInstitutions`).then((res) => {
+      const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
         setInstData(res.data);
       });
     } catch (error) {
@@ -126,7 +100,6 @@ const CalendarView = (props) => {
       setInstData([]);
     }
   };
->>>>>>> Stashed changes
 
   useEffect(() => {
     if (selectedAudit != null) {

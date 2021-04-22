@@ -35,7 +35,6 @@ export default function InstitutionBarChart(props) {
 
   const retrieveData = async () => {
     try {
-<<<<<<< Updated upstream
         const data = await axios
             .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
             .then(res => {
@@ -63,31 +62,6 @@ export default function InstitutionBarChart(props) {
         setAuditData([]);
         setOutletData([]);
         setInstData([]);
-=======
-      const data = await axios.get(`/audits/0`).then((res) => {
-        console.log(res.data);
-        setAuditData(res.data);
-      });
-      const outletData = await axios.get(`/outlets/0`).then((res) => {
-        const activeOutlets = [];
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].active == true) {
-            activeOutlets.push(res.data[i]);
-          }
-        }
-        setOutletData(activeOutlets);
-      });
-
-      const institutionData = await axios
-        .get(`/getInstitutions`)
-        .then((res) => {
-          setInstData(res.data);
-        });
-    } catch (error) {
-      setAuditData([]);
-      setOutletData([]);
-      setInstData([]);
->>>>>>> Stashed changes
     }
   };
   const chartProps = {

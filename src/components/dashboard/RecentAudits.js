@@ -95,78 +95,21 @@ const RecentAudits = (props) => {
   // setOutletAudits(rows);
 
   const retrieveData = async () => {
-<<<<<<< Updated upstream
-      try {
-          const data = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
-              .then(res => {
-                  console.log(res.data)
-                  setAuditData(getAudits(res.data));
-              });
-          const outletData = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
-              .then(res =>{
-                setOutletData(res.data);
-              });
-          const instituionData = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
-              .then(res =>{
-                setInstData(res.data);
-              });
-      }catch(error){
-          setAuditData([]);
-          setOutletData([]);
-          setInstData([]);
-      }
-  };
-
-  if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
-
-    var latestAudits = sortAudits(auditData).slice(0,5);
-    var dataForTable = [];
-
-    console.log(instData)
-    console.log(outletData)
-
-    for (var i = 0; i < latestAudits.length; i++){
-      console.log(latestAudits[i]["outlet_id"])
-      
-      var OutletandInstitute = getOutletAndInstitute(latestAudits[i]["outlet_id"], instData, outletData);
-      var tenantName = OutletandInstitute[0];
-      var instName = OutletandInstitute[1];
-
-      // id, date, tenant, institution, NC, score
-      var id = latestAudits[i]["id"];
-      var date = latestAudits[i]["date"];
-      var type = latestAudits[i]["type"];
-      var no_NC = latestAudits[i]["NC"];
-      var score = latestAudits[i]["score"];
-      if (type == "COVID-19"){
-        score = "N/A";
-      }
-      if (type != "COVID-19"){
-        no_NC = "N/A";
-      }
-      
-      var table_row = makeData(id, date, type, tenantName, instName, no_NC, score);
-      dataForTable.push(table_row);
-=======
     try {
-      const data = await axios.get(`/audits/0`).then((res) => {
+      const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
         console.log(res.data);
         setAuditData(res.data);
       });
-      const outletData = await axios.get(`/outlets/0`).then((res) => {
+      const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
         setOutletData(res.data);
       });
-      const instituionData = await axios.get(`/getInstitutions`).then((res) => {
+      const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
         setInstData(res.data);
       });
     } catch (error) {
       setAuditData([]);
       setOutletData([]);
       setInstData([]);
->>>>>>> Stashed changes
     }
   };
 

@@ -99,77 +99,20 @@ const RecentAudits = (props) => {
   // setOutletAudits(rows);
 
   const retrieveData = async () => {
-<<<<<<< Updated upstream
-      try {
-          const data = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
-              .then(res => {
-                  console.log(res.data)
-                  setAuditData(getAudits(res.data));
-              });
-          const outletData = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
-              .then(res =>{
-                setOutletData(res.data);
-              });
-          const instituionData = await axios
-              .get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`)
-              .then(res =>{
-                setInstData(res.data);
-              });
-      }catch(error){
-          setAuditData([]);
-          setOutletData([]);
-          setInstData([]);
-      }
-  };
-
-  if (auditData.length != 0 && instData.length != 0 && outletData.length != 0){
-    var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
-
-    var all_audits_by_tenant = sortAudits(auditData).filter(audit => (audit.outlet_id == current_user_id));
-    var dataForTable = [];
-
-    var outlet_and_institution = getOutletAndInstitute(current_user_id, instData, outletData);
-    var tenantName = outlet_and_institution[0]
-    var instName = outlet_and_institution[1]
-
-    console.log(tenantName)
-    console.log(instName)
-
-    for (var i = 0; i < all_audits_by_tenant.length; i++){
-
-      // id, date, tenant, institution, NC, score
-      var id = all_audits_by_tenant[i]["id"];
-      var date = all_audits_by_tenant[i]["date"];
-      var type = all_audits_by_tenant[i]["type"];
-      var no_NC = all_audits_by_tenant[i]["NC"];
-      if (type != "COVID-19"){
-          no_NC = "N/A";
-      }
-      var score = all_audits_by_tenant[i]["score"];
-      if (type == "COVID-19"){
-          score = "N/A";
-      }
-      
-      var table_row = makeData(id, date, type, tenantName, instName, no_NC, score);
-      dataForTable.push(table_row);
-=======
     try {
-      const data = await axios.get(`/audits/0`).then((res) => {
+      const data = await axios.get(`https://www.audit-n-go-backend.technopanther.com/audits/0`).then((res) => {
         setAuditData(res.data);
       });
-      const outletData = await axios.get(`/outlets/0`).then((res) => {
+      const outletData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`).then((res) => {
         setOutletData(res.data);
       });
-      const instituionData = await axios.get(`/getInstitutions`).then((res) => {
+      const instituionData = await axios.get(`https://www.audit-n-go-backend.technopanther.com/getInstitutions`).then((res) => {
         setInstData(res.data);
       });
     } catch (error) {
       setAuditData([]);
       setOutletData([]);
       setInstData([]);
->>>>>>> Stashed changes
     }
   };
 

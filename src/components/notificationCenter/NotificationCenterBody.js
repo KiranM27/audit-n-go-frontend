@@ -37,23 +37,13 @@ function NotificationCenterBody(props) {
 
   const retrieveNotification = () => {
     try {
-<<<<<<< Updated upstream
-        axios
-          .get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${ props.loggedInUser.userId }`)
-          .then(res => {
-              console.log(res.data);
-              setNotifications(res.data);
-          });
-    }catch(error){
-=======
       axios
-        .get(`/getNotifications/${props.loggedInUser.userId}`)
+        .get(`https://www.audit-n-go-backend.technopanther.com/getNotifications/${props.loggedInUser.userId}`)
         .then((res) => {
           console.log(res.data);
           setNotifications(res.data);
         });
     } catch (error) {
->>>>>>> Stashed changes
       setNotifications([]);
     }
   };
