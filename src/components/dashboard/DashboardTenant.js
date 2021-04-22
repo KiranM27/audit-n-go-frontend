@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
@@ -11,10 +13,6 @@ import {
 } from "@material-ui/core";
 import AllAuditsByTenant from "./dashboardTenants/AllAuditsByTenant";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import IndivTenantChart from "./IndivTenantChart";
-import TenantRadialChart from "./TenantRadialChart";
-import InstitutionBarChart from "./InstitutionBarChart";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -30,7 +28,12 @@ import CalendarView from "./dashboardTenants/CalendarByTenant";
 import ControlCenter from "./ControlCenter";
 import RestrictAccess from "../helperfunctions/RestrictAccess";
 import AIChatbot from "../chatbot/AIChatbot";
-import ChartsForTenant from "./dashboardTenants/ChartsByTenant"
+import ChartsForTenant from "./dashboardTenants/ChartsByTenant";
+
+const {
+  getAudits,
+  sortAudits,
+} = require("../helperfunctions/AuditProcessing.js");
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,6 +107,23 @@ const Dashboard = (props) => {
   const classes = useStyles();
   const themeTab = useTheme();
   const [value, setValue] = React.useState(1);
+  const [auditData, setAuditData] = useState([]);
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  const retrieveData = async () => {
+    try {
+      const data = await axios.get(`/audits/0`).then((res) => {
+        console.log(res.data);
+        setAuditData(getAudits(res.data));
+      });
+    } catch (error) {
+      setAuditData([]);
+    }
+  };
+
   const [pieSelection, setPieSelection] = React.useState("KKH");
   const isSmallScreen = useMediaQuery((theme) =>
     themeTab.breakpoints.down("xs")
@@ -144,6 +164,20 @@ const Dashboard = (props) => {
     return <Redirect to={"/"} />;
   }
 
+  if (auditData.length != 0) {
+    var current_user_id = JSON.parse(Cookies.get("loggedInUser")).userId;
+    var filteredAuditData = sortAudits(auditData).filter(
+      (child) => child.outlet_id == current_user_id
+    );
+    var lastAuditId = filteredAuditData[0].id;
+  } else {
+    return (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <main className={classes.content}>
@@ -160,6 +194,20 @@ const Dashboard = (props) => {
                     Welcome, {props.loggedInUser.username}
                   </Typography>
                 </Grid>
+              </Grid>
+              <Grid container justify="flex-end" item xs={6} sm={6}>
+                <Button
+                  style={{ textTransform: "none" }}
+                  {...buttonProps}
+                  color="secondary"
+                  onClick={(e) =>
+                    history.push({
+                      pathname: "/auditDetail/" + lastAuditId,
+                    })
+                  }
+                >
+                  See Last Audit
+                </Button>
               </Grid>
             </Grid>
           </div>
@@ -211,7 +259,7 @@ const Dashboard = (props) => {
   );
 };
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function(state) {
   console.log("state is ", state);
   return {
     loggedInUser: state.loggedInUser,
