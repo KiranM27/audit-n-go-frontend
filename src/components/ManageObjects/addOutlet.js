@@ -102,11 +102,11 @@ export default function AddOutlet() {
     }
   };
 
-  function onSubmit() {
+  async function onSubmit() {
     let temp_password = Math.random().toString(36).substring(10);
     console.log("random ", temp_password);
 
-    axios
+    await axios
       .post("/outlet", {
         username: username,
         email: email,
@@ -114,10 +114,24 @@ export default function AddOutlet() {
         institution_id: selectedInstitution,
       })
       .then((res) => {
+        alert("An email has been sent to you containing login instructions!")
         if (res.status !== 201) {
           alert("Outlet not added! Please try again!");
         }
       });
+
+      await axios
+      .post("/sendOutletMail", {
+        email: email
+      })
+      .then((res) => {
+        console.log("Mail is sending hahaha")
+        if (res.status !== 200) {
+          alert("Mail not sent! Something went wrong!");
+        }
+      });
+
+      history.push('/dashboard')
   }
 
   useEffect(() => {
@@ -227,7 +241,6 @@ function RenderOutletSelect(props) {
             </form>
             <p></p>
 
-            <Link to={"/dashboard"}>
               <Button
                 variant="contained"
                 color="primary"
@@ -236,7 +249,6 @@ function RenderOutletSelect(props) {
               >
                 Create outlet
               </Button>
-            </Link>
           </Grid>
         </Grid>
       </div>
