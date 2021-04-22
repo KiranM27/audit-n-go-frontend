@@ -11,7 +11,7 @@ public class FullFlow {
 		String Password = "123456";
 
 		// Change the link to the driver based on your local location
-		System.setProperty("webdriver.chrome.driver", "C:/Users/shriv/Documents/ChromeDriver/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/kiran/Desktop/SUTD/Misc/chromedriver");
 		WebDriver driver = new ChromeDriver();
 
 		// Ensure that the frontend and the backend of the app are running
@@ -142,10 +142,10 @@ public class FullFlow {
 		Thread.sleep(3000);
 		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div/div[2]/div[4]/ul/li[3]/button")).click();
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div/div[2]/div[8]/ul/li[2]/button")).click();
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div/div[1]/a")).click();
-		Thread.sleep(1000);
+		// driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div/div[2]/div[8]/ul/li[2]/button")).click();
+		// Thread.sleep(2000);
+		// driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div/div[1]/a")).click();
+		Thread.sleep(6000);
 
 		driver.close();
 	}
