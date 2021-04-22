@@ -21,7 +21,7 @@ export default function AddInstitution(){
 
 function onSubmit(){
 
-    axios.post('/createInstitution', {name:name})
+    axios.post('https://www.audit-n-go-backend.technopanther.com/createInstitution', {name:name})
     .then(
       (res) => {
         if(res.status!==201){
