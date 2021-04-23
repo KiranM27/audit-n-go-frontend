@@ -105,29 +105,8 @@ function sortAudits(fullAuditList){
   output.sort(function(a,b){
     return b.id - a.id
   })
-  console.log(output)
+  // console.log(output)
   return output
-}
-
-function sortAuditsRaw(fullAuditList){
-  var output = [];
-  for (var i=0; i<fullAuditList.length; ++i){
-    output.push(
-      {
-        "id":fullAuditList[i]['id'], 
-        "type":fullAuditList[i]['type'], 
-        "date":fullAuditList[i]['date'], 
-        "NC":fullAuditList[i]['numberNC'], 
-        "score":fullAuditList[i]['score'],
-        "outlet_id":fullAuditList[i]['outlet_id']
-      }
-    );
-  }
-  var sortedFullAuditList = fullAuditList.sort(function(a,b){
-    return b.audit_id - a.audit_id;
-  })
-  
-  return sortedFullAuditList;
 }
 
 // export {getAudits, makeData, getOutletAndInstitute, sortAudits}

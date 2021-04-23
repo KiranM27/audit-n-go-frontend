@@ -39,8 +39,8 @@ const processedAuditData = [
     {
       id: 15,
       type: 'COVID-19',
-      deadline: '2021-03-23',
-      date: '2021-03-21',
+      deadline: 'Mar 24 2021',
+      date: 'Mar 22 2021',
       checklist: [
           {
               "part":1,
@@ -59,6 +59,7 @@ const processedAuditData = [
 const makeDataTest = {
     "id": 1,
     "date": "2021/03/25",
+    "type":"COVID-19",
     "tenant": "Starbucks",
     "institution": "NUH",
     "NC": 3,
@@ -67,20 +68,20 @@ const makeDataTest = {
 
 const sortedAudits = [
     {
-      id: 1,
-      type: 'COVID-19',
-      date: 1616371200000,
-      NC: 0,
-      score: 0,
-      outlet_id: 1
-    },
-    {
       id: 15,
       type: 'COVID-19',
-      date: 1616284800000,
+      date: "Mar 22 2021",
       NC: 0,
       score: 0,
       outlet_id: 2
+    },
+    {
+      id: 1,
+      type: 'COVID-19',
+      date: "Mar 23 2021",
+      NC: 0,
+      score: 0,
+      outlet_id: 1
     }
 ]
 
@@ -117,13 +118,11 @@ const outletData = [
 test('Get processed full audit data', () => {
     var expected = JSON.stringify(getAudits(fullAuditData)[0])
     var actual = JSON.stringify(processedAuditData[0])
-    // console.log(expected);
-    // console.log(actual);
     expect(expected).toBe(actual);
 });
 
 test('Get makeData', () => {
-    var expected = JSON.stringify(makeData(1, "2021/03/25", "Starbucks", "NUH", 3, 10));
+    var expected = JSON.stringify(makeData(1, "2021/03/25", "COVID-19", "Starbucks", "NUH", 3, 10));
     var actual = JSON.stringify(makeDataTest)
     // console.log(expected);
     // console.log(actual);
@@ -137,7 +136,7 @@ test('Get sorted audits (by date, latest first)', () => {
     var expected1 = JSON.stringify(sorted[1])
     var actual1 = JSON.stringify(sortedAudits[1])
 
-    console.log(getOutletAndInstitute(2, institutionData, outletData))
+    // console.log(getOutletAndInstitute(2, institutionData, outletData))
 
     expect(expected0).toBe(actual0)
     expect(expected1).toBe(actual1)
