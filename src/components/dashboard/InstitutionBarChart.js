@@ -39,7 +39,7 @@ export default function InstitutionBarChart(props) {
             .get(`https://www.audit-n-go-backend.technopanther.com/audits/0`)
             .then(res => {
                 console.log(res.data)
-                setAuditData(getAudits(res.data));
+                setAuditData(res.data);
             });
         const outletData = await axios
             .get(`https://www.audit-n-go-backend.technopanther.com/outlets/0`)
