@@ -302,11 +302,6 @@ export default function AuditView() {
             </AppBar>
           </Grid>
         </Container>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Container maxWidth="md">
               <PartView
@@ -371,7 +366,6 @@ export default function AuditView() {
               />
             </Container>
           </TabPanel>
-        </SwipeableViews>
         <Chat audit_id={audit_id} />
         <Modal
           title="Upload Non compliance Image"
